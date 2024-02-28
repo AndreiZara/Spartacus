@@ -167,7 +167,6 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
-    <Content Include="External\google-map\gmap.js" />
     <Content Include="External\icofont\fonts\icofont.svg" />
     <Content Include="External\icofont\icofont.css" />
     <Content Include="External\icofont\icofont.min.css" />
@@ -219,6 +218,19 @@
     <Content Include="Content\images\team\team-2.jpg" />
     <Content Include="Content\images\team\team-3.jpg" />
     <Content Include="Content\images\team\team-4.jpg" />
+    <Content Include="Content\Slick\slick.scss" />
+    <Content Include="Content\Slick\slick-theme.scss" />
+    <Content Include="Content\Slick\fonts\slick.woff" />
+    <Content Include="Content\Slick\fonts\slick.ttf" />
+    <Content Include="Content\Slick\fonts\slick.eot" />
+    <Content Include="External\icofont\fonts\icofont.eot" />
+    <Content Include="External\icofont\fonts\icofont.ttf" />
+    <Content Include="External\icofont\fonts\icofont.woff" />
+    <Content Include="External\icofont\fonts\icofont.woff2" />
+    <Content Include="External\themify\fonts\themify.eot" />
+    <Content Include="External\themify\fonts\themify.ttf" />
+    <Content Include="External\themify\fonts\themify.woff" />
+    <Content Include="Content\css\style.css.map" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -247,19 +259,6 @@
     <Content Include="Content\bootstrap-grid.rtl.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
-    <Content Include="Content\Slick\slick.scss" />
-    <Content Include="Content\Slick\slick-theme.scss" />
-    <Content Include="Content\Slick\fonts\slick.woff" />
-    <Content Include="Content\Slick\fonts\slick.ttf" />
-    <Content Include="Content\Slick\fonts\slick.eot" />
-    <Content Include="External\icofont\fonts\icofont.eot" />
-    <Content Include="External\icofont\fonts\icofont.ttf" />
-    <Content Include="External\icofont\fonts\icofont.woff" />
-    <Content Include="External\icofont\fonts\icofont.woff2" />
-    <Content Include="External\themify\fonts\themify.eot" />
-    <Content Include="External\themify\fonts\themify.ttf" />
-    <Content Include="External\themify\fonts\themify.woff" />
-    <Content Include="Content\css\style.css.map" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />
@@ -313,6 +312,9 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

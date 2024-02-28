@@ -50,7 +50,7 @@ namespace Spartacus.Web.App_Start
                       "~/Scripts/jquery-3.7.1.js"));
 
             // jQuery Validation
-            bundles.Add(new ScriptBundle("~/bundles/validation/js").Include(
+            bundles.Add(new ScriptBundle("~/bundles/jquery/valid/js").Include(
                       "~/Scripts/jquery.validate.min.js"));
 
             // Slick Carousel script
