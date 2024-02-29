@@ -42,6 +42,10 @@ namespace Spartacus.Web.App_Start
             bundles.Add(new StyleBundle("~/bundles/Slick/tcss").Include(
                 "~/Content/Slick/slick-theme.css", new CssRewriteUrlTransform()));
 
+            // SignIn Style
+            bundles.Add(new StyleBundle("~/bundles/Sign-In/css").Include(
+                "~/Content/css/Register.css"));
+
             // Bootstrap
             bundles.Add(new Bundle("~/bundles/bootstrap/js").Include(
                       "~/Scripts/bootstrap.min.js"));
