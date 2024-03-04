@@ -10,4 +10,13 @@ namespace Spartacus.Web.Controllers
             return View();
         }
     }
+
+    public class AboutController : Controller
+    {
+        // GET: Home
+        public ActionResult About()
+        {
+            return View();
+        }
+    }
 }
