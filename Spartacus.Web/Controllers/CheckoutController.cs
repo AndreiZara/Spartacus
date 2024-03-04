@@ -2,9 +2,9 @@
 
 namespace Spartacus.Web.Controllers
 {
-    public class RegisterController : Controller
+    public class CheckoutController : Controller
     {
-        // GET: Register
+        // GET: Checkout
         public ActionResult Index()
         {
             return View();
