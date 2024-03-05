@@ -1,5 +1,5 @@
 ﻿<div class="container-fluid">
-    <a class="navbar-brand" href="/Home/Index">
+    <a class="navbar-brand" href=@Url.Action("Index", "Home")>
         <h2 class="text-white text-capitalize">Spartac<span class="text-color">us</span></h2>
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsid" aria-controls="navbarsid" aria-expanded="false" aria-label="Toggle navigation">
@@ -10,13 +10,13 @@
             <li class="nav-item"><a class="nav-link" href="trainers.html">Trainers</a></li>
             <li class="nav-item"><a class="nav-link" href="service.html">Services</a></li>
             <li class="nav-item"><a class="nav-link" href="pricing.html">Memebership</a></li>
-            <li class="nav-item"><a class="nav-link" href="contact.html">Contact us</a></li>
-            <li class="nav-item"><a class="nav-link" href="about.html">About us</a></li>
+            <li class="nav-item"><a class="nav-link" href=@Url.Action("Contact", "Home")>Contact us</a></li>
+            <li class="nav-item"><a class="nav-link" href=@Url.Action("About", "Home")>About us</a></li>
         </ul>
         <ul class="navbar-nav">
-            <li class="nav-item"><a class="nav-link" href="#">Login</a></li>
+            <li class="nav-item"><a class="nav-link" href=@Url.Action("Login", "Account")>Login</a></li>
             <li class="vr text-white opacity-100 px-0"></li>
-            <li class="nav-item pe-0"><a class="nav-link" href="#">Join</a></li>
+            <li class="nav-item pe-0"><a class="nav-link" href=@Url.Action("Join", "Account")>Join</a></li>
         </ul>
     </div>
 </div>
