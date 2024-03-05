@@ -117,10 +117,10 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
-    <Content Include="Content\css\cstyle.css" />
     <Content Include="Content\css\style.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\images\Muscles.jpg" />
     <Content Include="Content\magnific-popup.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\Slick\ajax-loader.gif" />
