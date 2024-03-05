@@ -5,6 +5,12 @@ VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spartacus.Web", "Spartacus.Web\Spartacus.Web.csproj", "{5D3068F0-1B3B-45B7-8329-AE54102DDC63}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spartacus.BusinessLogic", "Spartacus.BusinessLogic\Spartacus.BusinessLogic.csproj", "{DDE29F9D-7A98-49B0-AAC4-C3C95301832E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spartacus.Domain", "Spartacus.Domain\Spartacus.Domain.csproj", "{BBE0F79F-CDC6-4A3F-84A3-E80B6E4AAE78}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spartacus.Helpers", "Spartacus.Helpers\Spartacus.Helpers.csproj", "{DAB76ADF-54AE-4C45-8574-22DF0EA986B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +21,18 @@ Global
 		{5D3068F0-1B3B-45B7-8329-AE54102DDC63}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D3068F0-1B3B-45B7-8329-AE54102DDC63}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D3068F0-1B3B-45B7-8329-AE54102DDC63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDE29F9D-7A98-49B0-AAC4-C3C95301832E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDE29F9D-7A98-49B0-AAC4-C3C95301832E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDE29F9D-7A98-49B0-AAC4-C3C95301832E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDE29F9D-7A98-49B0-AAC4-C3C95301832E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBE0F79F-CDC6-4A3F-84A3-E80B6E4AAE78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBE0F79F-CDC6-4A3F-84A3-E80B6E4AAE78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBE0F79F-CDC6-4A3F-84A3-E80B6E4AAE78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBE0F79F-CDC6-4A3F-84A3-E80B6E4AAE78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAB76ADF-54AE-4C45-8574-22DF0EA986B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAB76ADF-54AE-4C45-8574-22DF0EA986B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAB76ADF-54AE-4C45-8574-22DF0EA986B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAB76ADF-54AE-4C45-8574-22DF0EA986B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
