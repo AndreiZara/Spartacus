@@ -38,6 +38,9 @@ namespace Spartacus.Web.App_Start
             bundles.Add(new StyleBundle("~/bundles/Slick/css").Include(
                 "~/Content/Slick/slick.css", new CssRewriteUrlTransform()));
 
+            bundles.Add(new StyleBundle("~/bundles/cstyle/css").Include(
+                "~/Content/css/cstyle.css", new CssRewriteUrlTransform()));
+
             // Slick Carousel theme style
             bundles.Add(new StyleBundle("~/bundles/Slick/tcss").Include(
                 "~/Content/Slick/slick-theme.css", new CssRewriteUrlTransform()));
