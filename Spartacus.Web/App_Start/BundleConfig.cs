@@ -45,6 +45,10 @@ namespace Spartacus.Web.App_Start
             bundles.Add(new StyleBundle("~/bundles/Slick/tcss").Include(
                 "~/Content/Slick/slick-theme.css", new CssRewriteUrlTransform()));
 
+            // Checkout style
+            bundles.Add(new StyleBundle("~/bundles/checkout/css").Include(
+                "~/Content/checkout.css", new CssRewriteUrlTransform()));
+
             // SignIn Style
             bundles.Add(new StyleBundle("~/bundles/Sign-In/css").Include(
                 "~/Content/css/Register.css"));
@@ -52,6 +56,9 @@ namespace Spartacus.Web.App_Start
             // Bootstrap
             bundles.Add(new Bundle("~/bundles/bootstrap/js").Include(
                       "~/Scripts/bootstrap.min.js"));
+            // Checkout script
+            bundles.Add(new Bundle("~/bundles/checkout/js").Include(
+                      "~/Scripts/checkout.js"));
             // jQuery
             bundles.Add(new ScriptBundle("~/bundles/jquery/js").Include(
                       "~/Scripts/jquery-3.7.1.js"));
