@@ -16,7 +16,7 @@
                 <div class="card p-3">
                     <h5 class="text-uppercase">Payment details</h5>
                     <div class="form-floating mt-3">
-                        <input autocomplete="cc-name" class="form-control" id="cc-name" name="cc-name" placeholder="" required>
+                        <input autocomplete="cc-name" type="text" pattern="[a-zA-Z ]+" oninvalid="setCustomValidity('Please enter on alphabets only. ')" class="form-control" id="cc-name" name="cc-name" placeholder="" required>
                         <label for="cc-name">Name on Card</label>
                     </div>
                     <div class="row">
