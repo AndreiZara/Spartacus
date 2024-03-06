@@ -9,5 +9,17 @@ namespace Spartacus.Web.Controllers
         {
             return View();
         }
+        public ActionResult Membership()
+        {
+            return View();
+        }
+        public ActionResult Trainer() 
+        { 
+            return View();
+        }
+        public ActionResult Services()
+        {
+            return View();
+        }
     }
 }
