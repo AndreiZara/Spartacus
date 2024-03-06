@@ -314,6 +314,10 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Account\UserMenagement.cshtml" />
+	<Content Include="Views\Register\Index.cshtml" />
+	<Content Include="Views\Home\Membership.cshtml" />
+	<Content Include="Views\Home\Trainer.cshtml" />
+	<Content Include="Views\Home\Services.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
