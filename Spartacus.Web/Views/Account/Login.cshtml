@@ -1,9 +1,39 @@
-﻿@using System.Web.Optimization
+﻿
+@section Styles {
+     <style>
 
-@Styles.Render("~/bundles/Sign-In/css")
+     .bg-5 {
+               background: url("Content/images/Muscles.jpg") no-repeat 0% 30%;
+               background-size: cover;
+               padding: 180px 0px;
+          }
 
+     .btn-lg {
+     padding: 12px 26px;
+     font-size: 14px;
+     font-weight: 700;
+     letter-spacing: 1px;
+     text-transform: uppercase;
+     }
 
-<div class="demo-container">
+     ::placeholder {
+     font-size: 14px;
+     letter-spacing: 0.5px;
+     }
+
+     .form-control-lg {
+     font-size: 16px;
+     padding: 25px 20px;
+     }
+
+     .font-500 {
+     font-weight: 500;
+     }
+     </style>
+
+}
+
+<div class="bg-5">
      <div class="container">
           <div class="row">
                <div class="col-lg-6 col-12 mx-auto">

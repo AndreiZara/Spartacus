@@ -6,6 +6,17 @@ namespace Spartacus.Web.Controllers
     {
         public ActionResult Index()
         {
+
+            return View();
+        }
+        
+        public ActionResult Contact()
+        {
+            return View();
+        }
+
+        public ActionResult About()
+        {
             return View();
         }
         
