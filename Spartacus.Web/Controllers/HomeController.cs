@@ -6,7 +6,6 @@ namespace Spartacus.Web.Controllers
     {
         public ActionResult Index()
         {
-
             return View();
         }
         
@@ -20,23 +19,16 @@ namespace Spartacus.Web.Controllers
             return View();
         }
         
-        public ActionResult Contact()
-        {
-            return View();
-        }
-
-        public ActionResult About()
-        {
-            return View();
-        }
         public ActionResult Membership()
         {
             return View();
         }
-        public ActionResult Trainer() 
+
+        public ActionResult Trainers() 
         { 
             return View();
         }
+
         public ActionResult Services()
         {
             return View();

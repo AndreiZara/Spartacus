@@ -461,7 +461,10 @@ ul.dropdown-menu li {
   background-size: cover;
 }
 
-
+.bg-5 {
+    background: url("../images/Muscles.jpg") no-repeat;
+    background-size: cover;
+}
 
 
 .mt-80px {
