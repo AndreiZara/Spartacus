@@ -6,6 +6,7 @@ namespace Spartacus.Web.Controllers
     {
         public ActionResult Index()
         {
+
             return View();
         }
         
