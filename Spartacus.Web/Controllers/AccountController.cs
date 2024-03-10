@@ -12,6 +12,12 @@ namespace Spartacus.Web.Controllers
             return View();
         }
 
+
+        public ActionResult Register()
+        {
+            return View();
+        }
+
         [HttpPost]
         public ActionResult Login(UserLogin login)
         {
@@ -19,8 +25,8 @@ namespace Spartacus.Web.Controllers
             {
                 ULoginData data = new ULoginData
                 {
-                    Name = login.Username,
-                    Password = login.Password,
+                    Name = login.Username,  
+                    Password = login.Password, 
                     Ip = Request.UserHostAddress,
                     LoginDateTime = DateTime.Now
                 };
@@ -35,7 +41,8 @@ namespace Spartacus.Web.Controllers
             else
             {
                 ModelState.AddModelError("DeBil", "DeBil");
-                return View();
+                Session["Username"] = login.Username;
+                return RedirectToAction("Index", "Home");
             }
         }
 
