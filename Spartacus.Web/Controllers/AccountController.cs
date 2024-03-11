@@ -50,5 +50,11 @@ namespace Spartacus.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult Logout()
+        {
+            Session["Username"] = null;
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

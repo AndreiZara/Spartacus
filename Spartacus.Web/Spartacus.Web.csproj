@@ -318,6 +318,7 @@
     <Content Include="Views\Home\Trainers.cshtml" />
     <Content Include="Views\Home\Services.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\Logout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
