@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Spartacus.BusinessLogic
+namespace Spartacus.BusinessLogic.Core
 {
-    public class BusinessLogic
+    class AdminApi
     {
-
     }
 }
