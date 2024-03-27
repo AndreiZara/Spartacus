@@ -1,13 +1,31 @@
-﻿using Spartacus.Domain.Entities.User;
+﻿using Spartacus.BusinessLogic;
+using Spartacus.BusinessLogic.Interfaces;
+using Spartacus.Domain.Entities.User;
 using Spartacus.Web.Models;
 using System;
 using System.Web.Mvc;
 
 namespace Spartacus.Web.Controllers
 {
+
     public class AccountController : Controller
     {
+        private readonly ISession _session;
+
+        public AccountController()
+        {
+            var bl = new BussinesLogic();
+            _session = bl.GetSessionBL();
+        }
+
         public ActionResult Login()
+        {
+            
+            return View();
+        }
+
+
+        public ActionResult Register()
         {
             return View();
         }
@@ -15,7 +33,7 @@ namespace Spartacus.Web.Controllers
         [HttpPost]
         public ActionResult Login(UserLogin login)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 ULoginData data = new ULoginData
                 {
@@ -28,20 +46,27 @@ namespace Spartacus.Web.Controllers
 
             var userLogin = false; // RESULT FROM THE Business Logic
 
-            if(userLogin)
+            if (userLogin)
             {
                 return RedirectToAction("Index", "Home");
-            } 
+            }
             else
             {
                 ModelState.AddModelError("DeBil", "DeBil");
-                return View();
+                Session["Username"] = login.Username;
+                return RedirectToAction("Index", "Home");
             }
         }
 
         public ActionResult Join()
         {
             return View();
+        }
+
+        public ActionResult Logout()
+        {
+            Session["Username"] = null;
+            return RedirectToAction("Index", "Home");
         }
     }
 }

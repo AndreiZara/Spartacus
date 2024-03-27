@@ -1,17 +1,16 @@
-﻿using Spartacus.Domain.Entities.User;
-using System;
-using System.Collections.Generic;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;  
+using Spartacus.BusinessLogic.DBModel;
+using Spartacus.Domain.Entities.User;
+using Spartacus.Helpers;
 
 namespace Spartacus.BusinessLogic.Core
 {
-    internal class UserApi
+    public class UserApi
     {
-        internal bool UserLoginAction(ULoginData data)
-        {
-            return true;
-        }
+        
     }
 }
