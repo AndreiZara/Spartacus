@@ -13,3 +13,4 @@ bl/interace/iauth
 nivel de initializare
 entities/responses/generalresponse
 available trainers
+controleru comunica cu BL prin intermediul unui contract

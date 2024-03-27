@@ -1,12 +1,16 @@
-﻿using System.Web.Mvc;
+﻿using Spartacus.Web.Models;
+using System.Web.Mvc;
+using System.Web.UI.WebControls;
 
 namespace Spartacus.Web.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        
+        public ActionResult Index(UserLogin login)
         {
-            return View();
+            login.Username = "admin";
+            return View(login);
         }
         
         public ActionResult Contact()
