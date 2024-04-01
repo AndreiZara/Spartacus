@@ -1,56 +1,87 @@
-﻿@model Spartacus.Web.Models.UserLogin
+﻿@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model Spartacus.Web.Models.UserRegister
 
 <section class="slider bg-5">
-     <div class="container">
-          <div class="row">
-               <div class="col-md-8 mx-auto">
-                    <div class="p-5 bg-white rounded shadow-lg">
-                         <h2 class="mb-2 text-center">Sign Up</h2>
-                         <p class="text-center lead">Sign Up to open the door to new experiences</p>
-                         @using (Html.BeginForm("Login", "Account", FormMethod.Post))
-                         {
-                              <label class="font-500">Name</label>
-                              @Html.TextBoxFor(Model => Model.Username, new
-                              {
-                                  @class = "form-control form-control-lg mb-3",
-                                  type = "text"
-                              })
-                              <label class="font-500">Surname</label>
-                              @Html.TextBoxFor(Model => Model.Username, new
-                              {
-                                  @class = "form-control form-control-lg mb-3",
-                                  type = "text"
-                              })
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <div class="p-5 bg-white rounded shadow-lg">
+                    <h2 class="mb-2 text-center">Sign Up</h2>
+                    <p class="text-center lead">Sign Up to open the door to new experiences</p>
+                    @Html.ValidationMessage("RegMessage", new { @class = "text-danger fs-4" })
+                    @using (Html.BeginForm("Register", "Account", FormMethod.Post))
+                    {
+                        <div class="form-floating mt-3">
+                            @Html.TextBoxFor(m => m.Username, new
+                            {
+                                @class = "form-control",
+                                placeholder = "",
+                                type = "text",
+                            })
+                            @Html.LabelFor(m => m.Username)
+                            @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-floating mt-3">
+                            @Html.TextBoxFor(m => m.Firstname, new
+                            {
+                                @class = "form-control",
+                                placeholder = "",
+                                type = "text",
+                            })
+                            @Html.LabelFor(m => m.Firstname)
+                            @Html.ValidationMessageFor(m => m.Firstname, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-floating mt-3">
+                            @Html.TextBoxFor(m => m.Lastname, new
+                            {
+                                @class = "form-control",
+                                placeholder = "",
+                                type = "text",
+                            })
+                            @Html.LabelFor(m => m.Lastname)
+                            @Html.ValidationMessageFor(m => m.Lastname, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-floating mt-3">
+                            @Html.TextBoxFor(m => m.Email, new
+                            {
+                                @class = "form-control",
+                                placeholder = "",
+                                type = "email"
+                            })
+                            @Html.LabelFor(m => m.Email)
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-floating mt-3">
+                            @Html.TextBoxFor(m => m.Password, new
+                            {
+                                @class = "form-control",
+                                placeholder = "",
+                                type = "password",
+                            })
+                            @Html.LabelFor(m => m.Password)
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-floating mt-3">
+                            @Html.TextBoxFor(m => m.ConfirmPassword, new
+                            {
+                                @class = "form-control",
+                                placeholder = "",
+                                type = "password",
+                            })
+                            @Html.LabelFor(m => m.ConfirmPassword)
+                            @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                        </div>
 
-
-                              <label class="font-500">Email</label>
-                              @Html.TextBoxFor(Model => Model.Username, new
-                              {
-                                   @class = "form-control form-control-lg mb-3",
-                                   type = "email",
-                                   placeholder = "example@gmail.com",
-
-                              })
-                              <label class="font-500">Password</label>
-                              @Html.TextBoxFor(Model => Model.Password, new
-                              {
-                                  @class = "form-control form-control-lg",
-                                  type = "password"
-                              })
-                              <label class="font-500">Confirm password</label>
-                              @Html.TextBoxFor(Model => Model.Password, new
-                              {
-                                   @class = "form-control form-control-lg",
-                                   type = "password"
-                              })
-                              <p class="m-0 py-4"><a href="" class="text-muted">Forget password?</a></p>
-                              <button class="btn btn-success btn-lg w-100 shadow-lg">SIGN UP</button>
-                         }
-                         <div class="text-center pt-4">
-                              <p class="m-0">Do you have an account? <a href="@Url.Action("Login", "Account")" class="text-dark font-weight-bold">Sign In</a></p>
-                         </div>
+                        <button class="btn btn-success btn-lg w-100 shadow-lg mt-3">SIGN UP</button>
+                    }
+                    <div class="text-center pt-4">
+                        <p class="m-0">Do you have an account? <a href="@Url.Action("Login", "Account")" class="text-dark font-weight-bold">Sign In</a></p>
                     </div>
-               </div>
-          </div>
-     </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>

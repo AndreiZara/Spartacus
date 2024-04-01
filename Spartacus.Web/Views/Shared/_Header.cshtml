@@ -1,4 +1,4 @@
-﻿@model Spartacus.Web.Models.UserLogin
+﻿@*@model Spartacus.Domain.Entities.User.UDbTable*@
 <div class="container-fluid">
      <a class="navbar-brand" href=@Url.Action("Index", "Home")>
           <h2 class="text-white text-capitalize">Spartac<span class="text-color">us</span></h2>
@@ -21,11 +21,11 @@
                {
                     <li class="nav-item"><a class="nav-link" href=@Url.Action("Login", "Account")>Login</a></li>
                     <li class="vr text-white opacity-100 px-0"></li>
-                    <li class="nav-item pe-0"><a class="nav-link" href=@Url.Action("Membership", "Home")>Join</a></li>
+                    <li class="nav-item pe-0"><a class="nav-link" href=@Url.Action("Register", "Account")>Join</a></li>
                }
                else
                {
-                    <li class="nav-item"><a class="nav-link" href=@Url.Action("Login", "Account")>@Session["Username"]</a></li>
+                    <li class="nav-item"><a class="nav-link" href=@Url.Action("Details", "Account")>@Session["Username"]</a></li>
                     <li class="vr text-white opacity-100 px-0"></li>
                     <li class="nav-item"><a class="nav-link" href=@Url.Action("Logout", "Account")>Disconect</a></li>
                }

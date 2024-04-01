@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Spartacus.Domain.Enums
+﻿namespace Spartacus.Domain.Enums
 {
     public enum URole
     {
-        User,
+        Client,
         Moderator,
         Admin
     }

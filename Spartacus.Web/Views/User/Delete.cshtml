@@ -1,15 +1,15 @@
-﻿@model Spartacus.Domain.Entities.User.User
+﻿@model Spartacus.Domain.Entities.User.UDbTable
 
 @{
-     ViewBag.Title = "Detele";
-     Layout = "~/Views/Shared/_LayoutEmpty.cshtml";
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_LayoutEmpty.cshtml";
 }
 
-<h2>Detele</h2>
+<h2>Delete</h2>
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>User</h4>
+    <h4>UDbTable</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -36,6 +36,30 @@
             @Html.DisplayFor(model => model.Email)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.LastLogin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastLogin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastIp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastIp)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Level)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Level)
+        </dd>
+
     </dl>
 
     @using (Html.BeginForm()) {
@@ -43,7 +67,7 @@
 
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            @Html.ActionLink("Back to List", "Read")
         </div>
     }
 </div>

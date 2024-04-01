@@ -9,11 +9,11 @@ namespace Spartacus.Web
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute(
-                name: "Account",
-                url: "Account/{action}/{id}",
-                defaults: new { controller = "Account", action = "Login", id = UrlParameter.Optional }
-            );
+            //routes.MapRoute(
+            //    name: "Account",
+            //    url: "Account/{action}/{id}",
+            //    defaults: new { controller = "Account", action = "Login", id = UrlParameter.Optional }
+            //);
 
             routes.MapRoute(
                 name: "Default",
