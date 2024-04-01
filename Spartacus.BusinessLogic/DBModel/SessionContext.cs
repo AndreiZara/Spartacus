@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Spartacus.Domain.Entities.User;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Spartacus.Domain.Entities.User;
 
 namespace Spartacus.BusinessLogic.DBModel
 {

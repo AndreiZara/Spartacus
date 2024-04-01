@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Spartacus.Domain.Enums;
+﻿using Spartacus.Domain.Enums;
+using System;
 
 namespace Spartacus.Domain.Entities.User
 {

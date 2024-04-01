@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Spartacus.Domain.Enums;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Spartacus.Domain.Enums;
 
 namespace Spartacus.Domain.Entities.User
 {
@@ -20,7 +20,7 @@ namespace Spartacus.Domain.Entities.User
         [Display(Name = "Password")]
         [StringLength(50, MinimumLength = 8, ErrorMessage = "Password cannot be shorter than 8 characters.")]
         public string Password { get; set; }
-
+        
         [Required]
         [Display(Name = "Email Address")]
         [StringLength(30)]
@@ -29,8 +29,8 @@ namespace Spartacus.Domain.Entities.User
         [DataType(DataType.Date)]
         public DateTime LastLogin { get; set; }
 
-        [StringLength(30)]
-        public string LasIp { get; set; }
+        [StringLength(16)]
+        public string LastIp { get; set; }
 
         public URole Level { get; set; }
     }

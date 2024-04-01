@@ -1,93 +1,30 @@
-﻿using Spartacus.Domain.Entities.User;
-using Spartacus.BusinessLogic;
-using Spartacus.Web.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Spartacus.BusinessLogic.Core;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
-using Microsoft.Ajax.Utilities;
 
 namespace Spartacus.Web.Controllers
 {
+    //[Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
-        // GET: User
-        public ActionResult Create(UserLogin login)
+        public ActionResult Read()
         {
-
-            if (ModelState.IsValid)
-            {
-                ULoginData data = new ULoginData
-                {
-                    Name = login.Username,
-                    Password = login.Password,
-                    Ip = Request.UserHostAddress,
-                    LoginDateTime = DateTime.Now
-                };
-            }
-
-            var userLogin = false;  
-
-            if (userLogin)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            else
-            {
-                ModelState.AddModelError("DeBil", "DeBil");
-                Session["Username"] = login.Username;
-                return View(login);
-            }
-
+            var users = new AdminApi().GetUsersAction();
+            return View(users);
         }
 
-        /*    [HttpPost]
-        public ActionResult Login(UserLogin login)
+        public ActionResult Delete(int id)
         {
-            if (ModelState.IsValid)
-            {
-                ULoginData data = new ULoginData
-                {
-                    Name = login.Username,
-                    Password = login.Password,
-                    Ip = Request.UserHostAddress,
-                    LoginDateTime = DateTime.Now
-                };
-            }
-
-            var userLogin = false; // RESULT FROM THE Business Logic
-
-            if (userLogin)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            else
-            {
-                ModelState.AddModelError("DeBil", "DeBil");
-                Session["Username"] = login.Username;
-                return RedirectToAction("Index", "Home");
-            }
-        }*/
-
-        
-        public ActionResult MUSer(UserLogin login)
-        {
-            UserTable user = new UserTable();
-            user.UserList = new List<UserLogin>();
-            
+            var user = new AdminApi().GetUserByIdAction(id);
+            if (user == null) return HttpNotFound();
             return View(user);
         }
 
-
-        public ActionResult Delete()
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int id)
         {
-
-
-            return View();
+            var result = new AdminApi().DeleteUserByIdAction(id);
+            if (result == false) return HttpNotFound();
+            return RedirectToAction("Read");
         }
-
-      
     }
 }

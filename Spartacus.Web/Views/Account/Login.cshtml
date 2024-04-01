@@ -1,39 +1,51 @@
-﻿@model Spartacus.Web.Models.UserLogin
+﻿@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model Spartacus.Web.Models.UserLogin
 
 <section class="slider bg-5">
-     <div class="container">
-          <div class="row">
-               <div class="col-md-8 mx-auto">
-                    <div class="p-5 bg-white rounded shadow-lg">
-                         <h2 class="mb-2 text-center">Sign In</h2>
-                         @Html.ValidationMessage("DeBil", new { @class = "text-danger fs-1" })
-                         <p class="text-center lead">Sign In to manage all your devices</p>
-                         @using (Html.BeginForm("Login", "Account", FormMethod.Post))
-                         {
-                              <label class="font-500">Username</label>
-                              @Html.TextBoxFor(Model => Model.Username, new
-                              {
-                                  @class = "form-control form-control-lg mb-3",
-                                  type = "text"
-                              })
-                              <label class="font-500">Password</label>
-                              @Html.TextBoxFor(Model => Model.Password, new
-                              {
-                                  @class = "form-control form-control-lg",
-                                  type = "password"
-                              })
-                              <p class="m-0 py-4"><a href="" class="text-muted">Forget password?</a></p>
-                              <button class="btn btn-success btn-lg w-100 shadow-lg">SIGN IN</button>
-                         }
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <div class="p-5 bg-white rounded shadow-lg">
+                    <h2 class="mb-2 text-center">Sign In</h2>
+                    @Html.ValidationMessage("LoginMessage", new { @class = "text-danger fs-4" })
+                    @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+                    {
+                        <div class="form-floating mt-3">
+                            @Html.TextBoxFor(m => m.Username, new
+                            {
+                                @class = "form-control",
+                                placeholder = "",
+                                required = true,
+                                type = "text",
+                            })
+                            @Html.LabelFor(m => m.Username)
+                        </div>
+                        <div class="form-floating mt-3">
+                            @Html.TextBoxFor(m => m.Password, new
+                            {
+                                @class = "form-control",
+                                placeholder = "",
+                                required = true,
+                                type = "password"
+                            })
+                            @Html.LabelFor(m => m.Password)
+                        </div>
+
+                        <p class="m-0 py-4"><a href="" class="text-muted">Forgot password?</a></p>
+                        <button class="btn btn-success btn-lg w-100 shadow-lg">SIGN IN</button>
+                    }
                     <div class="text-center pt-4">
-                         <span class="text-dark font-weight-bold"></span>
-                         
-                         <p class="m-0">Do not have an account?<a href="@Url.Action("Register", "Account")" class="text-dark font-weight-bold">Sign Up</a></p>
+                        <span class="text-dark font-weight-bold"></span>
+
+                        <p class="m-0">Do not have an account? <a href="@Url.Action("Register", "Account")" class="text-dark font-weight-bold">Sign Up</a></p>
                     </div>
-                    </div>
-               </div>
-          </div>
-     </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
 
