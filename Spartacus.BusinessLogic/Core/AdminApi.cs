@@ -19,13 +19,25 @@ namespace Spartacus.BusinessLogic.Core
             }
         }
 
-        public List<UDbTable> ReadUser()
+        public List<UDbTable> GetUsersAction()
         {
+            var users = new List<UDbTable>();
             using (var debil = new UserContext())
             {
-                var userContext = debil.Users.ToList();
-                return userContext;
+                users = debil.Users.ToList();
             }
+
+            return users;
+        }
+
+        public UDbTable GetUserByIdAction(int id)
+        {
+            var user = new UDbTable();
+            using (var debil = new UserContext())
+            {
+                user = debil.Users.FirstOrDefault(u => u.Id == id);
+            }
+            return user;
         }
 
         public bool UpdateUser(UDbTable user, int Id)
