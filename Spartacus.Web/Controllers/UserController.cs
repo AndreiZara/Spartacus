@@ -8,86 +8,115 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
 using Microsoft.Ajax.Utilities;
+using Spartacus.BusinessLogic.Core;
 
 namespace Spartacus.Web.Controllers
 {
     public class UserController : Controller
     {
-        // GET: User
-        public ActionResult Create(UserLogin login)
+
+        public ActionResult UCreate()
         {
-
-            if (ModelState.IsValid)
-            {
-                ULoginData data = new ULoginData
-                {
-                    Name = login.Username,
-                    Password = login.Password,
-                    Ip = Request.UserHostAddress,
-                    LoginDateTime = DateTime.Now
-                };
-            }
-
-            var userLogin = false;  
-
-            if (userLogin)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            else
-            {
-                ModelState.AddModelError("DeBil", "DeBil");
-                Session["Username"] = login.Username;
-                return View(login);
-            }
-
+            return View();
         }
 
-        /*    [HttpPost]
-        public ActionResult Login(UserLogin login)
+
+        // GET: User
+        [HttpPost]
+        public ActionResult UCreate(UDbTable login)
         {
+
             if (ModelState.IsValid)
             {
-                ULoginData data = new ULoginData
+                UDbTable data = new UDbTable
                 {
-                    Name = login.Username,
+                    Username = login.Username,
+                    Id= login.Id,
                     Password = login.Password,
-                    Ip = Request.UserHostAddress,
-                    LoginDateTime = DateTime.Now
+                    Email = login.Email,
+                    LastLogin = DateTime.Now,
+                    LasIp = login.LasIp,
+                    Level = login.Level,
                 };
-            }
 
-            var userLogin = false; // RESULT FROM THE Business Logic
 
-            if (userLogin)
-            {
-                return RedirectToAction("Index", "Home");
+                Session["Id"] = data.Id;
+                Session["Username"] = data.Username;
+                Session["Password"] = data.Password;
+                Session["Email"] = data.Email;
+                Session["LastLogin"] = data.LastLogin;
+                Session["LastIp"] = data.LasIp;
+                
+                AdminApi api = new AdminApi();
+                api.AddUser(data);
+                
+                
             }
-            else
-            {
-                ModelState.AddModelError("DeBil", "DeBil");
-                Session["Username"] = login.Username;
-                return RedirectToAction("Index", "Home");
-            }
-        }*/
+            return View(login);
+
+        }
 
         
-        public ActionResult MUSer(UserLogin login)
-        {
-            UserTable user = new UserTable();
-            user.UserList = new List<UserLogin>();
-            
-            return View(user);
-        }
-
-
-        public ActionResult Delete()
+        public ActionResult Update(UDbTable login)
         {
 
+
+            if (ModelState.IsValid)
+            {
+                UDbTable data = new UDbTable
+                {
+                    Username = login.Username,
+                    Id = login.Id,
+                    Password = login.Password,
+                    Email = login.Email,
+                    LastLogin = DateTime.Now,
+                    LasIp = login.LasIp,
+                    Level = login.Level,
+                };
+                
+                bool isTrue = new AdminApi().UpdateUser(data,login.Id);
+
+                if (isTrue)
+                {
+                    return RedirectToAction("Read");
+                }
+
+                else { return View(); }
+            }
+            Session["Id"] = login.Id;
 
             return View();
         }
 
-      
+
+        [HttpGet]
+        public ActionResult URead() 
+        {
+            List<UDbTable> Ulist = new List<UDbTable>();
+            UDbTable newTable = new UDbTable();
+            AdminApi api = new AdminApi();
+            Ulist = api.ReadUser();
+            newTable = Ulist[3];
+
+            return View(newTable);
+        }
+
+
+
+        
+        [HttpGet]
+        public ActionResult Read()
+        {
+            List<UDbTable> Ulist = new List<UDbTable>();
+            UDbTable newTable = new UDbTable();
+            AdminApi api = new AdminApi();
+            Ulist = api.ReadUser();
+            return View(Ulist);
+        }
+
+
+
+    
+
     }
 }
