@@ -15,6 +15,15 @@
           <th>
                @Html.DisplayNameFor(model => model.Username)
           </th>
+
+          <th>
+               @Html.DisplayNameFor(model => model.Firstname)
+          </th>
+
+          <th>
+               @Html.DisplayNameFor(model => model.Lastname)
+          </th>
+
           <th>
                @Html.DisplayNameFor(model => model.Password)
           </th>
@@ -25,7 +34,7 @@
                @Html.DisplayNameFor(model => model.LastLogin)
           </th>
           <th>
-               @Html.DisplayNameFor(model => model.LasIp)
+               @Html.DisplayNameFor(model => model.LastIp)
           </th>
           <th></th>
      </tr>
@@ -46,7 +55,7 @@
                     @Html.DisplayFor(modelItem => item.LastLogin)
                </td>
                <td>
-                    @Html.DisplayFor(modelItem => item.LasIp)
+                    @Html.DisplayFor(modelItem => item.LastIp)
                </td>
                <td>
                     @Html.ActionLink("Edit", "Update", new { id = item.Id })

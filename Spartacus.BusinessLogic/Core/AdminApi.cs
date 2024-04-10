@@ -19,25 +19,13 @@ namespace Spartacus.BusinessLogic.Core
             }
         }
 
-        public List<UDbTable> GetUsersAction()
+        public List<UDbTable> ReadUser()
         {
-            var users = new List<UDbTable>();
             using (var debil = new UserContext())
             {
-                users = debil.Users.ToList();
+                var userContext = debil.Users.ToList();
+                return userContext;
             }
-
-            return users;
-        }
-
-        public UDbTable GetUserByIdAction(int id)
-        {
-            var user = new UDbTable();
-            using (var debil = new UserContext())
-            {
-                user = debil.Users.FirstOrDefault(u => u.Id == id);
-            }
-            return user;
         }
 
         public bool UpdateUser(UDbTable user, int Id)
@@ -50,9 +38,11 @@ namespace Spartacus.BusinessLogic.Core
                 {
                     data.Username = user.Username;
                     data.Password = user.Password;
+                    data.Firstname = user.Firstname;
+                    data.Lastname = user.Lastname;  
                     data.Email = user.Email;
                     data.LastLogin = user.LastLogin;
-                    data.LasIp = user.LasIp;
+                    data.LastIp = user.LastIp;
                     data.Id = user.Id;
                     data.Level = user.Level;
                     debil.SaveChanges();

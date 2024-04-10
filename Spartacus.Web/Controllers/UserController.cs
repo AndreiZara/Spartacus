@@ -33,9 +33,11 @@ namespace Spartacus.Web.Controllers
                     Username = login.Username,
                     Id= login.Id,
                     Password = login.Password,
+                    Firstname = login.Firstname,
+                    Lastname = login.Lastname,
                     Email = login.Email,
                     LastLogin = DateTime.Now,
-                    LasIp = login.LasIp,
+                    LastIp = login.LastIp,
                     Level = login.Level,
                 };
 
@@ -45,7 +47,7 @@ namespace Spartacus.Web.Controllers
                 Session["Password"] = data.Password;
                 Session["Email"] = data.Email;
                 Session["LastLogin"] = data.LastLogin;
-                Session["LastIp"] = data.LasIp;
+                Session["LastIp"] = data.LastIp;
                 
                 AdminApi api = new AdminApi();
                 api.AddUser(data);
@@ -66,11 +68,13 @@ namespace Spartacus.Web.Controllers
                 UDbTable data = new UDbTable
                 {
                     Username = login.Username,
+                    Firstname = login.Firstname,
+                    Lastname = login.Lastname,
                     Id = login.Id,
                     Password = login.Password,
                     Email = login.Email,
                     LastLogin = DateTime.Now,
-                    LasIp = login.LasIp,
+                    LastIp = login.LastIp,
                     Level = login.Level,
                 };
                 
@@ -100,9 +104,6 @@ namespace Spartacus.Web.Controllers
 
             return View(newTable);
         }
-
-
-
         
         [HttpGet]
         public ActionResult Read()
