@@ -1,4 +1,5 @@
 ﻿using Spartacus.BusinessLogic;
+using Spartacus.BusinessLogic.Core;
 using Spartacus.BusinessLogic.Interfaces;
 using Spartacus.Domain.Entities.User;
 using Spartacus.Web.Models;
@@ -46,16 +47,33 @@ namespace Spartacus.Web.Controllers
 
             var userLogin = false; // RESULT FROM THE Business Logic
 
-            if (userLogin)
+            var user = new AdminApi().GetUserByUsername(login.Username);
+
+            if(user != null) 
             {
-                return RedirectToAction("Index", "Home");
+                if(user.Username == login.Username&&user.Password == login.Password) {
+                    Session["Username"] = login.Username;
+                    return RedirectToAction("Index", "Home");
+                }
+
+                else
+                {
+                    ModelState.AddModelError("Incercati din nou", "DeBil");
+                    return RedirectToAction("Login", "Account");
+                }
             }
-            else
-            {
-                ModelState.AddModelError("DeBil", "DeBil");
-                Session["Username"] = login.Username;
-                return RedirectToAction("Index", "Home");
-            }
+
+            return View();
+            //if (userLogin)
+            //{
+                
+            //}
+            //else
+            //{
+            //    ModelState.AddModelError("DeBil", "DeBil");
+            //    Session["Username"] = login.Username;
+            //    return RedirectToAction("Index", "Home");
+            //}
         }
 
         public ActionResult Join()

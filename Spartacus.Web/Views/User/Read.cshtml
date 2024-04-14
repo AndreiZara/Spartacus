@@ -13,6 +13,10 @@
 <table class="table">
      <tr>
           <th>
+               @Html.DisplayNameFor(model => model.Id)
+          </th>
+
+          <th>
                @Html.DisplayNameFor(model => model.Username)
           </th>
 
@@ -43,14 +47,29 @@
      {
           <tr>
                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+               </td>
+
+               <td>
                     @Html.DisplayFor(modelItem => item.Username)
                </td>
+
                <td>
-                    @Html.DisplayFor(modelItem => item.Password)
+                    @Html.DisplayFor(modelItem => item.Firstname)
                </td>
+
+               <td>
+                    @Html.DisplayFor(modelItem => item.Lastname)
+               </td>
+
                <td>
                     @Html.DisplayFor(modelItem => item.Email)
                </td>
+
+               <td>
+                    @Html.DisplayFor(modelItem => item.Password)
+               </td>
+
                <td>
                     @Html.DisplayFor(modelItem => item.LastLogin)
                </td>

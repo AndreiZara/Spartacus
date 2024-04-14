@@ -28,6 +28,15 @@ namespace Spartacus.BusinessLogic.Core
             }
         }
 
+        public UDbTable GetUserByUsername(string Username)
+        {
+            using (var debil = new UserContext())
+            {
+                var user = debil.Users.SingleOrDefault(u => u.Username == Username);
+                return user;
+            }
+        }
+
         public bool UpdateUser(UDbTable user, int Id)
         {
             using (var debil = new UserContext())

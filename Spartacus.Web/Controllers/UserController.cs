@@ -37,7 +37,7 @@ namespace Spartacus.Web.Controllers
                     Lastname = login.Lastname,
                     Email = login.Email,
                     LastLogin = DateTime.Now,
-                    LastIp = login.LastIp,
+                    LastIp = "12345678",
                     Level = login.Level,
                 };
 
@@ -117,7 +117,7 @@ namespace Spartacus.Web.Controllers
 
 
 
-    
+        
 
     }
 }
