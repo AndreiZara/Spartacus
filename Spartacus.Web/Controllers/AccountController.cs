@@ -53,7 +53,7 @@ namespace Spartacus.Web.Controllers
             {
                 if(user.Username == login.Username&&user.Password == login.Password) {
                     Session["Username"] = login.Username;
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Profile", "UserProfile", new {Username = login.Username});
                 }
 
                 else
@@ -63,17 +63,8 @@ namespace Spartacus.Web.Controllers
                 }
             }
 
-            return View();
-            //if (userLogin)
-            //{
-                
-            //}
-            //else
-            //{
-            //    ModelState.AddModelError("DeBil", "DeBil");
-            //    Session["Username"] = login.Username;
-            //    return RedirectToAction("Index", "Home");
-            //}
+            return View(login);
+         
         }
 
         public ActionResult Join()

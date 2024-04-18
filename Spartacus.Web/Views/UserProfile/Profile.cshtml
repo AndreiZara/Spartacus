@@ -1,10 +1,11 @@
 ﻿
 @{
-     ViewBag.Title = "Profile";
      Layout = "~/Views/Shared/_LayoutNav.cshtml";
 }
 
-@model IEnumerable<Spartacus.Domain.Entities.User.UDbTable>
+
+
+
 <section style="background-color: #eee;">
      <div class="container py-5">
 
@@ -13,7 +14,7 @@
                <div class="col-lg-4">
                     <div class="card mb-4">
                          <div class="card-body text-center">
-                            <img src="~/Content/images/team/a.gif"/>
+                              <img src="~/Content/images/team/a.gif" width="380px"/>
                          </div>
                     </div>
                     <div class="card mb-4 mb-lg-0">
@@ -43,10 +44,9 @@
                          </div>
                     </div>
                </div>
-               
+
                <div class="col-lg-8">
-                    @foreach (var item in Model)
-                    {
+                    
                          <div class="card mb-4">
                               <div class="card-body">
                                    <div class="row">
@@ -54,16 +54,18 @@
                                              <p class="mb-0">Username</p>
                                         </div>
                                         <div class="col-sm-9">
-                                             <p class="text-muted mb-0">@Html.DisplayFor(modelitem => item.Username)</p>
+                                             @*<p class="text-muted mb-0">@Html.DisplayFor(modelitem => item.Username)</p>*@
+                                             <p class="text-muted mb-0">@Session["Username"]</p>
                                         </div>
                                    </div>
-
+                                   <hr>
                                    <div class="row">
                                         <div class="col-sm-3">
                                              <p class="mb-0">Firstname</p>
                                         </div>
                                         <div class="col-sm-9">
-                                             <p class="text-muted mb-0">@Html.DisplayFor(modelitem => item.Firstname)</p>
+                                             @*<p class="text-muted mb-0">@Html.DisplayFor(modelitem => item.Firstname)</p>*@
+                                             <p class="text-muted mb-0">@Session["Firstname"]</p>
                                         </div>
                                    </div>
                                    <hr>
@@ -72,7 +74,8 @@
                                              <p class="mb-0">Lastname</p>
                                         </div>
                                         <div class="col-sm-9">
-                                             <p class="text-muted mb-0">@Html.DisplayFor(modelitem => item.Lastname)</p>
+                                             @*<p class="text-muted mb-0">@Html.DisplayFor(modelitem => item.Lastname)</p>*@
+                                             <p class="text-muted mb-0">@Session["Lastname"]</p>
                                         </div>
                                    </div>
                                    <hr>
@@ -81,30 +84,31 @@
                                              <p class="mb-0">Email</p>
                                         </div>
                                         <div class="col-sm-9">
-                                             <p class="text-muted mb-0">@Html.DisplayFor(modelitem => item.Email)</p>
+                                             @*<p class="text-muted mb-0">@Html.DisplayFor(modelitem => item.Email)</p>*@
+                                             <p class="text-muted mb-0">@Session["Email"]</p>
                                         </div>
                                    </div>
                                    <hr>
                                    @*<div class="row">
-                                        <div class="col-sm-3">
-                                             <p class="mb-0">Mobile</p>
-                                        </div>
-                                        <div class="col-sm-9">
-                                             <p class="text-muted mb-0">(098) 765-4321</p>
-                                        </div>
-                                   </div>
-                                   <hr>
-                                   <div class="row">
-                                        <div class="col-sm-3">
-                                             <p class="mb-0">Address</p>
-                                        </div>
-                                        <div class="col-sm-9">
-                                             <p class="text-muted mb-0">Bay Area, San Francisco, CA</p>
-                                        </div>
-                                   </div>*@
+               <div class="col-sm-3">
+                    <p class="mb-0">Mobile</p>
+               </div>
+               <div class="col-sm-9">
+                    <p class="text-muted mb-0">(098) 765-4321</p>
+               </div>
+          </div>
+          <hr>
+          <div class="row">
+               <div class="col-sm-3">
+                    <p class="mb-0">Address</p>
+               </div>
+               <div class="col-sm-9">
+                    <p class="text-muted mb-0">Bay Area, San Francisco, CA</p>
+               </div>
+          </div>*@
                               </div>
                          </div>
-                    }
+                    
                     <div class="row">
                          <div class="col-md-6">
                               <div class="card mb-4 mb-md-0">
