@@ -12,6 +12,7 @@ namespace Spartacus.Web.Models
             Email = register.Email;
             Password = register.Password;
         }
+        public UserRegister() { }
 
         [Required]
         [StringLength(30, MinimumLength = 5, ErrorMessage = "Must be between 5 and 30 characters.")]
