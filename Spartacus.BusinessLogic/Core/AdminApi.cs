@@ -1,5 +1,6 @@
 ﻿using Spartacus.BusinessLogic.DBModel;
 using Spartacus.Domain.Entities.User;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,6 +8,15 @@ namespace Spartacus.BusinessLogic.Core
 {
     public class AdminApi
     {
+        public void AddUser(UDbTable user)
+        {
+            using (var debil = new UserContext())
+            {
+                debil.Users.Add(user);
+                debil.SaveChanges();
+            }
+        }
+
         public List<UDbTable> GetUsersAction()
         {
             var users = new List<UDbTable>();
@@ -28,18 +38,42 @@ namespace Spartacus.BusinessLogic.Core
             return user;
         }
 
-        public bool DeleteUserByIdAction(int id)
+        public bool UpdateUser(UDbTable user, int Id)
         {
-
             using (var debil = new UserContext())
             {
-                var user = debil.Users.Find(id);
-                if (user == null) return false;
+                var data = debil.Users.FirstOrDefault(x => x.Id == user.Id);
 
-                debil.Users.Remove(user);
-                debil.SaveChanges();
+                if (data != null)
+                {
+                    data.Username = user.Username;
+                    data.Password = user.Password;
+                    data.Email = user.Email;
+                    data.LastLogin = user.LastLogin;
+                    data.LasIp = user.LasIp;
+                    data.Id = user.Id;
+                    data.Level = user.Level;
+                    debil.SaveChanges();
+
+                    return true;
+                }
+
             }
-            return true;
+
+            return false;
         }
+
     }
 }
+
+/*
+ 
+ fnjsdfks dsjfksdf dkfksdf kdsf dsfksd fsd fksd f
+
+ 
+ 
+ 
+ 
+ 
+ 
+ */

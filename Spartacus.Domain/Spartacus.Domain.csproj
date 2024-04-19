@@ -42,6 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Membership\CatDbTable.cs" />
+    <Compile Include="Entities\Membership\MsDbTable.cs" />
     <Compile Include="Entities\User\URegData.cs" />
     <Compile Include="Enums\URole.cs" />
     <Compile Include="Entities\User\Session.cs" />

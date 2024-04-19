@@ -298,6 +298,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Models\Membership.cs" />
     <Compile Include="Models\UserRegister.cs" />
     <Compile Include="Models\UserTable.cs" />
     <Compile Include="Global.asax.cs">
