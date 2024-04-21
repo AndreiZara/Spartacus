@@ -1,21 +1,22 @@
-﻿using Spartacus.Domain.Entities.User;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.UI.WebControls.WebParts;
+﻿using Spartacus.Domain.Entities.Membership;
 using Spartacus.Domain.Entities.User;
+using System.Data.Entity;
 
 namespace Spartacus.BusinessLogic.DBModel
 {
     class UserContext : DbContext
     {
-        public UserContext() : 
-            base("name=Spartacus") // connectionstring name define in your web.config
+        public UserContext() : base("name=Spartacus") { }
+        public virtual DbSet<UTable> Users{ get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<UTable>()
+                        .HasOptional(u => u.Membership)
+                        .WithOptionalPrincipal()
+                        .WillCascadeOnDelete(true);
 
+            base.OnModelCreating(modelBuilder);
         }
-
-        public virtual DbSet<UDbTable> Users{ get; set; }
     }
 }

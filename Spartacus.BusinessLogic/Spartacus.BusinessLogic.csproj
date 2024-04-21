@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.10.1.1\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -55,9 +58,12 @@
     <Compile Include="BussinesLogic.cs" />
     <Compile Include="Core\AdminApi.cs" />
     <Compile Include="Core\UserApi.cs" />
+    <Compile Include="DBModel\MembershipContext.cs" />
     <Compile Include="DBModel\SessionContext.cs" />
     <Compile Include="DBModel\UserContext.cs" />
+    <Compile Include="Interfaces\IAdmin.cs" />
     <Compile Include="Interfaces\ISession.cs" />
+    <Compile Include="Logics\AdminBL.cs" />
     <Compile Include="Migrations\202403271204355_InitialCreate.cs" />
     <Compile Include="Migrations\202403271204355_InitialCreate.Designer.cs">
       <DependentUpon>202403271204355_InitialCreate.cs</DependentUpon>
@@ -66,9 +72,17 @@
     <Compile Include="Migrations\202403311621301_ChangeLastIpLength.Designer.cs">
       <DependentUpon>202403311621301_ChangeLastIpLength.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202404200950539_AddFirstLastName.cs" />
+    <Compile Include="Migrations\202404200950539_AddFirstLastName.Designer.cs">
+      <DependentUpon>202404200950539_AddFirstLastName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202404211802051_AddAssociation.cs" />
+    <Compile Include="Migrations\202404211802051_AddAssociation.Designer.cs">
+      <DependentUpon>202404211802051_AddAssociation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SessionBL.cs" />
+    <Compile Include="Logics\SessionBL.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Spartacus.Domain\Spartacus.Domain.csproj">
@@ -93,6 +107,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202403311621301_ChangeLastIpLength.resx">
       <DependentUpon>202403311621301_ChangeLastIpLength.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202404200950539_AddFirstLastName.resx">
+      <DependentUpon>202404200950539_AddFirstLastName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202404211802051_AddAssociation.resx">
+      <DependentUpon>202404211802051_AddAssociation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

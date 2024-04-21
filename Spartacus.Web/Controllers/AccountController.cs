@@ -1,11 +1,14 @@
-﻿using Microsoft.Win32;
+﻿using AutoMapper;
+using Microsoft.Win32;
 using Spartacus.BusinessLogic;
 using Spartacus.BusinessLogic.Core;
 using Spartacus.BusinessLogic.Interfaces;
+using Spartacus.Domain.Entities.Membership;
 using Spartacus.Domain.Entities.User;
 using Spartacus.Web.Models;
 using System;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 
@@ -18,8 +21,7 @@ namespace Spartacus.Web.Controllers
 
         public AccountController()
         {
-            var bl = new BussinesLogic();
-            _session = bl.GetSessionBL();
+            _session = new BussinesLogic().GetSessionBL();
         }
 
         public ActionResult Login()
@@ -44,13 +46,13 @@ namespace Spartacus.Web.Controllers
 
                 if (userLogin)
                 {
-                    Session["Username"] = login.Username;
+                    HttpCookie cookie = _session.GetCookie(login.Username);
+                    ControllerContext.HttpContext.Response.Cookies.Add(cookie);
+
                     return RedirectToAction("Index", "Home");
                 }
                 else
-                {
                     ModelState.AddModelError("LoginMessage", "You have entered an invalid username or password");
-                }
             }
             return View();
         }
@@ -103,9 +105,10 @@ namespace Spartacus.Web.Controllers
 
         public ActionResult Details()
         {
-            var users = new AdminApi().GetUsersAction();
-            var user = users.FirstOrDefault(x => x.Username == Session["Username"] as string);
-            if (user == null) return HttpNotFound();
+            var cookie = ControllerContext.HttpContext.Request.Cookies["UserCookie"].Value;
+            var data = _session.GetUserByCookie(cookie);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<UProfData, UserProfile>());
+            var user = config.CreateMapper().Map<UserProfile>(data);
             return View(user);
         }
     }

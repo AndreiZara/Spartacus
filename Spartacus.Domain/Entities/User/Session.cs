@@ -8,7 +8,7 @@ namespace Spartacus.Domain.Entities.User
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int SessionId { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [StringLength(30)]

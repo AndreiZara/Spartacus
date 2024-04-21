@@ -1,4 +1,5 @@
 ﻿using Spartacus.Domain.Entities.User;
+using System.Web;
 
 namespace Spartacus.BusinessLogic.Interfaces
 {
@@ -6,9 +7,8 @@ namespace Spartacus.BusinessLogic.Interfaces
     {
         bool UserLogin(ULoginData data);
         bool UserReg(URegData data);
-
-        //ULoginResp UserLogin(ULoginData data);
-        //HttpCookie GenCookie(string loginCredential);
+        HttpCookie GetCookie(string data);
+        UProfData GetUserByCookie(string cookie);
         //UserMinimal GetUserByCookie(string apiCookieValue);
     }
 }

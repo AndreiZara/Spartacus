@@ -1,113 +1,83 @@
-﻿using Spartacus.BusinessLogic.Core;
-using System.Web.Mvc;
-using System.Web.UI.WebControls;
-using Microsoft.Ajax.Utilities;
+﻿using System.Web.Mvc;
+using System;
+using Spartacus.BusinessLogic.DBModel;
+using Spartacus.BusinessLogic.Interfaces;
+using Spartacus.Domain.Entities.User;
+using System.Linq;
+using Spartacus.BusinessLogic;
 
 namespace Spartacus.Web.Controllers
 {
     //[Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
+        private readonly IAdmin _admin;
 
-        public ActionResult UCreate()
+        public UserController()
+        {
+            _admin = new BussinesLogic().GetAdminBL();
+        }
+        public ActionResult Create()
         {
             return View();
         }
 
-
-        // GET: User
         [HttpPost]
-        public ActionResult UCreate(UDbTable login)
-        public ActionResult Read()
+        public ActionResult Create(UTable data)
         {
-
             if (ModelState.IsValid)
             {
-                UDbTable data = new UDbTable
-                {
-                    Username = login.Username,
-                    Id= login.Id,
-                    Password = login.Password,
-                    Email = login.Email,
-                    LastLogin = DateTime.Now,
-                    LasIp = login.LasIp,
-                    Level = login.Level,
-                };
-            var users = new AdminApi().GetUsersAction();
+                data.LastLogin = DateTime.Now;
+                data.LastIp = Request.UserHostAddress;
+                _admin.AddUser(data);
+            }
+            return View(data);
+        }
+        public ActionResult Read()
+        {
+            var users = _admin.GetUsers();
             return View(users);
+        }
+        
+        public ActionResult Update(int id)
+        {
+            var user = _admin.GetUserById(id);
+            using (var db = new MembershipContext())
+            {
+                user.Membership = db.Memberships.FirstOrDefault(m => m.Id == user.MembershipId);
+            }
+            return View(user);
+        }
+
+        [HttpPost]
+        public ActionResult Update(UTable data)
+        {
+            if (ModelState.IsValid)
+            {
+                data.LastLogin = DateTime.Now;
+                data.LastIp = Request.UserHostAddress;
+
+                var userUpdated = _admin.UpdateUser(data);
+
+                if(userUpdated)
+                    return RedirectToAction("Read");
+                else
+                    ModelState.AddModelError("UpdateMessage", "Update failed!");
+            }
+            return View(data);
         }
 
         public ActionResult Delete(int id)
         {
-            var user = new AdminApi().GetUserByIdAction(id);
+            var user = _admin.GetUserById(id);
             if (user == null) return HttpNotFound();
             return View(user);
-
-                Session["Id"] = data.Id;
-                Session["Username"] = data.Username;
-                Session["Password"] = data.Password;
-                Session["Email"] = data.Email;
-                Session["LastLogin"] = data.LastLogin;
-                Session["LastIp"] = data.LasIp;
-                
-                AdminApi api = new AdminApi();
-                api.AddUser(data);
-                
-                
-            }
-            return View(login);
-
-        }
-
-        
-        public ActionResult Update(UDbTable login)
-        {
-
-
-            if (ModelState.IsValid)
-            {
-                UDbTable data = new UDbTable
-                {
-                    Username = login.Username,
-                    Id = login.Id,
-                    Password = login.Password,
-                    Email = login.Email,
-                    LastLogin = DateTime.Now,
-                    LasIp = login.LasIp,
-                    Level = login.Level,
-                };
-                
-                bool isTrue = new AdminApi().UpdateUser(data,login.Id);
-
-                if (isTrue)
-                {
-                    return RedirectToAction("Read");
-                }
-
-                else { return View(); }
-            }
-            Session["Id"] = login.Id;
-
-            return View();
-        }
-
-
-        [HttpGet]
-        public ActionResult URead() 
-        {
-            List<UDbTable> Ulist = new List<UDbTable>();
-            UDbTable newTable = new UDbTable();
-            AdminApi api = new AdminApi();
-            Ulist = api.ReadUser();
-            newTable = Ulist[3];
-
-            return View(newTable);
         }
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            var result = new AdminApi().DeleteUserByIdAction(id);
+            var result = _admin.DeleteUserById(id);
             if (result == false) return HttpNotFound();
             return RedirectToAction("Read");
         }

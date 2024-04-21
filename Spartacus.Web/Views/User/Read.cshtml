@@ -1,11 +1,11 @@
-﻿@model IEnumerable<Spartacus.Domain.Entities.User.UDbTable>
+﻿@model IEnumerable<Spartacus.Domain.Entities.User.UTable>
 
 @{
     ViewBag.Title = "Read";
     Layout = "~/Views/Shared/_LayoutEmpty.cshtml";
 }
 
-<h2>View</h2>
+<h2>Read</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -16,16 +16,27 @@
             @Html.DisplayNameFor(model => model.Username)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Password)
+            @Html.DisplayNameFor(model => model.Firstname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Lastname)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Password)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.LastLogin)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.LastIp)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Membership.StartTime) 
+            /
+            @Html.DisplayNameFor(model => model.Membership.EndTime)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Level)
@@ -39,10 +50,16 @@
             @Html.DisplayFor(modelItem => item.Username)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Password)
+            @Html.DisplayFor(modelItem => item.Firstname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Lastname)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Password)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.LastLogin)
@@ -51,12 +68,16 @@
             @Html.DisplayFor(modelItem => item.LastIp)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.Membership.StartTime) <br />
+            @Html.DisplayFor(modelItem => item.Membership.EndTime)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Level)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Edit", "Update", new { id = item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
         </td>
     </tr>
 }
