@@ -1,5 +1,4 @@
-﻿@*@model Spartacus.Domain.Entities.User.UDbTable*@
-<div class="container-fluid">
+﻿<div class="container-fluid">
      <a class="navbar-brand" href=@Url.Action("Index", "Home")>
           <h2 class="text-white text-capitalize">Spartac<span class="text-color">us</span></h2>
      </a>
@@ -17,7 +16,7 @@
           <ul class="navbar-nav">
 
 
-               @if (Session["Username"] == null)
+               @if (Session["LoginStatus"] as string == "logout")
                {
                     <li class="nav-item"><a class="nav-link" href=@Url.Action("Login", "Account")>Login</a></li>
                     <li class="vr text-white opacity-100 px-0"></li>

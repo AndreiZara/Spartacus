@@ -33,7 +33,7 @@ namespace Spartacus.Web.Models
         [Display(Name = "Email Address")]
         [StringLength(30)]
         public string Email { get; set; }
-        
+
         [Required]
         [DataType(DataType.Password)]
         [StringLength(50, MinimumLength = 8, ErrorMessage = "Must be between 8 and 50 characters.")]

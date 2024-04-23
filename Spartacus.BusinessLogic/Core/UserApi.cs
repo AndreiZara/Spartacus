@@ -2,9 +2,9 @@
 using Spartacus.BusinessLogic.DBModel;
 using Spartacus.Domain.Entities.Membership;
 using Spartacus.Domain.Entities.User;
+using Spartacus.Helpers;
 using System;
 using System.Linq;
-using System.Net.Http.Headers;
 using System.Web;
 
 namespace Spartacus.BusinessLogic.Core
@@ -44,38 +44,25 @@ namespace Spartacus.BusinessLogic.Core
 
             return true;
         }
-        //internal UProfData UserProfileAction(int id)
-        //{
-        //    UProfData userProfile;
-        //    using(var debil = new UserContext())
-        //    {
-        //        var user = debil.Users.FirstOrDefault(u => u.Id == id);
-        //        var config = new MapperConfiguration(cfg => cfg.CreateMap<UTable, UProfData>());
-        //        userProfile = config.CreateMapper().Map<UProfData>(user);
-        //    }
-        //    using(var debil = new MembershipContext())
-        //    {
-        //        var membership = debil.Memberships.FirstOrDefault(u => u.Id == userProfile.MembershipId);
-        //        var config = new MapperConfiguration(cfg => cfg.CreateMap<MsTable, UProfData>());
-        //        userProfile = config.CreateMapper().Map<UProfData>(membership);
-        //    }
-
-        //    return userProfile;
-        //}
 
         internal HttpCookie GetCookieAction(string data)
         {
-            var cookie = new HttpCookie("UserCookie", data);
+            // better to store a string rather than int Id
+            var cookie = new HttpCookie("UserCookie")
+            {
+                Value = CookieGenerator.Create(data)
+            };
 
             using (var debil = new SessionContext())
             {
                 Session current;
                 current = debil.Sessions.FirstOrDefault(s => s.Username == data);
+                int sessionLength = 2;
 
                 if (current != null)
                 {
                     current.CookieString = cookie.Value;
-                    current.ExpireTime = DateTime.Now.AddMinutes(60);
+                    current.ExpireTime = DateTime.Now.AddMinutes(sessionLength);
                 }
                 else
                 {
@@ -83,7 +70,7 @@ namespace Spartacus.BusinessLogic.Core
                     {
                         Username = data,
                         CookieString = cookie.Value,
-                        ExpireTime = DateTime.Now.AddMinutes(60)
+                        ExpireTime = DateTime.Now.AddMinutes(sessionLength)
                     });
                 }
                 debil.SaveChanges();
@@ -91,7 +78,7 @@ namespace Spartacus.BusinessLogic.Core
 
             return cookie;
         }
-        internal UProfData GetUserByCookieAction(string cookie)
+        internal UserMinimal GetUserByCookieAction(string cookie)
         {
             Session current;
             using (var debil = new SessionContext())
@@ -106,21 +93,10 @@ namespace Spartacus.BusinessLogic.Core
                 user = debil.Users.FirstOrDefault(u => u.Username == current.Username);
             }
             if (user == null) return null;
-            
-            MsTable membership;
-            using (var debil = new MembershipContext())
-            {
-                //membership = debil.Memberships.FirstOrDefault(u => u.Id == user.MembershipId);
-                membership = null;
-            }
-            if (membership == null) return null;
-            
-            UProfData userProfile;
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<UTable, UProfData>());
-            userProfile = config.CreateMapper().Map<UProfData>(user);
-            
-            config = new MapperConfiguration(cfg => cfg.CreateMap<MsTable, UProfData>());
-            userProfile = config.CreateMapper().Map<UProfData>(membership);
+
+            UserMinimal userProfile;
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<UTable, UserMinimal>());
+            userProfile = config.CreateMapper().Map<UserMinimal>(user);
 
             return userProfile;
         }

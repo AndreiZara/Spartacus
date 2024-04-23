@@ -13,6 +13,6 @@ namespace Spartacus.BusinessLogic
 
         public HttpCookie GetCookie(string data) => GetCookieAction(data);
 
-        public UProfData GetUserByCookie(string cookie) => GetUserByCookieAction(cookie);
+        public UserMinimal GetUserByCookie(string cookie) => GetUserByCookieAction(cookie);
     }
 }

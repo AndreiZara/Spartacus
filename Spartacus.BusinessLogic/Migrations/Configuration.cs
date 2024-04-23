@@ -10,7 +10,6 @@
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "Spartacus.BusinessLogic.DBModel.UserContext";
         }
 
         protected override void Seed(Spartacus.BusinessLogic.DBModel.UserContext context)

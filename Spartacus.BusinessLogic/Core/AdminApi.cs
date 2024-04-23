@@ -14,6 +14,9 @@ namespace Spartacus.BusinessLogic.Core
         {
             using (var debil = new UserContext())
             {
+                debil.Users.Add(user);
+                debil.SaveChanges();
+            }
                 MsTable ms;
                 using (var debili = new MembershipContext())
                 {
@@ -21,14 +24,12 @@ namespace Spartacus.BusinessLogic.Core
                     {
                         StartTime = DateTime.Now,
                         EndTime = DateTime.Now.AddMinutes(60),
+                        User = user
                     });
+                    //user.Membership = ms;
                     debili.SaveChanges();
                 }
-                user.Membership = ms;
 
-                debil.Users.Add(user);
-                debil.SaveChanges();
-            }
         }
 
         public List<UTable> GetUsersAction()
@@ -67,7 +68,7 @@ namespace Spartacus.BusinessLogic.Core
                 user.LastIp = data.LastIp;
                 user.LastLogin = data.LastLogin;
                 user.Level = data.Level;
-                
+
                 debil.SaveChanges();
             }
             return true;

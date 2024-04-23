@@ -8,7 +8,6 @@ namespace Spartacus.BusinessLogic.Interfaces
         bool UserLogin(ULoginData data);
         bool UserReg(URegData data);
         HttpCookie GetCookie(string data);
-        UProfData GetUserByCookie(string cookie);
-        //UserMinimal GetUserByCookie(string apiCookieValue);
+        UserMinimal GetUserByCookie(string cookie);
     }
 }

@@ -46,6 +46,6 @@ namespace Spartacus.Domain.Entities.User
 
         public URole Level { get; set; }
 
-        public virtual MsTable Membership {  get; set; }
+        public virtual MsTable Membership { get; set; }
     }
 }
