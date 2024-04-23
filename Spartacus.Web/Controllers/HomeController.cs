@@ -1,39 +1,42 @@
-﻿using Spartacus.Web.Models;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace Spartacus.Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-
-        public ActionResult Index(UserLogin login)
+        public ActionResult Index()
         {
-            login.Username = "admin";
-            return View(login);
+            SessionStatus();
+            return View();
         }
 
         public ActionResult Contact()
         {
+            SessionStatus();
             return View();
         }
 
         public ActionResult About()
         {
+            SessionStatus();
             return View();
         }
 
         public ActionResult Membership()
         {
+            SessionStatus();
             return View();
         }
 
         public ActionResult Trainers()
         {
+            SessionStatus();
             return View();
         }
 
         public ActionResult Services()
         {
+            SessionStatus();
             return View();
         }
     }

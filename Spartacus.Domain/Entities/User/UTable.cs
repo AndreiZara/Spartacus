@@ -1,20 +1,19 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Spartacus.Domain.Entities.Membership;
+using Spartacus.Domain.Enums;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Spartacus.Web.Models
+namespace Spartacus.Domain.Entities.User
 {
-    public class UserRegister
+    public class UTable
     {
-        public UserRegister(UserRegister register)
-        {
-            Username = register.Username;
-            Firstname = register.Firstname;
-            Lastname = register.Lastname;
-            Email = register.Email;
-            Password = register.Password;
-        }
-        public UserRegister() { }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
 
         [Required]
+        [Display(Name = "Username")]
         [StringLength(30, MinimumLength = 5, ErrorMessage = "Must be between 5 and 30 characters.")]
         public string Username { get; set; }
 
@@ -39,11 +38,14 @@ namespace Spartacus.Web.Models
         [StringLength(50, MinimumLength = 8, ErrorMessage = "Must be between 8 and 50 characters.")]
         public string Password { get; set; }
 
-        [Required]
-        [StringLength(50, MinimumLength = 8, ErrorMessage = "Must be between 5 and 50 characters.")]
-        [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage = "Passwords should be the same.")]
-        [Display(Name = "Confirm password")]
-        public string ConfirmPassword { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime LastLogin { get; set; }
+
+        [StringLength(16)]
+        public string LastIp { get; set; }
+
+        public URole Level { get; set; }
+
+        public virtual MsTable Membership { get; set; }
     }
 }

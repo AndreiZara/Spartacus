@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Spartacus.Domain.Entities.Membership
 {
-    public class CatDbTable
+    public class CatTable
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -17,13 +12,13 @@ namespace Spartacus.Domain.Entities.Membership
         [Required]
         public string Title { get; set; }
 
-        [Required]
-        public int[4] Prices { get; set; }
+        //[Required]
+        //public int[4] Prices { get; set; }
 
         [Required]
         public string Description { get; set; }
 
-        [Required]
-        public int[2] HourPeriod { get; set; }
+        //[Required]
+        //public int[2] HourPeriod { get; set; }
     }
 }

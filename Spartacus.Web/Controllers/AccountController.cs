@@ -1,27 +1,18 @@
-﻿using Microsoft.Win32;
+﻿using AutoMapper;
 using Spartacus.BusinessLogic;
-using Spartacus.BusinessLogic.Core;
 using Spartacus.BusinessLogic.Interfaces;
 using Spartacus.Domain.Entities.User;
 using Spartacus.Web.Models;
 using System;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
-using System.Web.Security;
+using System.Web.UI.WebControls;
 
 namespace Spartacus.Web.Controllers
 {
-
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
-        private readonly ISession _session;
-
-        public AccountController()
-        {
-            var bl = new BussinesLogic();
-            _session = bl.GetSessionBL();
-        }
-
         public ActionResult Login()
         {
             return View();
@@ -44,13 +35,14 @@ namespace Spartacus.Web.Controllers
 
                 if (userLogin)
                 {
+                    HttpCookie cookie = _session.GetCookie(login.Username);
+                    ControllerContext.HttpContext.Response.Cookies.Add(cookie);
                     Session["Username"] = login.Username;
+
                     return RedirectToAction("Index", "Home");
                 }
                 else
-                {
                     ModelState.AddModelError("LoginMessage", "You have entered an invalid username or password");
-                }
             }
             return View();
         }
@@ -58,7 +50,7 @@ namespace Spartacus.Web.Controllers
         public ActionResult Logout()
         {
             // https://stackoverflow.com/questions/54518454/how-to-create-logoff-in-c-sharp-with-asp-net-mvc-and-entity-framework
-            Session["Username"] = null;
+            EatCookie();
             Session.Abandon();
             return RedirectToAction("Index", "Home");
         }
@@ -71,7 +63,7 @@ namespace Spartacus.Web.Controllers
         [HttpPost]
         public ActionResult Register(UserRegister register)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 URegData data = new URegData
                 {
@@ -88,7 +80,10 @@ namespace Spartacus.Web.Controllers
 
                 if (userReg)
                 {
+                    HttpCookie cookie = _session.GetCookie(register.Username);
+                    ControllerContext.HttpContext.Response.Cookies.Add(cookie);
                     Session["Username"] = register.Username;
+
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -103,10 +98,11 @@ namespace Spartacus.Web.Controllers
 
         public ActionResult Details()
         {
-            var users = new AdminApi().GetUsersAction();
-            var user = users.FirstOrDefault(x => x.Username == Session["Username"] as string);
-            if (user == null) return HttpNotFound();
-            return View(user);
+            //var cookie = ControllerContext.HttpContext.Request.Cookies["UserCookie"].Value;
+            //var data = _session.GetUserByCookie(cookie);
+            //var config = new MapperConfiguration(cfg => cfg.CreateMap<UProfData, UserProfile>());
+            //var user = config.CreateMapper().Map<UserProfile>(data);
+            return View();
         }
     }
 }
