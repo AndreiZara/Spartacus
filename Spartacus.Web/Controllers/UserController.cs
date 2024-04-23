@@ -102,8 +102,6 @@ namespace Spartacus.Web.Controllers
             Ulist = api.ReadUser();
             newTable = Ulist[3];
 
-            return View(newTable);
-        }
         
         [HttpGet]
         public ActionResult Read()
