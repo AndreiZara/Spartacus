@@ -293,13 +293,16 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionFilters\AdminModAttribute.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\MembershipController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Controllers\UserProfileController.cs" />
+    <Compile Include="Extension\HttpContextExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -332,11 +335,16 @@
     <Content Include="Views\Home\Services.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\Logout.cshtml" />
-    <Content Include="Views\User\UCreate.cshtml" />
+    <Content Include="Views\User\Create.cshtml" />
     <Content Include="Views\User\Read.cshtml" />
     <Content Include="Views\User\Update.cshtml" />
-    <Content Include="Views\UserProfile\Profile.cshtml" />
+    <Content Include="Views\Account\Profile.cshtml" />
     <Content Include="Views\Shared\_LayoutNav.cshtml" />
+    <Content Include="Views\Shared\_HeaderRole.cshtml" />
+    <Content Include="Views\Shared\_LayoutRole.cshtml" />
+    <Content Include="Views\Membership\Create.cshtml" />
+    <Content Include="Views\Membership\Read.cshtml" />
+    <Content Include="Views\Membership\Update.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -346,6 +354,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

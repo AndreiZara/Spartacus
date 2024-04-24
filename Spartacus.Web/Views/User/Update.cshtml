@@ -1,4 +1,4 @@
-﻿@model Spartacus.Domain.Entities.User.UDbTable
+﻿@model Spartacus.Domain.Entities.User.UTable
 
 @{
      ViewBag.Title = "Update";
@@ -42,6 +42,14 @@
      </div>
 
      <div class="form-group">
+          @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+          <div class="col-md-10">
+               @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } });
+               @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+          </div>
+     </div>
+
+     <div class="form-group">
           @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
           <div class="col-md-10">
                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
@@ -49,27 +57,11 @@
           </div>
      </div>
 
-     <div class="form-group">
-          @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-          <div class="col-md-10">
-               @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-               @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-          </div>
-     </div>
 
      <div class="form-group">
-          @Html.LabelFor(model => model.LastLogin, htmlAttributes: new { @class = "control-label col-md-2" })
-          <div class="col-md-10">
-               @Html.EditorFor(model => model.LastLogin, new { htmlAttributes = new { @class = "form-control" } })
-               @Html.ValidationMessageFor(model => model.LastLogin, "", new { @class = "text-danger" })
-          </div>
-     </div>
-
-     <div class="form-group">
-          @Html.LabelFor(model => model.LastIp, htmlAttributes: new { @class = "control-label col-md-2" })
-          <div class="col-md-10">
-               @Html.EditorFor(model => model.LastIp, new { htmlAttributes = new { @class = "form-control" } })
-               @Html.ValidationMessageFor(model => model.LastIp, "", new { @class = "text-danger" })
+          @Html.DropDownListFor(Model => Model.Level, new SelectList(new string[] { "Moderator", "Consmer", "Admin" }, "Rugby"), htmlAttributes: new { @class = "form-control" });
+          <div class="col-md-8">
+               @Html.ValidationMessageFor(model => model.Level, "", new { @class = "text-danger" })
           </div>
      </div>
 

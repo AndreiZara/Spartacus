@@ -1,4 +1,4 @@
-﻿@model Spartacus.Web.Models.UserLogin
+﻿@model Spartacus.Domain.Entities.User.UTable
 
 <section class="slider bg-5">
      <div class="container">
@@ -9,13 +9,21 @@
                          <p class="text-center lead">Sign Up to open the door to new experiences</p>
                          @using (Html.BeginForm("Login", "Account", FormMethod.Post))
                          {
-                              <label class="font-500">Name</label>
+
+                              <label class="font-500">Username</label>
                               @Html.TextBoxFor(Model => Model.Username, new
                               {
                                   @class = "form-control form-control-lg mb-3",
                                   type = "text"
                               })
-                              <label class="font-500">Surname</label>
+
+                              <label class="font-500">Firstname</label>
+                              @Html.TextBoxFor(Model => Model.Username, new
+                              {
+                                  @class = "form-control form-control-lg mb-3",
+                                  type = "text"
+                              })
+                              <label class="font-500">Lastname</label>
                               @Html.TextBoxFor(Model => Model.Username, new
                               {
                                   @class = "form-control form-control-lg mb-3",
@@ -43,6 +51,8 @@
                                    @class = "form-control form-control-lg",
                                    type = "password"
                               })
+                              <label class="font-500">Confirm password</label>
+                              @Html.DropDownListFor(Model => Model.Level, new SelectList(new string[] { "Football", "Rugby", "Horse Racing" }, "Rugby"), htmlAttributes: new { @class = "form-control" });
                               <p class="m-0 py-4"><a href="" class="text-muted">Forget password?</a></p>
                               <button class="btn btn-success btn-lg w-100 shadow-lg">SIGN UP</button>
                          }

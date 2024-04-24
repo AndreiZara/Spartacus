@@ -16,6 +16,7 @@ namespace Spartacus.BusinessLogic.DBModel
         {
         }
 
-        public virtual DbSet<UDbTable> Users{ get; set; }
+        public virtual DbSet<UTable> Users{ get; set; }
+
     }
 }

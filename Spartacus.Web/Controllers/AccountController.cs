@@ -5,6 +5,10 @@ using Spartacus.Domain.Entities.User;
 using Spartacus.Web.Models;
 using System;
 using System.Web.Mvc;
+using System.Collections.Generic;
+using System.Web.UI.WebControls;
+using System.Web;
+using System.Linq;
 
 namespace Spartacus.Web.Controllers
 {
@@ -19,6 +23,27 @@ namespace Spartacus.Web.Controllers
             _session = bl.GetSessionBL();
         }
 
+        public ActionResult Register()
+        {
+            ViewBag.Roles = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "Admin", Text = "Administrator" },
+                new SelectListItem { Value = "User", Text = "Regular User" }
+            };
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Register(UTable login)
+        {
+            if (ModelState.IsValid)
+            {
+
+            }
+            return View();
+        }
+
+
         public ActionResult Login()
         {
             
@@ -26,11 +51,7 @@ namespace Spartacus.Web.Controllers
         }
 
 
-        public ActionResult Register()
-        {
-            return View();
-        }
-
+        
         [HttpPost]
         public ActionResult Login(UserLogin login)
         {
@@ -43,24 +64,26 @@ namespace Spartacus.Web.Controllers
                     Ip = Request.UserHostAddress,
                     LoginDateTime = DateTime.Now
                 };
-            }
 
-            var userLogin = false; // RESULT FROM THE Business Logic
 
-            var user = new AdminApi().GetUserByUsername(login.Username);
+                //var userLogin = false; // RESULT FROM THE Business Logic
 
-            if(user != null) 
-            {
-                if(user.Username == login.Username&&user.Password == login.Password) {
+                var userLogin = _session.UserLogin(data);
+
+                if (userLogin.Status)
+                {
                     Session["Username"] = login.Username;
-                    return RedirectToAction("Profile", "UserProfile", new {Username = login.Username});
-                }
+                    HttpCookie cookie = _session.GenCookie(login.Username);
+                    ControllerContext.HttpContext.Response.Cookies.Add(cookie);
 
+                    return RedirectToAction("Index", "Home");
+                }
                 else
                 {
-                    ModelState.AddModelError("Incercati din nou", "DeBil");
-                    return RedirectToAction("Login", "Account");
+                    ModelState.AddModelError("", userLogin.StatusMsg);
+                    return View();
                 }
+
             }
 
             return View(login);
@@ -74,8 +97,46 @@ namespace Spartacus.Web.Controllers
 
         public ActionResult Logout()
         {
-            Session["Username"] = null;
+            if(Session != null)
+            {
+                Session["Username"] = null;
+                System.Web.HttpContext.Current.Session.Clear();
+                if (ControllerContext.HttpContext.Request.Cookies.AllKeys.Contains("X-KEY"))
+                {
+                    var cookie = ControllerContext.HttpContext.Request.Cookies["X-KEY"];
+                    if (cookie != null)
+                    {
+                        cookie.Expires = DateTime.Now.AddDays(-1);
+                        ControllerContext.HttpContext.Response.Cookies.Add(cookie);
+                    }
+                }
+            }
+            
             return RedirectToAction("Index", "Home");
+            
+            
         }
+
+
+        public ActionResult Profile(UserLogin login)
+        {
+            if (ModelState.IsValid)
+            {
+                ULoginData data = new ULoginData
+                {
+                    Credential = login.Username,
+                    Password = login.Password,
+                    Ip = Request.UserHostAddress,
+                    LoginDateTime = DateTime.Now
+                };
+
+                var userTable = _session.UserProfile(data);
+
+                
+            }
+            return View();
+        }
+
+        
     }
 }

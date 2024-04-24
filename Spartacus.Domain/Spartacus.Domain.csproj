@@ -42,9 +42,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Membership\CatTable.cs" />
+    <Compile Include="Entities\Membership\Period.cs" />
+    <Compile Include="Entities\Membership\Prices.cs" />
+    <Compile Include="Entities\Membership\MsTable.cs" />
     <Compile Include="Enums\URole.cs" />
     <Compile Include="Entities\User\Session.cs" />
-    <Compile Include="Entities\User\UDbTable.cs" />
+    <Compile Include="Entities\User\UTable.cs" />
     <Compile Include="Entities\User\ULoginData.cs" />
     <Compile Include="Entities\User\ULoginResp.cs" />
     <Compile Include="Entities\User\UserMinimal.cs" />
@@ -56,5 +60,6 @@
       <Name>Spartacus.Helpers</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

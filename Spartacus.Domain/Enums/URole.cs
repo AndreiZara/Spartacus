@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Spartacus.Domain.Enums
 {
-    public enum URole
+    public enum URole:int
     {
-        User,
-        Moderator,
-        Admin
+        Consumer = 1,
+        Moderator = 2,
+        Admin = 3
     }
 }

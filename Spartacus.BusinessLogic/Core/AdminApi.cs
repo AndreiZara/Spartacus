@@ -1,4 +1,5 @@
 ﻿using Spartacus.BusinessLogic.DBModel;
+using Spartacus.Domain.Entities.Membership;
 using Spartacus.Domain.Entities.User;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace Spartacus.BusinessLogic.Core
 {
     public class AdminApi
     {
-        public void AddUser(UDbTable user)
+        public void AddUser(UTable user)
         {
             using (var debil = new UserContext())
             {
@@ -19,7 +20,7 @@ namespace Spartacus.BusinessLogic.Core
             }
         }
 
-        public List<UDbTable> ReadUser()
+        public List<UTable> ReadUser()
         {
             using (var debil = new UserContext())
             {
@@ -28,7 +29,7 @@ namespace Spartacus.BusinessLogic.Core
             }
         }
 
-        public UDbTable GetUserByUsername(string Username)
+        public UTable GetUserByUsername(string Username)
         {
             using (var debil = new UserContext())
             {
@@ -37,7 +38,7 @@ namespace Spartacus.BusinessLogic.Core
             }
         }
 
-        public bool UpdateUser(UDbTable user, int Id)
+        public bool UpdateUser(UTable user, int Id)
         {
             using (var debil = new UserContext())
             {
@@ -64,17 +65,15 @@ namespace Spartacus.BusinessLogic.Core
             return false;
         }
 
+        public void AddCategory(CatTable table)
+        {
+            using (var debil = new CategoryContext())
+            {
+                debil.Categories.Add(table);
+                debil.SaveChanges();
+            }
+        }
+
+
     }
 }
-
-/*
- 
- fnjsdfks dsjfksdf dkfksdf kdsf dsfksd fsd fksd f
-
- 
- 
- 
- 
- 
- 
- */

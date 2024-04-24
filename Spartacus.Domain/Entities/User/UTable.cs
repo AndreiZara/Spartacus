@@ -5,7 +5,7 @@ using Spartacus.Domain.Enums;
 
 namespace Spartacus.Domain.Entities.User
 {
-    public class UDbTable
+    public class UTable
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
