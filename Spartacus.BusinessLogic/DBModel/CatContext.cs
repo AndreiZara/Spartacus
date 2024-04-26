@@ -9,9 +9,9 @@ using Spartacus.Domain.Entities.Membership;
 
 namespace Spartacus.BusinessLogic.DBModel
 {
-    class CategoryContext : DbContext
+    class CatContext : DbContext
     {
-        public CategoryContext() : base("name=Spartacus")  {}
+        public CatContext() : base("name=Spartacus") { }
 
         public virtual DbSet<CategoryTable> Categories { get; set; }
 

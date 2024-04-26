@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Spartacus.Domain.Entities.Membership
 {
-    public class CatTable
+    public class CategoryTable
     {
 
         [Key]
@@ -28,33 +28,22 @@ namespace Spartacus.Domain.Entities.Membership
         [Required]
         [StringLength(10)]
         [Display(Name = "Price for 12 month")]
-        public string Price_12;
+        public string Price_12 { get; set; }
 
         [Required]
         [StringLength(10)]
         [Display(Name = "Price for 6 month")]
-        public string Price_6;
+        public string Price_6 { get; set; }
 
         [Required]
         [StringLength(10)]
         [Display(Name = "Price for 3 month")]
-        public string Price_3;
+        public string Price_3 { get; set; }
 
         [Required]
         [StringLength(10)]
         [Display(Name = "Price for 1 month")]
-        public string Price_1;
-
-        public const string Month_12 = "12 Months";
-
-
-        public const string Month_6 = "6 Months";
-
-
-        public const string Month_3 = "3 Months";
-
-
-        public const string Month_1 = "1 Month";
+        public string Price_1 { get; set; }
 
 
     }

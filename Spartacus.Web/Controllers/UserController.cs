@@ -14,6 +14,7 @@ using Spartacus.Web.ActionFilters;
 using Spartacus.Web.Controllers;
 using eUseControl.Web.Controllers;
 using Spartacus.Web.Extension;
+using Spartacus.Domain.Entities.Membership;
 
 namespace Spartacus.Web.Controllers
 {
@@ -63,6 +64,7 @@ namespace Spartacus.Web.Controllers
             return View(login);
 
         }
+        
 
         
         public ActionResult Update(UTable login)
@@ -116,6 +118,7 @@ namespace Spartacus.Web.Controllers
             Ulist = api.ReadUser();
             return View(Ulist);
         }
+
 
 
 

@@ -95,6 +95,7 @@ namespace Spartacus.Web.Controllers
             return View();
         }
 
+
         public ActionResult Logout()
         {
             if(Session != null)

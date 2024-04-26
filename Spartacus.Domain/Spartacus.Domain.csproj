@@ -42,10 +42,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Membership\CategoryTable.cs" />
     <Compile Include="Entities\Membership\CatTable.cs" />
     <Compile Include="Entities\Membership\Period.cs" />
     <Compile Include="Entities\Membership\Prices.cs" />
     <Compile Include="Entities\Membership\MsTable.cs" />
+    <Compile Include="Entities\User\GUID.cs" />
     <Compile Include="Enums\URole.cs" />
     <Compile Include="Entities\User\Session.cs" />
     <Compile Include="Entities\User\UTable.cs" />
