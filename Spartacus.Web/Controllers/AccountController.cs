@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Spartacus.BusinessLogic;
+using Spartacus.BusinessLogic.Core;
 using Spartacus.BusinessLogic.Interfaces;
 using Spartacus.Domain.Entities.User;
 using Spartacus.Web.Models;

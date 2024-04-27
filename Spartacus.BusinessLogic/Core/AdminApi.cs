@@ -47,9 +47,9 @@ namespace Spartacus.BusinessLogic.Core
             UTable user;
             using (var debil = new UserContext())
             {
-                user = debil.Users.FirstOrDefault(u => u.Id == id);
+                var user = debil.Users.SingleOrDefault(u => u.Username == Username);
+                return user;
             }
-            return user;
         }
 
         public bool UpdateUserAction(UTable data)
