@@ -43,6 +43,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -61,9 +63,13 @@
     <Compile Include="Interfaces\IAdmin.cs" />
     <Compile Include="Interfaces\ISession.cs" />
     <Compile Include="Logics\AdminBL.cs" />
-    <Compile Include="Migrations\202404230733100_CorrectAssociation.cs" />
-    <Compile Include="Migrations\202404230733100_CorrectAssociation.Designer.cs">
-      <DependentUpon>202404230733100_CorrectAssociation.cs</DependentUpon>
+    <Compile Include="Migrations\202404232114504_InitialCreate.cs" />
+    <Compile Include="Migrations\202404232114504_InitialCreate.Designer.cs">
+      <DependentUpon>202404232114504_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202404232124187_Cascada.cs" />
+    <Compile Include="Migrations\202404232124187_Cascada.Designer.cs">
+      <DependentUpon>202404232124187_Cascada.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -87,8 +93,14 @@
     <Folder Include="DBModel\Seed\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202404230733100_CorrectAssociation.resx">
-      <DependentUpon>202404230733100_CorrectAssociation.cs</DependentUpon>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202404232114504_InitialCreate.resx">
+      <DependentUpon>202404232114504_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202404232124187_Cascada.resx">
+      <DependentUpon>202404232124187_Cascada.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

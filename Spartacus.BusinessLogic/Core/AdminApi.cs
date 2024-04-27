@@ -17,19 +17,6 @@ namespace Spartacus.BusinessLogic.Core
                 debil.Users.Add(user);
                 debil.SaveChanges();
             }
-                MsTable ms;
-                using (var debili = new MembershipContext())
-                {
-                    ms = debili.Memberships.Add(new MsTable()
-                    {
-                        StartTime = DateTime.Now,
-                        EndTime = DateTime.Now.AddMinutes(60),
-                        User = user
-                    });
-                    //user.Membership = ms;
-                    debili.SaveChanges();
-                }
-
         }
 
         public List<UTable> GetUsersAction()

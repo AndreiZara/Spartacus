@@ -95,6 +95,10 @@ namespace Spartacus.Web.Controllers
             return View();
         }
 
+        //public ActionResult Profile()
+        //{
+        //    return RedirectToAction("Index", "Home");
+        //}
 
         public ActionResult Details()
         {

@@ -7,9 +7,9 @@ namespace Spartacus.Domain.Entities.Membership
 {
     public class MsTable
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        [Key, ForeignKey("User")]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int UserId { get; set; }
 
         [Required]
         public DateTime StartTime { get; set; }

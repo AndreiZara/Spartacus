@@ -33,6 +33,8 @@ namespace Spartacus.BusinessLogic.Core
                 debil.Users.Add(new UTable
                 {
                     Username = data.Username,
+                    Firstname = data.Firstname,
+                    Lastname = data.Lastname,
                     Password = data.Password,
                     Email = data.Email,
                     LastIp = data.Ip,

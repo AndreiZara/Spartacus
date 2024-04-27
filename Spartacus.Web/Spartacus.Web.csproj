@@ -303,6 +303,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Filters\AllowAttribute.cs" />
+    <Compile Include="Models\Feedback.cs" />
     <Compile Include="Models\Membership.cs" />
     <Compile Include="Models\UserProfile.cs" />
     <Compile Include="Models\UserRegister.cs" />
