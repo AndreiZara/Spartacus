@@ -56,11 +56,14 @@ namespace Spartacus.Web.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult Register()
+        public ActionResult Login()
         {
+            
             return View();
         }
 
+
+        
         [HttpPost]
         public ActionResult Register(UserRegister register)
         {
@@ -105,5 +108,7 @@ namespace Spartacus.Web.Controllers
             //var user = config.CreateMapper().Map<UserProfile>(data);
             return View();
         }
+
+        
     }
 }

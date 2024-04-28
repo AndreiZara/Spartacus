@@ -1,4 +1,5 @@
-﻿<div class="container-fluid">
+﻿
+<div class="container-fluid">
      <a class="navbar-brand" href=@Url.Action("Index", "Home")>
           <h2 class="text-white text-capitalize">Spartac<span class="text-color">us</span></h2>
      </a>
@@ -9,18 +10,19 @@
           <ul class="navbar-nav mx-auto">
                <li class="nav-item"><a class="nav-link" href=@Url.Action("Trainers", "Home")>Trainers</a></li>
                <li class="nav-item"><a class="nav-link" href=@Url.Action("Services", "Home")>Services</a></li>
-               <li class="nav-item"><a class="nav-link" href=@Url.Action("Membership", "Home")>Membership</a></li>
+               <li class="nav-item"><a class="nav-link" href=@Url.Action("Membership", "Home")>Memebership</a></li>
                <li class="nav-item"><a class="nav-link" href=@Url.Action("Contact", "Home")>Contact us</a></li>
                <li class="nav-item"><a class="nav-link" href=@Url.Action("About", "Home")>About us</a></li>
+               <li class="nav-item"><a class="nav-link" href=@Url.Action("Read", "User")>Users</a></li>
           </ul>
           <ul class="navbar-nav">
 
 
-               @if (Session["LoginStatus"] as string == "logout")
+               @if (Session["Username"] == null)
                {
                     <li class="nav-item"><a class="nav-link" href=@Url.Action("Login", "Account")>Login</a></li>
                     <li class="vr text-white opacity-100 px-0"></li>
-                    <li class="nav-item pe-0"><a class="nav-link" href=@Url.Action("Register", "Account")>Join</a></li>
+                    <li class="nav-item pe-0"><a class="nav-link" href=@Url.Action("Membership", "Home")>Join</a></li>
                }
                else
                {

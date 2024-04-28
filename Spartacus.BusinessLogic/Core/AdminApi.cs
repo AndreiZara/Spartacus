@@ -90,3 +90,65 @@ namespace Spartacus.BusinessLogic.Core
 
     }
 }
+        public bool UpdateCategory(CategoryTable category, int Id)
+        {
+            using (var debil = new CatContext())
+            {
+                var newCat = debil.Categories.FirstOrDefault(x => x.Id == category.Id);
+
+                if (newCat != null)
+                {
+                    newCat.Title = category.Title;
+                    newCat.Description = category.Description;
+                    newCat.Price_12 = category.Price_12;
+                    newCat.Price_6 = category.Price_6;
+                    newCat.Price_3 = category.Price_3;
+                    newCat.Price_1 = category.Price_1;
+
+                    debil.SaveChanges();
+
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public void AddCategory(CategoryTable table)
+        {
+            using (var debil = new CatContext())
+            {
+                debil.Categories.Add(table);
+                debil.SaveChanges();
+            }
+        }
+
+        public List<CategoryTable> ReadCategory()
+        {
+            using (var debil = new CatContext())
+            {
+                var catContext = debil.Categories.ToList();
+                return catContext;
+            }
+        }
+
+        public CategoryTable GetCategoryById(int Id)
+        {
+            using (var debil = new CatContext())
+            {
+                var user = debil.Categories.Where(u => u.Id == Id).SingleOrDefault();
+                return user;
+            }
+        }
+
+        public CategoryTable GetParticularCategoryById(int Id)
+        {
+            using (var debil = new CatContext())
+            {
+                var user = debil.Categories.FirstOrDefault(u => u.Id == Id);
+                return user;
+            }
+        }
+
+        
+    }
+}
