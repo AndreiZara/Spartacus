@@ -127,8 +127,7 @@ namespace Spartacus.Helpers
             finally
             {
                 // Clear the RijndaelManaged object.
-                if (aesAlg != null)
-                    aesAlg.Clear();
+                aesAlg?.Clear();
             }
 
             return plaintext;

@@ -1,14 +1,8 @@
-﻿using AutoMapper;
-using Spartacus.BusinessLogic;
-using Spartacus.BusinessLogic.Core;
-using Spartacus.BusinessLogic.Interfaces;
-using Spartacus.Domain.Entities.User;
+﻿using Spartacus.Domain.Entities.User;
 using Spartacus.Web.Models;
 using System;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
 
 namespace Spartacus.Web.Controllers
 {
@@ -56,14 +50,6 @@ namespace Spartacus.Web.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult Login()
-        {
-            
-            return View();
-        }
-
-
-        
         [HttpPost]
         public ActionResult Register(UserRegister register)
         {
@@ -99,16 +85,10 @@ namespace Spartacus.Web.Controllers
             return View();
         }
 
-
-        public ActionResult Details()
+        public new ActionResult Profile()
         {
-            //var cookie = ControllerContext.HttpContext.Request.Cookies["UserCookie"].Value;
-            //var data = _session.GetUserByCookie(cookie);
-            //var config = new MapperConfiguration(cfg => cfg.CreateMap<UProfData, UserProfile>());
-            //var user = config.CreateMapper().Map<UserProfile>(data);
+            // should load a model containing mstable and utable data
             return View();
         }
-
-        
     }
 }

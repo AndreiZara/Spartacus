@@ -1,4 +1,4 @@
-﻿@model Spartacus.Domain.Entities.Membership.CategoryTable
+﻿@model Spartacus.Domain.Entities.Membership.CatTable
 
 @{
      ViewBag.Title = "Create";
@@ -32,34 +32,34 @@
      </div>
 
      <div class="form-group">
-          @Html.LabelFor(model => model.Price_1, htmlAttributes: new { @class = "control-label col-md-2" })
+          @Html.LabelFor(model => model.PriceOneMonth, htmlAttributes: new { @class = "control-label col-md-2" })
           <div class="col-md-10">
-               @Html.EditorFor(model => model.Price_1, new { htmlAttributes = new { @class = "form-control" } })
-               @Html.ValidationMessageFor(model => model.Price_1, "", new { @class = "text-danger" })
+               @Html.EditorFor(model => model.PriceOneMonth, new { htmlAttributes = new { @class = "form-control" } })
+               @Html.ValidationMessageFor(model => model.PriceOneMonth, "", new { @class = "text-danger" })
           </div>
      </div>
 
      <div class="form-group">
-          @Html.LabelFor(model => model.Price_3, htmlAttributes: new { @class = "control-label col-md-2" })
+          @Html.LabelFor(model => model.PriceThreeMonths, htmlAttributes: new { @class = "control-label col-md-2" })
           <div class="col-md-10">
-               @Html.EditorFor(model => model.Price_3, new { htmlAttributes = new { @class = "form-control" } })
-               @Html.ValidationMessageFor(model => model.Price_3, "", new { @class = "text-danger" })
+               @Html.EditorFor(model => model.PriceThreeMonths, new { htmlAttributes = new { @class = "form-control" } })
+               @Html.ValidationMessageFor(model => model.PriceThreeMonths, "", new { @class = "text-danger" })
           </div>
      </div>
 
      <div class="form-group">
-          @Html.LabelFor(model => model.Price_6, htmlAttributes: new { @class = "control-label col-md-2" })
+          @Html.LabelFor(model => model.PriceSixMonths, htmlAttributes: new { @class = "control-label col-md-2" })
           <div class="col-md-10">
-               @Html.EditorFor(model => model.Price_6, new { htmlAttributes = new { @class = "form-control" } })
-               @Html.ValidationMessageFor(model => model.Price_6, "", new { @class = "text-danger" })
+               @Html.EditorFor(model => model.PriceSixMonths, new { htmlAttributes = new { @class = "form-control" } })
+               @Html.ValidationMessageFor(model => model.PriceSixMonths, "", new { @class = "text-danger" })
           </div>
      </div>
 
      <div class="form-group">
-          @Html.LabelFor(model => model.Price_12, htmlAttributes: new { @class = "control-label col-md-2" })
+          @Html.LabelFor(model => model.PriceOneYear, htmlAttributes: new { @class = "control-label col-md-2" })
           <div class="col-md-10">
-               @Html.EditorFor(model => model.Price_12, new { htmlAttributes = new { @class = "form-control" } })
-               @Html.ValidationMessageFor(model => model.Price_12, "", new { @class = "text-danger" })
+               @Html.EditorFor(model => model.PriceOneYear, new { htmlAttributes = new { @class = "form-control" } })
+               @Html.ValidationMessageFor(model => model.PriceOneYear, "", new { @class = "text-danger" })
           </div>
      </div>
 

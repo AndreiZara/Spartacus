@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Spartacus.Domain.Entities.Membership.CategoryTable>
+﻿@model IEnumerable<Spartacus.Domain.Entities.Membership.CatTable>
 
 @{
      ViewBag.Title = "Read";
@@ -21,19 +21,19 @@
           </th>
 
           <th>
-               @Html.DisplayNameFor(model => model.Price_1)
+               @Html.DisplayNameFor(model => model.PriceOneMonth)
           </th>
 
           <th>
-               @Html.DisplayNameFor(model => model.Price_3)
+               @Html.DisplayNameFor(model => model.PriceThreeMonths)
           </th>
 
           <th>
-               @Html.DisplayNameFor(model => model.Price_6)
+               @Html.DisplayNameFor(model => model.PriceSixMonths)
           </th>
 
           <th>
-               @Html.DisplayNameFor(model => model.Price_12)
+               @Html.DisplayNameFor(model => model.PriceOneYear)
           </th>
 
 
@@ -51,24 +51,23 @@
          </td>
 
          <td>
-              @Html.DisplayFor(modelItem => item.Price_1)
+              @Html.DisplayFor(modelItem => item.PriceOneMonth)
          </td>
 
          <td>
-              @Html.DisplayFor(modelItem => item.Price_3)
+              @Html.DisplayFor(modelItem => item.PriceThreeMonths)
          </td>
 
          <td>
-              @Html.DisplayFor(modelItem => item.Price_6)
+              @Html.DisplayFor(modelItem => item.PriceSixMonths)
          </td>
 
          <td>
-              @Html.DisplayFor(modelItem => item.Price_12)
+              @Html.DisplayFor(modelItem => item.PriceOneYear)
          </td>
 
          <td>
               @Html.ActionLink("Edit", "Update", new { id = item.Id }) |
-              @Html.ActionLink("Details", "Details", new { id = item.Id }) |
               @Html.ActionLink("Delete", "Delete", new { id = item.Id })
          </td>
     </tr>

@@ -301,6 +301,7 @@
     <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Filters\AllowAttribute.cs" />
     <Compile Include="Models\Membership.cs" />
@@ -339,6 +340,11 @@
     <Content Include="Views\User\Read.cshtml" />
     <Content Include="Views\User\Update.cshtml" />
     <Content Include="Views\User\Create.cshtml" />
+    <Content Include="Views\Account\Frogot.cshtml" />
+    <Content Include="Views\Account\Profile.cshtml" />
+    <Content Include="Views\Category\Create.cshtml" />
+    <Content Include="Views\Category\Read.cshtml" />
+    <Content Include="Views\Category\Update.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -348,7 +354,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Membership\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
