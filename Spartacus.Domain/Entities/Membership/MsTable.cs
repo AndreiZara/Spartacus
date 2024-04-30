@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Spartacus.Domain.Entities.User;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Spartacus.Domain.Entities.Membership
 {
-    public class MsDbTable
+    public class MsTable
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -18,7 +15,9 @@ namespace Spartacus.Domain.Entities.Membership
         public DateTime StartTime { get; set; }
 
         [Required]
-        public DateTime EndTime { get; set; } 
+        public DateTime EndTime { get; set; }
 
+        [Required]
+        public virtual UTable User { get; set; }
     }
 }

@@ -1,114 +1,117 @@
-﻿using Spartacus.BusinessLogic.Core;
+﻿using Spartacus.BusinessLogic;
+using Spartacus.BusinessLogic.DBModel;
+using Spartacus.BusinessLogic.Interfaces;
+using Spartacus.Domain.Entities.Membership;
+using Spartacus.Domain.Entities.User;
+using Spartacus.Domain.Enums;
+using Spartacus.Web.Filters;
+using System;
+using System.Linq;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
-using Microsoft.Ajax.Utilities;
 
 namespace Spartacus.Web.Controllers
 {
-    //[Authorize(Roles = "Admin")]
-    public class UserController : Controller
+    [Allow(URole.Admin, URole.Moderator)]
+    public class UserController : BaseController
     {
+        private readonly IAdmin _admin;
 
-        public ActionResult UCreate()
+        public UserController()
         {
+            _admin = new BussinesLogic().GetAdminBL();
+        }
+        public ActionResult Create()
+        {
+            //SessionStatus();
+            //var user = new UTable
+            //{
+            //    Username = "test123",
+            //    Firstname = "test1",
+            //    Lastname = "test1",
+            //    Email = "test1@gmail.com",
+            //    Password = "12345678",
+            //    Level = URole.Client,
+            //    LastLogin = DateTime.Now,
+            //    LastIp = Request.UserHostAddress
+            //};
+            //using (var debil = new UserContext())
+            //{
+            //    debil.Users.Add(user);
+            //    debil.SaveChanges();
+            //}
+
+            UTable tab;
+            using (var debil = new UserContext())
+            {
+                tab = debil.Users.FirstOrDefault(u => u.Username == "zahar");
+                tab.Membership = new MsTable
+                {
+                    StartTime = DateTime.Now,
+                    EndTime = DateTime.Now.AddMinutes(5),
+                };
+                debil.SaveChanges();
+            }
             return View();
         }
 
-
-        // GET: User
         [HttpPost]
-        public ActionResult UCreate(UDbTable login)
-        public ActionResult Read()
+        public ActionResult Create(UTable data)
         {
-
             if (ModelState.IsValid)
             {
-                UDbTable data = new UDbTable
-                {
-                    Username = login.Username,
-                    Id= login.Id,
-                    Password = login.Password,
-                    Email = login.Email,
-                    LastLogin = DateTime.Now,
-                    LasIp = login.LasIp,
-                    Level = login.Level,
-                };
-            var users = new AdminApi().GetUsersAction();
+                data.LastLogin = DateTime.Now;
+                data.LastIp = Request.UserHostAddress;
+                _admin.AddUser(data);
+                return RedirectToAction("Read");
+            }
+            return View(data);
+        }
+
+        public ActionResult Read()
+        {
+            SessionStatus();
+            var users = _admin.GetUsers();
             return View(users);
+        }
+
+        public ActionResult Update(int id)
+        {
+            SessionStatus();
+            var user = _admin.GetUserById(id);
+            return View(user);
+        }
+
+        [HttpPost]
+        public ActionResult Update(UTable data)
+        {
+            if (ModelState.IsValid)
+            {
+                data.LastLogin = DateTime.Now;
+                data.LastIp = Request.UserHostAddress;
+
+                var userUpdated = _admin.UpdateUser(data);
+
+                if (userUpdated)
+                    return RedirectToAction("Read");
+                else
+                    ModelState.AddModelError("UpdateMessage", "Update failed!");
+            }
+            return View(data);
         }
 
         public ActionResult Delete(int id)
         {
-            var user = new AdminApi().GetUserByIdAction(id);
+            SessionStatus();
+            var user = _admin.GetUserById(id);
             if (user == null) return HttpNotFound();
             return View(user);
-
-                Session["Id"] = data.Id;
-                Session["Username"] = data.Username;
-                Session["Password"] = data.Password;
-                Session["Email"] = data.Email;
-                Session["LastLogin"] = data.LastLogin;
-                Session["LastIp"] = data.LasIp;
-                
-                AdminApi api = new AdminApi();
-                api.AddUser(data);
-                
-                
-            }
-            return View(login);
-
-        }
-
-        
-        public ActionResult Update(UDbTable login)
-        {
-
-
-            if (ModelState.IsValid)
-            {
-                UDbTable data = new UDbTable
-                {
-                    Username = login.Username,
-                    Id = login.Id,
-                    Password = login.Password,
-                    Email = login.Email,
-                    LastLogin = DateTime.Now,
-                    LasIp = login.LasIp,
-                    Level = login.Level,
-                };
-                
-                bool isTrue = new AdminApi().UpdateUser(data,login.Id);
-
-                if (isTrue)
-                {
-                    return RedirectToAction("Read");
-                }
-
-                else { return View(); }
-            }
-            Session["Id"] = login.Id;
-
-            return View();
-        }
-
-
-        [HttpGet]
-        public ActionResult URead() 
-        {
-            List<UDbTable> Ulist = new List<UDbTable>();
-            UDbTable newTable = new UDbTable();
-            AdminApi api = new AdminApi();
-            Ulist = api.ReadUser();
-            newTable = Ulist[3];
-
-            return View(newTable);
         }
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            var result = new AdminApi().DeleteUserByIdAction(id);
-            if (result == false) return HttpNotFound();
+            var userDeleted = _admin.DeleteUserById(id);
+            if (userDeleted == false) return HttpNotFound();
             return RedirectToAction("Read");
         }
     }

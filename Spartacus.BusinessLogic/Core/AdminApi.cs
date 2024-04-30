@@ -1,14 +1,16 @@
 ﻿using Spartacus.BusinessLogic.DBModel;
+using Spartacus.Domain.Entities.Membership;
 using Spartacus.Domain.Entities.User;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 
 namespace Spartacus.BusinessLogic.Core
 {
     public class AdminApi
     {
-        public void AddUser(UDbTable user)
+        public void AddUserAction(UTable user)
         {
             using (var debil = new UserContext())
             {
@@ -17,63 +19,108 @@ namespace Spartacus.BusinessLogic.Core
             }
         }
 
-        public List<UDbTable> GetUsersAction()
+        public List<UTable> GetUsersAction()
         {
-            var users = new List<UDbTable>();
+            List<UTable> users;
             using (var debil = new UserContext())
             {
-                users = debil.Users.ToList();
+                users = debil.Users.Include(u => u.Membership).ToList();
             }
-
             return users;
         }
 
-        public UDbTable GetUserByIdAction(int id)
+        public UTable GetUserByIdAction(int id)
         {
-            var user = new UDbTable();
+            UTable user;
             using (var debil = new UserContext())
             {
-                user = debil.Users.FirstOrDefault(u => u.Id == id);
+                user = debil.Users.SingleOrDefault(u => u.Id == id);
             }
             return user;
         }
 
-        public bool UpdateUser(UDbTable user, int Id)
+        public bool UpdateUserAction(UTable data)
         {
             using (var debil = new UserContext())
             {
-                var data = debil.Users.FirstOrDefault(x => x.Id == user.Id);
+                var user = debil.Users.FirstOrDefault(x => x.Id == data.Id);
 
-                if (data != null)
-                {
-                    data.Username = user.Username;
-                    data.Password = user.Password;
-                    data.Email = user.Email;
-                    data.LastLogin = user.LastLogin;
-                    data.LasIp = user.LasIp;
-                    data.Id = user.Id;
-                    data.Level = user.Level;
-                    debil.SaveChanges();
+                if (user == null) return false;
 
-                    return true;
-                }
+                user.Username = data.Username;
+                user.Firstname = data.Firstname;
+                user.Lastname = data.Lastname;
+                user.Email = data.Email;
+                user.Password = data.Password;
+                user.LastIp = data.LastIp;
+                user.LastLogin = data.LastLogin;
+                user.Level = data.Level;
 
+                debil.SaveChanges();
             }
+            return true;
 
-            return false;
         }
 
+        public bool DeleteUserByIdAction(int id)
+        {
+            using (var debil = new UserContext())
+            {
+                var user = debil.Users.Find(id);
+                if (user == null) return false;
+                debil.Users.Remove(user);
+                debil.SaveChanges();
+            }
+            return true;
+        }
+
+        public bool UpdateCategory(CatTable data)
+        {
+            using (var debil = new CategoryContext())
+            {
+                var cat = debil.Categories.FirstOrDefault(x => x.Id == data.Id);
+
+                if (cat == null) return false;
+            
+                cat.Title = data.Title;
+                cat.Description = data.Description;
+                cat.PriceOneYear = data.PriceOneYear;
+                cat.PriceSixMonths = data.PriceSixMonths;
+                cat.PriceThreeMonths = data.PriceThreeMonths;
+                cat.PriceOneMonth = data.PriceOneMonth;
+
+                debil.SaveChanges();
+            }
+            return true;
+        }
+
+        public void AddCategory(CatTable table)
+        {
+            using (var debil = new CategoryContext())
+            {
+                debil.Categories.Add(table);
+                debil.SaveChanges();
+            }
+        }
+
+        public List<CatTable> GetCategories()
+        {
+            List<CatTable> cats;
+            using (var debil = new CategoryContext())
+            {
+                cats = debil.Categories.ToList();
+            }
+            return cats;
+        }
+
+        public CatTable GetCategoryById(int id)
+        {
+            CatTable cat;
+            using (var debil = new CategoryContext())
+            {
+                cat = debil.Categories.FirstOrDefault(c => c.Id == id);
+            }
+            return cat;
+        }
     }
 }
-
-/*
- 
- fnjsdfks dsjfksdf dkfksdf kdsf dsfksd fsd fksd f
-
- 
- 
- 
- 
- 
- 
- */

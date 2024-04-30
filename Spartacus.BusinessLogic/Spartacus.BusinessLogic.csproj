@@ -55,24 +55,20 @@
     <Compile Include="BussinesLogic.cs" />
     <Compile Include="Core\AdminApi.cs" />
     <Compile Include="Core\UserApi.cs" />
+    <Compile Include="DBModel\CategoryContext.cs" />
+    <Compile Include="DBModel\MembershipContext.cs" />
     <Compile Include="DBModel\SessionContext.cs" />
     <Compile Include="DBModel\UserContext.cs" />
+    <Compile Include="Interfaces\IAdmin.cs" />
     <Compile Include="Interfaces\ISession.cs" />
-    <Compile Include="Migrations\202403271204355_InitialCreate.cs" />
-    <Compile Include="Migrations\202403271204355_InitialCreate.Designer.cs">
-      <DependentUpon>202403271204355_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202403311621301_ChangeLastIpLength.cs" />
-    <Compile Include="Migrations\202403311621301_ChangeLastIpLength.Designer.cs">
-      <DependentUpon>202403311621301_ChangeLastIpLength.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Logics\AdminBL.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SessionBL.cs" />
+    <Compile Include="Logics\SessionBL.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Spartacus.Domain\Spartacus.Domain.csproj">
-      <Project>{bbe0f79f-cdc6-4a3f-84a3-e80b6e4aae78}</Project>
+      <Project>{BBE0F79F-CDC6-4A3F-84A3-E80B6E4AAE78}</Project>
       <Name>Spartacus.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\Spartacus.Helpers\Spartacus.Helpers.csproj">
@@ -86,14 +82,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DBModel\Seed\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202403271204355_InitialCreate.resx">
-      <DependentUpon>202403271204355_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202403311621301_ChangeLastIpLength.resx">
-      <DependentUpon>202403311621301_ChangeLastIpLength.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
