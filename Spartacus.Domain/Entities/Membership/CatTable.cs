@@ -24,15 +24,15 @@ namespace Spartacus.Domain.Entities.Membership
         public string Description { get; set; }
 
         [Required]
-        public int PriceOneYear { get; set; }
-
-        [Required]
-        public int PriceSixMonths { get; set; }
+        public int PriceOneMonth { get; set; }
 
         [Required]
         public int PriceThreeMonths { get; set; }
 
         [Required]
-        public int PriceOneMonth { get; set; }
+        public int PriceSixMonths { get; set; }
+
+        [Required]
+        public int PriceOneYear { get; set; }
     }
 }
