@@ -8,7 +8,7 @@ namespace Spartacus.Web.Filters
 {
     public class AllowAttribute : ActionFilterAttribute
     {
-        private readonly ISession _session = new BussinesLogic().GetSessionBL();
+        private readonly ISession _session = BussinesLogic.GetSessionBL();
         private readonly URole[] _roles;
 
         public AllowAttribute(params URole[] roles)

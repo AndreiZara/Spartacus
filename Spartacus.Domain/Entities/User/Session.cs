@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Spartacus.Domain.Enums;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -13,6 +14,8 @@ namespace Spartacus.Domain.Entities.User
         [Required]
         [StringLength(30)]
         public string Username { get; set; }
+
+        public MsDuration? Duration { get; set; }
 
         [Required]
         public string CookieString { get; set; }

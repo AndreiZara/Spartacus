@@ -52,13 +52,14 @@
   <ItemGroup>
     <Compile Include="Entities\Membership\CatTable.cs" />
     <Compile Include="Entities\Membership\MsTable.cs" />
+    <Compile Include="Entities\User\GUID.cs" />
     <Compile Include="Entities\User\URegData.cs" />
     <Compile Include="Entities\User\UProfData.cs" />
+    <Compile Include="Enums\MsDuration.cs" />
     <Compile Include="Enums\URole.cs" />
     <Compile Include="Entities\User\Session.cs" />
     <Compile Include="Entities\User\UTable.cs" />
     <Compile Include="Entities\User\ULoginData.cs" />
-    <Compile Include="Entities\User\ULoginResp.cs" />
     <Compile Include="Entities\User\UserMinimal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

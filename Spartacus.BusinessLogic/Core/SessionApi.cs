@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Spartacus.BusinessLogic.DBModel;
-using Spartacus.Domain.Entities.Membership;
 using Spartacus.Domain.Entities.User;
+using Spartacus.Domain.Enums;
 using Spartacus.Helpers;
 using System;
 using System.Linq;
@@ -9,14 +9,14 @@ using System.Web;
 
 namespace Spartacus.BusinessLogic.Core
 {
-    public class UserApi
+    public class SessionApi
     {
         internal bool UserLoginAction(ULoginData data)
         {
             UTable user;
             using (var debil = new UserContext())
             {
-                user = debil.Users.FirstOrDefault(u => u.Username == data.Name && u.Password == data.Password);
+                user = debil.Users.FirstOrDefault(u => u.Username == data.Username && u.Password == data.Password);
             }
 
             return user != null;
@@ -33,6 +33,8 @@ namespace Spartacus.BusinessLogic.Core
                 debil.Users.Add(new UTable
                 {
                     Username = data.Username,
+                    Firstname = data.Firstname,
+                    Lastname = data.Lastname,
                     Password = data.Password,
                     Email = data.Email,
                     LastIp = data.Ip,
@@ -99,6 +101,58 @@ namespace Spartacus.BusinessLogic.Core
             userProfile = config.CreateMapper().Map<UserMinimal>(user);
 
             return userProfile;
+        }
+
+        internal bool SetMsDurationForAction(string userCookie, MsDuration duration)
+        {
+            Session session;
+            using (var debil = new SessionContext())
+            {
+                session = debil.Sessions.FirstOrDefault(s => s.CookieString == userCookie && s.ExpireTime > DateTime.Now);
+                if (session == null) return false;
+
+                session.Duration = duration;
+                debil.SaveChanges();
+            }
+            return true;
+        }
+
+        internal MsDuration? GetMsDurationForAction(string userCookie)
+        {
+            Session session;
+            using (var debil = new SessionContext())
+            {
+                session = debil.Sessions.FirstOrDefault(s => s.CookieString == userCookie && s.ExpireTime > DateTime.Now);
+                if (session == null) return null;
+            }
+            return session.Duration;
+        }
+
+        internal bool AddMembershipForAction(string username, MsDuration? duration)
+        {
+            if (duration == null) return false;
+
+            UTable user;
+            using (var debil = new UserContext())
+            {
+                user = debil.Users.FirstOrDefault(u => u.Username == username);
+
+                if (user.Membership == null)
+                {
+                    user.Membership = new Domain.Entities.Membership.MsTable
+                    {
+                        StartTime = DateTime.Now,
+                        EndTime = DateTime.Now.AddMonths((int)duration),
+                    };
+                }
+                else
+                {
+                    user.Membership.StartTime = DateTime.Now;
+                    user.Membership.EndTime = DateTime.Now.AddMonths((int)duration);
+                }
+                debil.SaveChanges();
+            }
+            return true;
         }
     }
 }

@@ -43,6 +43,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -53,22 +55,26 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BussinesLogic.cs" />
-    <Compile Include="Core\AdminApi.cs" />
-    <Compile Include="Core\UserApi.cs" />
+    <Compile Include="Core\CatMgmtApi.cs" />
+    <Compile Include="Core\UserMgmtApi.cs" />
+    <Compile Include="Core\MainApi.cs" />
+    <Compile Include="Core\SessionApi.cs" />
     <Compile Include="DBModel\CategoryContext.cs" />
-    <Compile Include="DBModel\MembershipContext.cs" />
     <Compile Include="DBModel\SessionContext.cs" />
     <Compile Include="DBModel\UserContext.cs" />
-    <Compile Include="Interfaces\IAdmin.cs" />
+    <Compile Include="Interfaces\ICatMgmt.cs" />
+    <Compile Include="Interfaces\IUserMgmt.cs" />
+    <Compile Include="Interfaces\IMain.cs" />
     <Compile Include="Interfaces\ISession.cs" />
-    <Compile Include="Logics\AdminBL.cs" />
-    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Logics\CatMgmtBL.cs" />
+    <Compile Include="Logics\UserMgmtBL.cs" />
+    <Compile Include="Logics\MainBL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Logics\SessionBL.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Spartacus.Domain\Spartacus.Domain.csproj">
-      <Project>{BBE0F79F-CDC6-4A3F-84A3-E80B6E4AAE78}</Project>
+      <Project>{bbe0f79f-cdc6-4a3f-84a3-e80b6e4aae78}</Project>
       <Name>Spartacus.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\Spartacus.Helpers\Spartacus.Helpers.csproj">
@@ -82,6 +88,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DBModel\Seed\" />
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -5,7 +5,7 @@ namespace Spartacus.Helpers
 {
     internal class LoginHelpers
     {
-         public static string HashGen(string password)
+        public static string HashGen(string password)
         {
             SHA256 sha256 = new SHA256CryptoServiceProvider();
             var originalBytes = Encoding.Default.GetBytes(password + "praWebUTM2");

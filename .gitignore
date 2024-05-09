@@ -373,3 +373,4 @@ FodyWeavers.xsd
 /Spartacus.Domain/Entities/Membership/Prices.cs
 /Spartacus.Web/ActionFilters/AdminModAttribute.cs
 /Spartacus.Web/Extension/HttpContextExtensions.cs
+/Spartacus.BusinessLogic/Migrations/Configuration.cs

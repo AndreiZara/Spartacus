@@ -8,9 +8,9 @@ namespace Spartacus.Web.Controllers
 {
     public class BaseController : Controller
     {
-        protected readonly ISession _session = new BussinesLogic().GetSessionBL();
+        protected readonly ISession _session = BussinesLogic.GetSessionBL();
 
-        protected void SessionStatus()
+        protected bool SessionStatus()
         {
             var cookie = Request.Cookies["UserCookie"];
             if (cookie != null)
@@ -19,16 +19,19 @@ namespace Spartacus.Web.Controllers
                 if (user != null)
                 {
                     System.Web.HttpContext.Current.Session["LoginStatus"] = "login";
+                    return true;
                 }
                 else
                 {
                     Session.Abandon();
                     EatCookie();
+                    return false;
                 }
             }
             else
             {
                 System.Web.HttpContext.Current.Session["LoginStatus"] = "logout";
+                return false;
             }
         }
 

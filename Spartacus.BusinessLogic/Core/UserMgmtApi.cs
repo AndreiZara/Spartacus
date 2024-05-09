@@ -1,25 +1,28 @@
 ﻿using Spartacus.BusinessLogic.DBModel;
 using Spartacus.Domain.Entities.Membership;
 using Spartacus.Domain.Entities.User;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 
 namespace Spartacus.BusinessLogic.Core
 {
-    public class AdminApi
+    public class UserMgmtApi
     {
-        public void AddUserAction(UTable user)
+        internal bool AddUserAction(UTable data)
         {
             using (var debil = new UserContext())
             {
-                debil.Users.Add(user);
+                var user = debil.Users.FirstOrDefault(u => u.Username == data.Username);
+                if (user != null) return false;
+
+                debil.Users.Add(data);
                 debil.SaveChanges();
             }
+            return true;
         }
 
-        public List<UTable> GetUsersAction()
+        internal List<UTable> GetUsersAction()
         {
             List<UTable> users;
             using (var debil = new UserContext())
@@ -29,7 +32,7 @@ namespace Spartacus.BusinessLogic.Core
             return users;
         }
 
-        public UTable GetUserByIdAction(int id)
+        internal UTable GetUserByIdAction(int id)
         {
             UTable user;
             using (var debil = new UserContext())
@@ -39,7 +42,7 @@ namespace Spartacus.BusinessLogic.Core
             return user;
         }
 
-        public bool UpdateUserAction(UTable data)
+        internal bool UpdateUserAction(UTable data)
         {
             using (var debil = new UserContext())
             {
@@ -62,7 +65,7 @@ namespace Spartacus.BusinessLogic.Core
 
         }
 
-        public bool DeleteUserByIdAction(int id)
+        internal bool DeleteUserByIdAction(int id)
         {
             using (var debil = new UserContext())
             {
@@ -72,55 +75,6 @@ namespace Spartacus.BusinessLogic.Core
                 debil.SaveChanges();
             }
             return true;
-        }
-
-        public bool UpdateCategory(CatTable data)
-        {
-            using (var debil = new CategoryContext())
-            {
-                var cat = debil.Categories.FirstOrDefault(x => x.Id == data.Id);
-
-                if (cat == null) return false;
-            
-                cat.Title = data.Title;
-                cat.Description = data.Description;
-                cat.PriceOneYear = data.PriceOneYear;
-                cat.PriceSixMonths = data.PriceSixMonths;
-                cat.PriceThreeMonths = data.PriceThreeMonths;
-                cat.PriceOneMonth = data.PriceOneMonth;
-
-                debil.SaveChanges();
-            }
-            return true;
-        }
-
-        public void AddCategory(CatTable table)
-        {
-            using (var debil = new CategoryContext())
-            {
-                debil.Categories.Add(table);
-                debil.SaveChanges();
-            }
-        }
-
-        public List<CatTable> GetCategories()
-        {
-            List<CatTable> cats;
-            using (var debil = new CategoryContext())
-            {
-                cats = debil.Categories.ToList();
-            }
-            return cats;
-        }
-
-        public CatTable GetCategoryById(int id)
-        {
-            CatTable cat;
-            using (var debil = new CategoryContext())
-            {
-                cat = debil.Categories.FirstOrDefault(c => c.Id == id);
-            }
-            return cat;
         }
     }
 }

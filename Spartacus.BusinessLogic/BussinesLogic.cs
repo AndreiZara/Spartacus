@@ -3,9 +3,11 @@ using Spartacus.BusinessLogic.Logics;
 
 namespace Spartacus.BusinessLogic
 {
-    public class BussinesLogic
+    public static class BussinesLogic
     {
-        public ISession GetSessionBL() => new SessionBL();
-        public IAdmin GetAdminBL() => new AdminBL();
+        public static ISession GetSessionBL() => new SessionBL();
+        public static IUserMgmt GetUserMgmtBL() => new UserMgmtBL();
+        public static ICatMgmt GetCatMgmtBL() => new CatMgmtBL();
+        public static IMain GetMainBL() => new MainBL();
     }
 }

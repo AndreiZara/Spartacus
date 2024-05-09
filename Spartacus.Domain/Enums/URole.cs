@@ -1,9 +1,9 @@
 ﻿namespace Spartacus.Domain.Enums
 {
-    public enum URole:int
+    public enum URole
     {
         Client,
-        Moderator,
+        Manager,
         Admin
     }
 }
