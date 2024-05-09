@@ -15,7 +15,7 @@ namespace Spartacus.BusinessLogic.DBModel
             modelBuilder.Entity<UTable>()
                         .HasOptional(e => e.Membership)
                         .WithRequired(e => e.User)
-                        .WillCascadeOnDelete(true); 
+                        .WillCascadeOnDelete(true);
 
             base.OnModelCreating(modelBuilder);
         }

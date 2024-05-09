@@ -12,5 +12,8 @@ namespace Spartacus.Web.Models
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public DateTime RemainingTime { get; set; }
+        // and something related to category
+        public string Title { get; set; }
+        public string Description { get; set; }
     }
 }

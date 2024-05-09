@@ -15,6 +15,33 @@ body {
   color: rgba(0, 0, 0, 0.6);
 }
 
+.entry {
+    display: inline-grid;
+    grid-template-areas: "left mid right";
+    align-items: end;
+    gap: 10px;
+}
+
+.left {
+    grid-area: left;
+}
+
+.right {
+    grid-area: right;
+    color: white;
+}
+
+.dots {
+    grid-area: mid;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+    .dots::after {
+/*        content: "......................................................................................."*/
+        content: "-----------------------------------------------------------------------------------------"
+    }
+
 h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
   font-family: "Barlow Condensed", sans-serif;
   font-weight: 700;
@@ -204,10 +231,10 @@ input[type=email]:focus, input[type=password]:focus, input[type=text]:focus, inp
   padding: 155px 0 100px;
 }
 
-.overly, .bg-4 {
+.overly, .bg-4, .bg-mem {
   position: relative;
 }
-.overly:before, .bg-4:before {
+.overly:before, .bg-4:before, .bg-mem:before {
   content: "";
   position: absolute;
   left: 0;
@@ -466,6 +493,10 @@ ul.dropdown-menu li {
     background-size: cover;
 }
 
+.bg-mem {
+    background: url("../images/bg/bg-mem.jpg") no-repeat;
+    background-size: cover;
+}
 
 .mt-80px {
   margin-top: -80px;

@@ -55,21 +55,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BussinesLogic.cs" />
-    <Compile Include="Core\AdminApi.cs" />
-    <Compile Include="Core\UserApi.cs" />
-    <Compile Include="DBModel\MembershipContext.cs" />
+    <Compile Include="Core\CatMgmtApi.cs" />
+    <Compile Include="Core\UserMgmtApi.cs" />
+    <Compile Include="Core\MainApi.cs" />
+    <Compile Include="Core\SessionApi.cs" />
+    <Compile Include="DBModel\CategoryContext.cs" />
     <Compile Include="DBModel\SessionContext.cs" />
     <Compile Include="DBModel\UserContext.cs" />
-    <Compile Include="Interfaces\IAdmin.cs" />
+    <Compile Include="Interfaces\ICatMgmt.cs" />
+    <Compile Include="Interfaces\IUserMgmt.cs" />
+    <Compile Include="Interfaces\IMain.cs" />
     <Compile Include="Interfaces\ISession.cs" />
-    <Compile Include="Logics\AdminBL.cs" />
-    <Compile Include="Migrations\202404232114504_InitialCreate.cs" />
-    <Compile Include="Migrations\202404232114504_InitialCreate.Designer.cs">
-      <DependentUpon>202404232114504_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202404232124187_Cascada.cs" />
-    <Compile Include="Migrations\202404232124187_Cascada.Designer.cs">
-      <DependentUpon>202404232124187_Cascada.cs</DependentUpon>
+    <Compile Include="Logics\CatMgmtBL.cs" />
+    <Compile Include="Logics\UserMgmtBL.cs" />
+    <Compile Include="Logics\MainBL.cs" />
+    <Compile Include="Migrations\202405081900554_ModifySession.cs" />
+    <Compile Include="Migrations\202405081900554_ModifySession.Designer.cs">
+      <DependentUpon>202405081900554_ModifySession.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -96,11 +98,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202404232114504_InitialCreate.resx">
-      <DependentUpon>202404232114504_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202404232124187_Cascada.resx">
-      <DependentUpon>202404232124187_Cascada.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202405081900554_ModifySession.resx">
+      <DependentUpon>202405081900554_ModifySession.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

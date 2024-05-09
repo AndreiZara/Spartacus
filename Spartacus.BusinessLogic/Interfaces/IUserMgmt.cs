@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Spartacus.BusinessLogic.Interfaces
 {
-    public interface IAdmin
+    public interface IUserMgmt
     {
-        void AddUser(UTable data);
+        bool AddUser(UTable data);
 
         List<UTable> GetUsers();
 

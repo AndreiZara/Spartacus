@@ -1,10 +1,10 @@
-﻿var date = document.getElementById('cc-exp');
+﻿var date = document.getElementById('Expiry');
 
 
 function checkValue(str, max) {
     if (str.charAt(0) !== '0' || str == '00') {
         var num = parseInt(str);
-        if (isNaN(num) || num <= 0 || num > max) num = 1;
+        if (isNaN(num) || num <= 0 || num > max) num = parseInt(str[str.length - 1]);
         str = num > parseInt(max.toString().charAt(0))
             && num.toString().length == 1 ? '0' + num : num.toString();
     };

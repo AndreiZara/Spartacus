@@ -1,67 +1,61 @@
-﻿using Microsoft.Ajax.Utilities;
+﻿using Spartacus.BusinessLogic;
 using Spartacus.BusinessLogic.Core;
+using Spartacus.BusinessLogic.Interfaces;
 using Spartacus.Domain.Entities.Membership;
-using Spartacus.Domain.Entities.User;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using Spartacus.Domain.Enums;
+using Spartacus.Web.Filters;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
 
 namespace Spartacus.Web.Controllers
 {
-    public class CategoryController : Controller
+    [Allow(URole.Admin)]
+    public class CategoryController : BaseController
     {
+        private readonly ICatMgmt _catMgmt = BussinesLogic.GetCatMgmtBL();
         public ActionResult Read()
         {
-            var cats = new AdminApi().GetCategories();
+            SessionStatus();
+            var cats = _catMgmt.GetCats();
             return View(cats);
         }
 
         public ActionResult Create()
         {
+            SessionStatus();
             return View();
         }
-        
+
         [HttpPost]
-        public ActionResult Create(CatTable table)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(CatTable data)
         {
-            if (ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
-                CatTable category = new CatTable
-                {
-                    Id = table.Id,
-                    Title = table.Title,
-                    Description = table.Description,
-                    PriceOneYear = table.PriceOneYear,
-                    PriceSixMonths = table.PriceSixMonths,
-                    PriceThreeMonths = table.PriceThreeMonths,
-                    PriceOneMonth = table.PriceOneMonth,
+                var catCreated = _catMgmt.AddCat(data);
 
-                };
-
-                new AdminApi().AddCategory(category);
-
+                if (catCreated)
+                    return RedirectToAction("Read");
+                else
+                    ModelState.AddModelError("CreateMessage", "Creation failed!");
             }
-                return View();
-
+            return View();
         }
 
 
         public ActionResult Update(int id)
         {
-            var cat = new AdminApi().GetCategoryById(id);
+            SessionStatus();
+            var cat = _catMgmt.GetCatById(id);
             return View(cat);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Update(CatTable data) 
+        public ActionResult Update(CatTable data)
         {
             if (ModelState.IsValid)
             {
-                var catUpdated = new AdminApi().UpdateCategory(data);
+                var catUpdated = _catMgmt.UpdateCat(data);
 
                 if (catUpdated)
                     return RedirectToAction("Read");
@@ -69,6 +63,21 @@ namespace Spartacus.Web.Controllers
                     ModelState.AddModelError("UpdateMessage", "Update failed!");
             }
             return View(data);
+        }
+        public ActionResult Delete(int id)
+        {
+            SessionStatus();
+            var cat = _catMgmt.GetCatById(id);
+            if (cat == null) return HttpNotFound();
+            return View(cat);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            var catDeleted = _catMgmt.DeleteCatById(id);
+            if (catDeleted == false) return HttpNotFound();
+            return RedirectToAction("Read");
         }
     }
 }

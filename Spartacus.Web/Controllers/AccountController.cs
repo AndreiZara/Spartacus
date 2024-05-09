@@ -20,10 +20,10 @@ namespace Spartacus.Web.Controllers
             {
                 ULoginData data = new ULoginData
                 {
-                    Name = login.Username,
+                    Username = login.Username,
                     Password = login.Password,
                     Ip = Request.UserHostAddress,
-                    LoginDateTime = DateTime.Now
+                    LoginTime = DateTime.Now
                 };
 
                 var userLogin = _session.UserLogin(data); // RESULT FROM THE Business Logic
@@ -48,6 +48,11 @@ namespace Spartacus.Web.Controllers
             EatCookie();
             Session.Abandon();
             return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult Register()
+        {
+            return View();
         }
 
         [HttpPost]
