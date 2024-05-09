@@ -306,7 +306,6 @@
     <Compile Include="Filters\AllowAttribute.cs" />
     <Compile Include="Models\Checkout.cs" />
     <Compile Include="Models\Feedback.cs" />
-    <Compile Include="Models\Category.cs" />
     <Compile Include="Models\UserProfile.cs" />
     <Compile Include="Models\UserRegister.cs" />
     <Compile Include="Global.asax.cs">

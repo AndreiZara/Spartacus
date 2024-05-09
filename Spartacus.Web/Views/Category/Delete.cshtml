@@ -17,6 +17,14 @@
         </dt>
 
         <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
             @Html.DisplayFor(model => model.Description)
         </dd>
 
@@ -25,17 +33,32 @@
         </dt>
 
         <dd>
+            @Html.DisplayFor(model => model.PriceOneMonth)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PriceThreeMonths)
+        </dt>
+
+        <dd>
             @Html.DisplayFor(model => model.PriceThreeMonths)
         </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PriceSixMonths)
+        </dt>
 
         <dd>
             @Html.DisplayFor(model => model.PriceSixMonths)
         </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.PriceOneYear)
         </dt>
 
-
+        <dd>
+            @Html.DisplayFor(model => model.PriceOneYear)
+        </dd>
     </dl>
 
     @using (Html.BeginForm()) {

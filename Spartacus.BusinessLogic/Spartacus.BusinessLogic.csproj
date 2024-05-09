@@ -69,11 +69,6 @@
     <Compile Include="Logics\CatMgmtBL.cs" />
     <Compile Include="Logics\UserMgmtBL.cs" />
     <Compile Include="Logics\MainBL.cs" />
-    <Compile Include="Migrations\202405081900554_ModifySession.cs" />
-    <Compile Include="Migrations\202405081900554_ModifySession.Designer.cs">
-      <DependentUpon>202405081900554_ModifySession.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Logics\SessionBL.cs" />
   </ItemGroup>
@@ -93,14 +88,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DBModel\Seed\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202405081900554_ModifySession.resx">
-      <DependentUpon>202405081900554_ModifySession.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
