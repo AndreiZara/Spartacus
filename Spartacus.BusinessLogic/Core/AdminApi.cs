@@ -34,9 +34,9 @@ namespace Spartacus.BusinessLogic.Core
             UTable user;
             using (var debil = new UserContext())
             {
-                var user = debil.Users.SingleOrDefault(u => u.Username == Username);
-                return user;
+                user = debil.Users.SingleOrDefault(u => u.Id == id);
             }
+            return user;
         }
 
         public bool UpdateUserAction(UTable data)
@@ -64,7 +64,6 @@ namespace Spartacus.BusinessLogic.Core
 
         public bool DeleteUserByIdAction(int id)
         {
-
             using (var debil = new UserContext())
             {
                 var user = debil.Users.Find(id);
@@ -75,5 +74,53 @@ namespace Spartacus.BusinessLogic.Core
             return true;
         }
 
+        public bool UpdateCategory(CatTable data)
+        {
+            using (var debil = new CategoryContext())
+            {
+                var cat = debil.Categories.FirstOrDefault(x => x.Id == data.Id);
+
+                if (cat == null) return false;
+            
+                cat.Title = data.Title;
+                cat.Description = data.Description;
+                cat.PriceOneYear = data.PriceOneYear;
+                cat.PriceSixMonths = data.PriceSixMonths;
+                cat.PriceThreeMonths = data.PriceThreeMonths;
+                cat.PriceOneMonth = data.PriceOneMonth;
+
+                debil.SaveChanges();
+            }
+            return true;
+        }
+
+        public void AddCategory(CatTable table)
+        {
+            using (var debil = new CategoryContext())
+            {
+                debil.Categories.Add(table);
+                debil.SaveChanges();
+            }
+        }
+
+        public List<CatTable> GetCategories()
+        {
+            List<CatTable> cats;
+            using (var debil = new CategoryContext())
+            {
+                cats = debil.Categories.ToList();
+            }
+            return cats;
+        }
+
+        public CatTable GetCategoryById(int id)
+        {
+            CatTable cat;
+            using (var debil = new CategoryContext())
+            {
+                cat = debil.Categories.FirstOrDefault(c => c.Id == id);
+            }
+            return cat;
+        }
     }
 }

@@ -362,3 +362,15 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /Spartacus.BusinessLogic/Migrations
+/Spartacus.BusinessLogic/Migrations/202404250419374_NewCategTable.cs
+/Spartacus.BusinessLogic/Migrations/202404262006323_UpdateCategTableAddAnnotation.cs
+/Spartacus.BusinessLogic/Migrations/202404262006323_UpdateCategTableAddAnnotation.Designer.cs
+/Spartacus.BusinessLogic/Migrations/202404262020472_UpdateNewCategTable.cs
+/Spartacus.BusinessLogic/Migrations/202404262020472_UpdateNewCategTable.resx
+/Spartacus.BusinessLogic/DBModel/CatContext.cs
+/Spartacus.Domain/Entities/Membership/CatTable.cs
+/Spartacus.Domain/Entities/Membership/Period.cs
+/Spartacus.Domain/Entities/Membership/Prices.cs
+/Spartacus.Web/ActionFilters/AdminModAttribute.cs
+/Spartacus.Web/Extension/HttpContextExtensions.cs
+/Spartacus.BusinessLogic/Migrations/Configuration.cs

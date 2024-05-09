@@ -1,9 +1,7 @@
-﻿using Spartacus.BusinessLogic.Interfaces;
-using Spartacus.BusinessLogic;
+﻿using Spartacus.BusinessLogic;
+using Spartacus.BusinessLogic.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Spartacus.Web.Controllers
@@ -22,8 +20,8 @@ namespace Spartacus.Web.Controllers
                 {
                     System.Web.HttpContext.Current.Session["LoginStatus"] = "login";
                 }
-                else 
-                { 
+                else
+                {
                     Session.Abandon();
                     EatCookie();
                 }
