@@ -347,6 +347,7 @@
     <Content Include="Views\Category\Create.cshtml" />
     <Content Include="Views\Category\Read.cshtml" />
     <Content Include="Views\Category\Update.cshtml" />
+    <Content Include="Views\Category\Delete.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
