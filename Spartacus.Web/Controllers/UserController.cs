@@ -1,25 +1,27 @@
 ﻿using Spartacus.Domain.Entities.User;
-using Spartacus.BusinessLogic;
-using Spartacus.Web.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
-using Microsoft.Ajax.Utilities;
 using Spartacus.BusinessLogic.Core;
-using Spartacus.Domain.Enums;
 using Spartacus.Web.ActionFilters;
-using Spartacus.Web.Controllers;
 using eUseControl.Web.Controllers;
-using Spartacus.Web.Extension;
+using Spartacus.BusinessLogic.Interfaces;
+using Microsoft.Ajax.Utilities;
 using Spartacus.Domain.Entities.Membership;
+using Spartacus.BusinessLogic;
 
 namespace Spartacus.Web.Controllers
 {
     public class UserController : BaseController
     {
+        private readonly IAdmin _admin;
+
+        public UserController()
+        {
+            var bl = new BussinesLogic();
+            _admin = bl.GetAdminBL();
+        }
+
 
         public ActionResult Create()
         {
@@ -56,46 +58,43 @@ namespace Spartacus.Web.Controllers
                 Session["LastLogin"] = data.LastLogin;
                 Session["LastIp"] = data.LastIp;
                 
-                AdminApi api = new AdminApi();
-                api.AddUser(data);
+                
+                _admin.AddUser(data);
                 
                 
             }
             return View(login);
 
         }
-        
 
-        
-        public ActionResult Update(UTable login)
+
+        public ActionResult Update(UTable table)
         {
+            var category = _admin.GetUserById(table.Id);
+            return View(category);
+        }
 
+        [HttpPost]
+        public ActionResult Update(int id, UTable login)
+        {
+            var user = _admin.GetParticularUserById(id);
 
-            if (ModelState.IsValid)
+            if (user != null)
             {
-                UTable data = new UTable
-                {
-                    Username = login.Username,
-                    Firstname = login.Firstname,
-                    Lastname = login.Lastname,
-                    Id = login.Id,
-                    Password = login.Password,
-                    Email = login.Email,
-                    LastLogin = DateTime.Now,
-                    LastIp = Request.UserHostAddress,
-                    Level = login.Level,
-                };
+                user.Username = login.Username;
+                user.Firstname = login.Firstname;
+                user.Lastname = login.Lastname;
+                user.Id = login.Id;
+                user.Password = login.Password;
+                user.Email = login.Email;
+                user.LastLogin = DateTime.Now;
+                user.LastIp = Request.UserHostAddress;
+                user.Level = login.Level;
                 
-                bool isTrue = new AdminApi().UpdateUser(data,login.Id);
-
-                if (isTrue)
-                {
-                    return View(data);
-                }
-
-                else { return View(data); }
+                bool isTrue = _admin.UpdateUser(user,login.Id);
+                if (isTrue) { return RedirectToAction("Read"); }
+                return View(login);
             }
-            Session["Id"] = login.Id;
 
             return View();
         }
@@ -114,12 +113,24 @@ namespace Spartacus.Web.Controllers
 
             List<UTable> Ulist = new List<UTable>();
             UTable newTable = new UTable();
-            AdminApi api = new AdminApi();
-            Ulist = api.ReadUser();
+            
+            Ulist = _admin.ReadUser();
             return View(Ulist);
         }
 
+        public ActionResult Delete()
+        {
+            return View();
+        }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int Id)
+        {
+            bool isTrue = _admin.DeleteUser(Id);
+            if(isTrue) { return RedirectToAction("Read"); }
+            return View();
+        }
 
 
         

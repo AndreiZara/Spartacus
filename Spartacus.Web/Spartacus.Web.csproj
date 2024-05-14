@@ -146,6 +146,7 @@
     <Content Include="Content\Slick\slick-theme.css" />
     <Content Include="Content\Slick\slick.css" />
     <Content Include="Content\css\checkout.css" />
+    <Content Include="Content\Template\Email.html" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -313,7 +314,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\FrogotPassword.cs" />
     <Compile Include="Models\tmpModel.cs" />
+    <Compile Include="Models\Tocken.cs" />
     <Compile Include="Models\UserLogin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -352,7 +355,10 @@
     <Content Include="Views\Membership\Create.cshtml" />
     <Content Include="Views\Membership\Read.cshtml" />
     <Content Include="Views\Membership\Update.cshtml" />
-    <Content Include="Views\Account\Frogot.cshtml" />
+    <Content Include="Views\User\Delete.cshtml" />
+    <Content Include="Views\Membership\Delete.cshtml" />
+    <Content Include="Views\Account\Forgot.cshtml" />
+    <Content Include="Views\Account\Read.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

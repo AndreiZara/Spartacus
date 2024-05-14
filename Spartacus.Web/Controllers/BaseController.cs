@@ -4,9 +4,6 @@ using System.Web.Mvc;
 using Spartacus.BusinessLogic;
 using Spartacus.BusinessLogic.Interfaces;
 using Spartacus.Web.Extension;
-using Spartacus.BusinessLogic.Interfaces;
-using Spartacus.BusinessLogic;
-using Spartacus.Web.Extension;
 
 namespace eUseControl.Web.Controllers
 {

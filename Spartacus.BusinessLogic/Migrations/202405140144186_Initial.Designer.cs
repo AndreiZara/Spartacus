@@ -7,13 +7,13 @@ namespace Spartacus.BusinessLogic.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class UpdateCategTable : IMigrationMetadata
+    public sealed partial class Initial : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(UpdateCategTable));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Initial));
         
         string IMigrationMetadata.Id
         {
-            get { return "202404261953021_UpdateCategTable"; }
+            get { return "202405140144186_Initial"; }
         }
         
         string IMigrationMetadata.Source

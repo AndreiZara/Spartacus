@@ -1,21 +1,26 @@
-﻿using Microsoft.Ajax.Utilities;
+﻿using Spartacus.BusinessLogic;
 using Spartacus.BusinessLogic.Core;
+using Spartacus.BusinessLogic.Interfaces;
 using Spartacus.Domain.Entities.Membership;
-using Spartacus.Domain.Entities.User;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
 
 namespace Spartacus.Web.Controllers
 {
     public class MembershipController : Controller
     {
+        private readonly IAdmin _admin;
+
         public ActionResult Create()
         {
+            
             return View();
+        }
+
+        public MembershipController()
+        {
+            var bl = new BussinesLogic();
+            _admin = bl.GetAdminBL();
         }
         // GET: Membership
         [HttpPost]
@@ -35,7 +40,7 @@ namespace Spartacus.Web.Controllers
 
                 };
 
-                new AdminApi().AddCategory(category);
+                _admin.AddCategory(category);
 
             }
                 return View();
@@ -45,7 +50,7 @@ namespace Spartacus.Web.Controllers
 
         public ActionResult Update(CategoryTable table)
         {
-            var category = new AdminApi().GetCategoryById(table.Id);
+            var category = _admin.GetCategoryById(table.Id);
             return View(category);
         }
 
@@ -53,7 +58,7 @@ namespace Spartacus.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Update (int id, CategoryTable model) 
         {
-            var category = new AdminApi().GetParticularCategoryById(id);
+            var category = _admin.GetParticularCategoryById(id);
 
             if(category != null)
             {
@@ -63,7 +68,7 @@ namespace Spartacus.Web.Controllers
                 category.Price_6 = model.Price_6;   
                 category.Price_3 = model.Price_3;   
                 category.Price_1 = model.Price_1;
-                bool isTrue = new AdminApi().UpdateCategory(category, id);
+                bool isTrue = _admin.UpdateCategory(category, id);
                 return RedirectToAction("Read");
             }
             return View();
@@ -73,25 +78,11 @@ namespace Spartacus.Web.Controllers
         public ActionResult Read() 
         {
             List<CategoryTable> Clist = new List<CategoryTable>();
-            Clist = new AdminApi().ReadCategory();
+            Clist = _admin.ReadCategory();
             return View(Clist);
         }
 
         
-        //public ActionResult Delete()
-        //{
-        //    return View();
-        //}
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Delete(CategoryTable table)
-        //{
-        //    var newTable = new AdminApi().GetParticularCategoryById(table.Id);
-        //    if(newTable != null) 
-        //    {
-                
-        //    }
-        //    return View();
-        //}
+        
     }
 }

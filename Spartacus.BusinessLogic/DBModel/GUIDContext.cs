@@ -9,15 +9,14 @@ using Spartacus.Domain.Entities.User;
 
 namespace Spartacus.BusinessLogic.DBModel
 {
-    class UserContext : DbContext
+    class GUIDContext : DbContext
     {
-        public UserContext() : 
+        public GUIDContext() :
             base("name=Spartacus") // connectionstring name define in your web.config
         {
         }
 
-        public virtual DbSet<UTable> Users{ get; set; }
         public virtual DbSet<GUID> Tokens { get; set; }
-
+        
     }
 }

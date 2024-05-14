@@ -1,5 +1,4 @@
-﻿using System;
-using System.Web;
+﻿using System.Web;
 using Spartacus.BusinessLogic.Core;
 using Spartacus.BusinessLogic.Interfaces;
 using Spartacus.Domain.Entities.User;

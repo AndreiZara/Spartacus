@@ -12,7 +12,7 @@ namespace Spartacus.BusinessLogic.Core
 {
     public class AdminApi
     {
-        public void AddUser(UTable user)
+        internal void AddUserAction(UTable user)
         {
             using (var debil = new UserContext())
             {
@@ -21,7 +21,7 @@ namespace Spartacus.BusinessLogic.Core
             }
         }
 
-        public List<UTable> ReadUser()
+        internal List<UTable> ReadUserAction()
         {
             using (var debil = new UserContext())
             {
@@ -30,16 +30,8 @@ namespace Spartacus.BusinessLogic.Core
             }
         }
 
-        public UTable GetUserByUsername(string Username)
-        {
-            using (var debil = new UserContext())
-            {
-                var user = debil.Users.SingleOrDefault(u => u.Username == Username);
-                return user;
-            }
-        }
 
-        public bool UpdateUser(UTable user, int Id)
+        internal bool UpdateUserAction(UTable user, int Id)
         {
             using (var debil = new UserContext())
             {
@@ -64,7 +56,59 @@ namespace Spartacus.BusinessLogic.Core
             return false;
         }
 
-        public bool UpdateCategory(CategoryTable category, int Id)
+        internal bool DeleteUserAction(int Id)
+        {
+            using(var debil = new UserContext())
+            {
+                var user = debil.Users.FirstOrDefault(u => u.Id == Id);
+                if(user != null)
+                {
+                    debil.Users.Remove(user);
+                    debil.SaveChanges();   
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        internal UTable GetUserByIdAction(int Id)
+        {
+            using (var debil = new UserContext())
+            {
+                var user = debil.Users.Where(u => u.Id == Id).SingleOrDefault();
+                return user;
+            }
+        }
+
+        internal UTable GetUserByUsernameAction(string Username)
+        {
+            using (var debil = new UserContext())
+            {
+                var user = debil.Users.Where(u => u.Username == Username).SingleOrDefault();
+                return user;
+            }
+        }
+
+        internal UTable GetParticularUserByIdAction(int Id)
+        {
+            using (var debil = new UserContext())
+            {
+                var user = debil.Users.FirstOrDefault(u => u.Id == Id);
+                return user;
+            }
+        }
+
+
+        internal void AddCategoryAction(CategoryTable table)
+        {
+            using (var debil = new CatContext())
+            {
+                debil.Categories.Add(table);
+                debil.SaveChanges();
+            }
+        }
+
+        internal bool UpdateCategoryAction(CategoryTable category, int Id)
         {
             using (var debil = new CatContext())
             {
@@ -87,16 +131,7 @@ namespace Spartacus.BusinessLogic.Core
             return false;
         }
 
-        public void AddCategory(CategoryTable table)
-        {
-            using (var debil = new CatContext())
-            {
-                debil.Categories.Add(table);
-                debil.SaveChanges();
-            }
-        }
-
-        public List<CategoryTable> ReadCategory()
+        internal List<CategoryTable> ReadCategoryAction()
         {
             using (var debil = new CatContext())
             {
@@ -105,21 +140,21 @@ namespace Spartacus.BusinessLogic.Core
             }
         }
 
-        public CategoryTable GetCategoryById(int Id)
+        internal CategoryTable GetCategoryByIdAction(int Id)
         {
             using (var debil = new CatContext())
             {
-                var user = debil.Categories.Where(u => u.Id == Id).SingleOrDefault();
-                return user;
+                var category = debil.Categories.Where(cat => cat.Id == Id).SingleOrDefault();
+                return category;
             }
         }
 
-        public CategoryTable GetParticularCategoryById(int Id)
+        internal CategoryTable GetParticularCategoryByIdAction(int Id)
         {
             using (var debil = new CatContext())
             {
-                var user = debil.Categories.FirstOrDefault(u => u.Id == Id);
-                return user;
+                var category = debil.Categories.FirstOrDefault(cat => cat.Id == Id);
+                return category;
             }
         }
 

@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Web.UI.WebControls;
 using System.Web;
 using System.Linq;
+using System.Threading.Tasks;
+using Spartacus.Domain.Entities.Membership;
 
 namespace Spartacus.Web.Controllers
 {
@@ -16,11 +18,17 @@ namespace Spartacus.Web.Controllers
     public class AccountController : Controller
     {
         private readonly ISession _session;
+        private readonly IMain _sessionMain;
+        private readonly IAdmin _sessionAdmin;
 
         public AccountController()
         {
             var bl = new BussinesLogic();
             _session = bl.GetSessionBL();
+            var Mbl = new BussinesLogic();
+            _sessionMain = Mbl.GetMainBL();
+            var Abl = new BussinesLogic();
+            _sessionAdmin = Abl.GetAdminBL();
         }
 
         public ActionResult Register()
@@ -46,12 +54,12 @@ namespace Spartacus.Web.Controllers
 
         public ActionResult Login()
         {
-            
+
             return View();
         }
 
 
-        
+
         [HttpPost]
         public ActionResult Login(UserLogin login)
         {
@@ -87,7 +95,7 @@ namespace Spartacus.Web.Controllers
             }
 
             return View(login);
-         
+
         }
 
         public ActionResult Join()
@@ -98,7 +106,7 @@ namespace Spartacus.Web.Controllers
 
         public ActionResult Logout()
         {
-            if(Session != null)
+            if (Session != null)
             {
                 Session["Username"] = null;
                 System.Web.HttpContext.Current.Session.Clear();
@@ -112,32 +120,75 @@ namespace Spartacus.Web.Controllers
                     }
                 }
             }
-            
+
             return RedirectToAction("Index", "Home");
-            
-            
+
+
         }
 
 
-        public ActionResult Profile(UserLogin login)
+        public ActionResult Profile()
         {
+
+            
             if (ModelState.IsValid)
             {
-                ULoginData data = new ULoginData
-                {
-                    Credential = login.Username,
-                    Password = login.Password,
-                    Ip = Request.UserHostAddress,
-                    LoginDateTime = DateTime.Now
-                };
 
-                var userTable = _session.UserProfile(data);
+                UTable uTable = new UTable();
+                string username = Session["Username"].ToString();
+                var userTable = _sessionAdmin.GetUserByUsername(username);
 
-                
+                return View(userTable);
             }
             return View();
         }
 
-        
+
+        public ActionResult Forgot()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Forgot(FrogotPassword pass)
+        {
+            if (ModelState.IsValid)
+            {
+                GUID guid = new GUID()
+                {
+                    Token = Guid.NewGuid().ToString(),
+                    StartDate = DateTime.Now
+                };
+
+
+
+                _sessionMain.CreateToken(guid);
+                string token = Guid.NewGuid().ToString();
+
+                Session["token"] = token;
+
+
+                string subject = "helloworld";
+
+
+                string resetUrl = Url.Action("Forgot", "Account", Request.Url.Scheme);
+
+                string body = _sessionMain.PopulateBody("helloworld", resetUrl, "helloworld");
+
+                await _sessionMain.SendEmailAsync(pass.Email, subject, body);
+            }
+
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult Read()
+        {
+            List<GUID> Clist = new List<GUID>();
+            Clist = _sessionMain.GetToken();
+            return View(Clist);
+        }
+
     }
+
 }

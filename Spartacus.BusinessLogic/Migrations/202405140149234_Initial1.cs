@@ -3,17 +3,17 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialCreate : DbMigration
+    public partial class Initial1 : DbMigration
     {
         public override void Up()
         {
             CreateTable(
-                "dbo.CategoryTables",
+                "dbo.GUIDs",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Title = c.String(nullable: false),
-                        Description = c.String(nullable: false),
+                        Token = c.String(),
+                        StartDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -21,7 +21,7 @@
         
         public override void Down()
         {
-            DropTable("dbo.CategoryTables");
+            DropTable("dbo.GUIDs");
         }
     }
 }
