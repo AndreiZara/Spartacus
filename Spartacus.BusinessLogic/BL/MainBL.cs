@@ -21,14 +21,20 @@ namespace Spartacus.BusinessLogic.BL
             return PopulateBodyAction(title, url, message);
         }
 
-        public void CreateToken(GUID guid)
+        public void CreateToken(UToken guid)
         {
             CreateTokenAction(guid);    
         }
 
-        public List<GUID> GetToken()
+        public List<UToken> GetTokenList()
         {
-            return GetTokenAction();
+            return GetTokenListAction();
         }
+
+        public UToken GetToken(string token)
+        {
+            return GetTokenAction(token);
+        }
+
     }
 }

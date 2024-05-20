@@ -10,8 +10,8 @@ namespace Spartacus.BusinessLogic.Interfaces
     {
         Task SendEmailAsync(string email, string subject, string message);
         string PopulateBody(string title, string url, string message);
-        void CreateToken(GUID guid);
-        List<GUID> GetToken();
-
+        void CreateToken(UToken guid);
+        List<UToken> GetTokenList();
+        UToken GetToken(string token);
     }
 }

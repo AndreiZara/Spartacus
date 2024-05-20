@@ -17,7 +17,7 @@ namespace Spartacus.BusinessLogic.DBModel
         }
 
         public virtual DbSet<UTable> Users{ get; set; }
-        public virtual DbSet<GUID> Tokens { get; set; }
+        public virtual DbSet<UToken> Tokens { get; set; }
 
     }
 }

@@ -89,6 +89,15 @@ namespace Spartacus.BusinessLogic.Core
             }
         }
 
+        internal UTable GetUserByEmailAction(string Email)
+        {
+            using (var debil = new UserContext())
+            {
+                var user = debil.Users.Where(u => u.Email == Email).SingleOrDefault();
+                return user;
+            }
+        }
+
         internal UTable GetParticularUserByIdAction(int Id)
         {
             using (var debil = new UserContext())

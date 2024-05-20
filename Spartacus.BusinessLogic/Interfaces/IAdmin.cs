@@ -22,5 +22,6 @@ namespace Spartacus.BusinessLogic.Interfaces
         UTable GetUserByUsername(string Username);
         UTable GetParticularUserById(int Id);
         bool DeleteUser(int Id);
+        UTable GetUserByEmail(string Email);
     }
 }

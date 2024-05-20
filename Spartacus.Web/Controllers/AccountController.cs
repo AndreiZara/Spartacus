@@ -1,16 +1,15 @@
 ﻿using Spartacus.BusinessLogic;
-using Spartacus.BusinessLogic.Core;
 using Spartacus.BusinessLogic.Interfaces;
 using Spartacus.Domain.Entities.User;
 using Spartacus.Web.Models;
 using System;
 using System.Web.Mvc;
 using System.Collections.Generic;
-using System.Web.UI.WebControls;
 using System.Web;
 using System.Linq;
 using System.Threading.Tasks;
-using Spartacus.Domain.Entities.Membership;
+using System.Security.Policy;
+using System.Data;
 
 namespace Spartacus.Web.Controllers
 {
@@ -44,11 +43,37 @@ namespace Spartacus.Web.Controllers
         [HttpPost]
         public ActionResult Register(UTable login)
         {
+
             if (ModelState.IsValid)
             {
+                UTable data = new UTable
+                {
+                    Username = login.Username,
+                    Id = login.Id,
+                    Password = login.Password,
+                    Firstname = login.Firstname,
+                    Lastname = login.Lastname,
+                    Email = login.Email,
+                    LastLogin = DateTime.Now,
+                    LastIp = "12345678",
+                    Level = login.Level
+                };
+
+
+                Session["Id"] = data.Id;
+                Session["Username"] = data.Username;
+                Session["Password"] = data.Password;
+                Session["Email"] = data.Email;
+                Session["LastLogin"] = data.LastLogin;
+                Session["LastIp"] = data.LastIp;
+
+
+                _sessionAdmin.AddUser(data);
+
 
             }
-            return View();
+            return View(login);
+
         }
 
 
@@ -65,6 +90,7 @@ namespace Spartacus.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+               
                 ULoginData data = new ULoginData
                 {
                     Name = login.Username,
@@ -154,16 +180,24 @@ namespace Spartacus.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                GUID guid = new GUID()
+                if (_sessionAdmin.GetUserByEmail(pass.Email) == null)
                 {
-                    Token = Guid.NewGuid().ToString(),
-                    StartDate = DateTime.Now
+                    return RedirectToAction("Index", "Home");
+                }
+
+                Session["Emali"] = pass.Email;
+
+                string token = Guid.NewGuid().ToString();
+                UToken guid = new UToken()
+                {
+                    Token = token,
+                    EndDate = DateTime.Now.AddMinutes(5),
+                    Email = pass.Email
                 };
 
 
 
                 _sessionMain.CreateToken(guid);
-                string token = Guid.NewGuid().ToString();
 
                 Session["token"] = token;
 
@@ -171,7 +205,7 @@ namespace Spartacus.Web.Controllers
                 string subject = "helloworld";
 
 
-                string resetUrl = Url.Action("Forgot", "Account", Request.Url.Scheme);
+                string resetUrl = "http://localhost:51229/Account/ResetPassword?token=" + token;
 
                 string body = _sessionMain.PopulateBody("helloworld", resetUrl, "helloworld");
 
@@ -182,10 +216,25 @@ namespace Spartacus.Web.Controllers
         }
 
         [HttpGet]
+        public ActionResult ResetPassword(string token)
+        {
+            Session["token"] = token;
+            UToken guid = _sessionMain.GetToken(token);
+            DateTime now = DateTime.Now;
+            if(now < guid.EndDate) 
+            {
+                UTable uTable = _sessionAdmin.GetUserByEmail(guid.Email);
+                return RedirectToAction("Update", "User", new {id = uTable.Id});
+            }
+
+            return View();
+        }
+
+        [HttpGet]
         public ActionResult Read()
         {
-            List<GUID> Clist = new List<GUID>();
-            Clist = _sessionMain.GetToken();
+            List<UToken> Clist = new List<UToken>();
+            Clist = _sessionMain.GetTokenList();
             return View(Clist);
         }
 

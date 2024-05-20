@@ -68,7 +68,7 @@ namespace Spartacus.BusinessLogic.Core
         return body;
       }
 
-        public void CreateTokenAction(GUID guid)
+        public void CreateTokenAction(UToken guid)
         {
             using (var debil = new UserContext())
             {
@@ -77,7 +77,7 @@ namespace Spartacus.BusinessLogic.Core
             }
         }
 
-        public List<GUID> GetTokenAction()
+        public List<UToken> GetTokenListAction()
         {
             using (var debil = new UserContext())
             {
@@ -86,11 +86,15 @@ namespace Spartacus.BusinessLogic.Core
             }
             
         }
-
-
-
-
-
+        
+        public UToken GetTokenAction(string token)
+        {
+            using (var debil = new UserContext())
+            {
+                var guidContext = debil.Tokens.Where(u => u.Token == token).SingleOrDefault();
+                return guidContext;
+            }
+        }
 
     }
 }

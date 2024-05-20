@@ -48,6 +48,11 @@ namespace Spartacus.BusinessLogic.BL
             return GetParticularUserByIdAction(Id);
         }
 
+        public UTable GetUserByEmail(string Email)
+        {
+            return GetUserByEmailAction(Email);
+        }
+
         public UTable GetUserByUsername(string Username)
         {
             return GetUserByUsernameAction(Username);
