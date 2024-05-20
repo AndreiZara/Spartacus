@@ -8,13 +8,14 @@ namespace Spartacus.Web.Controllers
 {
     public class AccountController : BaseController
     {
-        public ActionResult Login()
+        public ActionResult Login(string returnUrl = null)
         {
+            if (returnUrl != null) ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
         [HttpPost]
-        public ActionResult Login(UserLogin login)
+        public ActionResult Login(UserLogin login, string returnUrl = null)
         {
             if (ModelState.IsValid)
             {
@@ -34,7 +35,10 @@ namespace Spartacus.Web.Controllers
                     ControllerContext.HttpContext.Response.Cookies.Add(cookie);
                     Session["Username"] = login.Username;
 
-                    return RedirectToAction("Index", "Home");
+                    if (returnUrl != null) 
+                        return Redirect(returnUrl);
+                    else
+                        return RedirectToAction("Index", "Home");
                 }
                 else
                     ModelState.AddModelError("LoginMessage", "You have entered an invalid username or password");

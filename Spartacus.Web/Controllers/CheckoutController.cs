@@ -16,10 +16,10 @@ namespace Spartacus.Web.Controllers
             _main = BussinesLogic.GetMainBL();
         }
 
-        public ActionResult Index(int mid, MsDuration dur)
+        public ActionResult Begin(int mid, MsDuration dur)
         {
             var isLoggedIn = SessionStatus();
-            if (!isLoggedIn) return RedirectToAction("Login", "Account");
+            if (!isLoggedIn) return RedirectToAction("Login", "Account", new { returnUrl = Request.Url.PathAndQuery });
 
             var cat = _main.GetCatById(mid);
             if (cat == null) return HttpNotFound();
@@ -48,7 +48,6 @@ namespace Spartacus.Web.Controllers
             var check = new Checkout
             {
                 Price = price,
-                //Duration = dur,
                 EndTime = DateTime.Now.AddMonths((int)dur)
             };
 
@@ -57,7 +56,7 @@ namespace Spartacus.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Index(Checkout check)
+        public ActionResult Begin(Checkout check)
         {
             if (ModelState.IsValid)
             {

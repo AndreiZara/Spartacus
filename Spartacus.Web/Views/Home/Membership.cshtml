@@ -44,22 +44,22 @@
                                 <div class="entry">
                                     <div class="text-uppercase left fw-bold fs-5">1 lună</div>
                                     <div class="dots"></div>
-                                    <a href=@Url.Action("Index", "Checkout", new {mid = m.Id, dur = Spartacus.Domain.Enums.MsDuration.OneMonth}) class="right fw-bold fs-5">@m.PriceOneMonth lei</a>
+                                    <a href=@Url.Action("Begin", "Checkout", new {mid = m.Id, dur = Spartacus.Domain.Enums.MsDuration.OneMonth}) class="right fw-bold fs-5">@m.PriceOneMonth lei</a>
                                 </div>
                                 <div class="entry pt-4">
                                     <div class="text-uppercase left fw-bold fs-5">3 luni</div>
                                     <div class="dots"></div>
-                                    <a href=@Url.Action("Index", "Checkout", new {mid = m.Id, dur = Spartacus.Domain.Enums.MsDuration.ThreeMonths}) class="right fw-bold fs-5">@m.PriceThreeMonths lei</a>
+                                    <a href=@Url.Action("Begin", "Checkout", new {mid = m.Id, dur = Spartacus.Domain.Enums.MsDuration.ThreeMonths}) class="right fw-bold fs-5">@m.PriceThreeMonths lei</a>
                                 </div>
                                 <div class="entry pt-4">
                                     <div class="text-uppercase left fw-bold fs-5">6 luni</div>
                                     <div class="dots"></div>
-                                    <a href=@Url.Action("Index", "Checkout", new {mid = m.Id, dur = Spartacus.Domain.Enums.MsDuration.SixMonths}) class="right fw-bold fs-5">@m.PriceSixMonths lei</a>
+                                    <a href=@Url.Action("Begin", "Checkout", new {mid = m.Id, dur = Spartacus.Domain.Enums.MsDuration.SixMonths}) class="right fw-bold fs-5">@m.PriceSixMonths lei</a>
                                 </div>
                                 <div class="entry pt-4 pb-3">
                                     <div class="text-uppercase left fw-bold fs-5">12 luni</div>
                                     <div class="dots"></div>
-                                    <a href=@Url.Action("Index", "Checkout", new {mid = m.Id, dur = Spartacus.Domain.Enums.MsDuration.OneYear}) class="right fw-bold fs-5 border-1 border-white">@m.PriceOneYear lei</a>
+                                    <a href=@Url.Action("Begin", "Checkout", new {mid = m.Id, dur = Spartacus.Domain.Enums.MsDuration.OneYear}) class="right fw-bold fs-5 border-1 border-white">@m.PriceOneYear lei</a>
                                 </div>
                             </div>
                         </div>

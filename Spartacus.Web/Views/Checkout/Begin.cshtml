@@ -15,7 +15,7 @@
     </div>
     <div class="row">
         <div class="col-md-8">
-            @using (Html.BeginForm("Index", "Checkout", FormMethod.Post))
+            @using (Html.BeginForm("Begin", "Checkout", FormMethod.Post))
             {
                 @Html.AntiForgeryToken();
                 @Html.HiddenFor(m => m.Price, Model.Price)
@@ -131,6 +131,7 @@
                     </div>
                 </div>
                 <div class="mt-4 mb-4 d-flex justify-content-between">
+                    <a href=@Url.Action("Index", "Home")>Back to home</a>
                     <button type="submit" class="btn btn-main px-3">Pay @Model.Price lei</button>
                 </div>
             }
