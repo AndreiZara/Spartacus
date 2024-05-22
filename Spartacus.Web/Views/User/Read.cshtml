@@ -46,6 +46,10 @@
           </th>
 
           <th>
+               @Html.DisplayNameFor(model => model.FileName)
+          </th>
+
+          <th>
 
           </th>
      </tr>
@@ -87,6 +91,11 @@
                <td>
                     @Html.DisplayFor(modelItem => item.Level)
                </td>
+
+               <th>
+                    @Html.DisplayFor(modelItem => item.FileName)
+               </th>
+
                <td>
                     @Html.ActionLink("Edit", "Update", new { id = item.Id })2
                     @Html.ActionLink("Delete", "Delete", new { id = item.Id })

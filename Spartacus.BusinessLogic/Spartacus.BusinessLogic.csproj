@@ -49,6 +49,10 @@
     <Reference Include="Grpc.Core.Api, Version=2.0.0.0, Culture=neutral, PublicKeyToken=d754f35622e28bad, processorArchitecture=MSIL">
       <HintPath>..\packages\Grpc.Core.Api.2.46.6\lib\net45\Grpc.Core.Api.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http.Features, Version=5.0.17.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Spartacus.Web\bin\Microsoft.AspNetCore.Http.Features.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -101,13 +105,25 @@
     <Compile Include="Interfaces\IAdmin.cs" />
     <Compile Include="Interfaces\IMain.cs" />
     <Compile Include="Interfaces\ISession.cs" />
-    <Compile Include="Migrations\202405191054060_Init.cs" />
-    <Compile Include="Migrations\202405191054060_Init.Designer.cs">
-      <DependentUpon>202405191054060_Init.cs</DependentUpon>
+    <Compile Include="Migrations\202405210630296_Init.cs" />
+    <Compile Include="Migrations\202405210630296_Init.Designer.cs">
+      <DependentUpon>202405210630296_Init.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202405191122243_Init1.cs" />
-    <Compile Include="Migrations\202405191122243_Init1.Designer.cs">
-      <DependentUpon>202405191122243_Init1.cs</DependentUpon>
+    <Compile Include="Migrations\202405210750487_Init1.cs" />
+    <Compile Include="Migrations\202405210750487_Init1.Designer.cs">
+      <DependentUpon>202405210750487_Init1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202405210919381_Init2.cs" />
+    <Compile Include="Migrations\202405210919381_Init2.Designer.cs">
+      <DependentUpon>202405210919381_Init2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202405210933357_Init3.cs" />
+    <Compile Include="Migrations\202405210933357_Init3.Designer.cs">
+      <DependentUpon>202405210933357_Init3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202405211607380_Init4.cs" />
+    <Compile Include="Migrations\202405211607380_Init4.Designer.cs">
+      <DependentUpon>202405211607380_Init4.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -131,11 +147,20 @@
     <Folder Include="DBModel\Seed\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202405191054060_Init.resx">
-      <DependentUpon>202405191054060_Init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202405210630296_Init.resx">
+      <DependentUpon>202405210630296_Init.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202405191122243_Init1.resx">
-      <DependentUpon>202405191122243_Init1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202405210750487_Init1.resx">
+      <DependentUpon>202405210750487_Init1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202405210919381_Init2.resx">
+      <DependentUpon>202405210919381_Init2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202405210933357_Init3.resx">
+      <DependentUpon>202405210933357_Init3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202405211607380_Init4.resx">
+      <DependentUpon>202405211607380_Init4.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

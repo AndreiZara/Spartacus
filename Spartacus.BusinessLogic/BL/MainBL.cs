@@ -1,11 +1,13 @@
 ﻿using Spartacus.BusinessLogic.Core;
 using Spartacus.BusinessLogic.Interfaces;
 using Spartacus.Domain.Entities.User;
+using Spartacus.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Spartacus.BusinessLogic.BL
 {
@@ -36,5 +38,13 @@ namespace Spartacus.BusinessLogic.BL
             return GetTokenAction(token);
         }
 
+        public void UploadFile(UFile File)
+        {
+            UploadFileAction(File);
+        }
+        public bool CheckFilePath(string Filepath)
+        {
+            return CheckFilePathAction(Filepath);
+        }
     }
 }

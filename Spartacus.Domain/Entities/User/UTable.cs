@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Web;
+using Microsoft.AspNetCore.Http;
 using Spartacus.Domain.Enums;
 
 namespace Spartacus.Domain.Entities.User
@@ -43,5 +45,12 @@ namespace Spartacus.Domain.Entities.User
         public string LastIp { get; set; }
 
         public URole Level { get; set; }
+
+        [NotMapped]
+        [Display(Name = "File")]
+        public HttpPostedFileBase File { get; set; }
+
+        [Display(Name = "File name")]
+        public string FileName { get; set;  }
     }
 }

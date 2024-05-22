@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Web;
 using AutoMapper;
+using Grpc.Core;
+using Microsoft.AspNetCore.Http;
 using Spartacus.BusinessLogic.DBModel;
 using Spartacus.Domain.Entities.User;
 using Spartacus.Helpers;
@@ -40,7 +44,7 @@ namespace Spartacus.BusinessLogic.Core
 
                 return new ULoginResp() { Status = true };
             }
-               
+
             else
             {
                 var pass = LoginHelper.HashGen(data.Password);
@@ -160,8 +164,9 @@ namespace Spartacus.BusinessLogic.Core
 
             return userminimal;
         }
+
+        
+
     }
-
-
 }
 

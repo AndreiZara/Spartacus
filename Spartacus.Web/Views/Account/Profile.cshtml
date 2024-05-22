@@ -3,7 +3,7 @@
      Layout = "~/Views/Shared/_LayoutNav.cshtml";
 }
 
-@model Spartacus.Domain.Entities.User.UTable
+@model Spartacus.Web.Models.tmpModel
 
 <section style="background-color: #eee;">
      <div class="container py-5">
@@ -13,7 +13,10 @@
                <div class="col-lg-4">
                     <div class="card mb-4">
                          <div class="card-body text-center">
-                              <img src="~/Content/images/team/a.gif" width="380px" />
+                              @{ 
+                                   string path = Model.FilePath;
+                                   <img src="@path" width="380px" />
+                              }
                          </div>
                     </div>
                     <div class="card mb-4 mb-lg-0">

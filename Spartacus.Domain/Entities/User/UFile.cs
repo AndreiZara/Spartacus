@@ -5,9 +5,9 @@ using System.Web;
 
 namespace Spartacus.Web.Models
 {
-    public class Tocken
+    public class UFile
     {
-        public string Value { get; set; }
-        public DateTime StartTime { get; set; }
+        public HttpPostedFileBase FileModel { get; set; }
+        public string Username { get; set; }
     }
 }

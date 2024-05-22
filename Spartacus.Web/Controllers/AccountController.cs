@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Security.Policy;
 using System.Data;
+using Microsoft.Ajax.Utilities;
 
 namespace Spartacus.Web.Controllers
 {
@@ -72,6 +73,7 @@ namespace Spartacus.Web.Controllers
 
 
             }
+            
             return View(login);
 
         }
@@ -114,7 +116,7 @@ namespace Spartacus.Web.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", userLogin.StatusMsg);
+                    ModelState.AddModelError("Username", "Please select an image to upload.");
                     return View();
                 }
 
@@ -157,16 +159,36 @@ namespace Spartacus.Web.Controllers
         {
 
             
-            if (ModelState.IsValid)
+            if (ControllerContext.HttpContext.Request.Cookies.AllKeys.Contains("X-KEY"))
             {
+                var cookie = ControllerContext.HttpContext.Request.Cookies["X-KEY"];
+                if (cookie != null)
+                {
+                    var user = _session.GetUserByCookie(cookie.Value);
 
-                UTable uTable = new UTable();
-                string username = Session["Username"].ToString();
-                var userTable = _sessionAdmin.GetUserByUsername(username);
+                    UTable userTable = _sessionAdmin.GetUserByUsername(user.Username);
 
-                return View(userTable);
+                    string FilePath = "/Content/Upload/" + userTable.Username + "/" + userTable.FileName;
+
+                    //bool itTrue = _sessionMain.CheckFilePath(FilePath);
+                    
+                    tmpModel Model = new tmpModel()
+                    {
+                        Username = userTable.Username,
+                        Password = userTable.Password,
+                        Firstname = userTable.Firstname,
+                        Lastname = userTable.Lastname,
+                        FilePath = FilePath
+
+                    };
+                    Session["Path"] = FilePath;
+
+                    return View(Model);
+                }
+            
             }
             return View();
+            
         }
 
 
@@ -194,8 +216,6 @@ namespace Spartacus.Web.Controllers
                     EndDate = DateTime.Now.AddMinutes(5),
                     Email = pass.Email
                 };
-
-
 
                 _sessionMain.CreateToken(guid);
 

@@ -9,17 +9,21 @@ using Spartacus.BusinessLogic.Interfaces;
 using Microsoft.Ajax.Utilities;
 using Spartacus.Domain.Entities.Membership;
 using Spartacus.BusinessLogic;
+using Spartacus.Web.Models;
 
 namespace Spartacus.Web.Controllers
 {
     public class UserController : BaseController
     {
+        private readonly IMain _main;
         private readonly IAdmin _admin;
 
         public UserController()
         {
             var bl = new BussinesLogic();
             _admin = bl.GetAdminBL();
+            var main = new BussinesLogic();
+            _main = main.GetMainBL();
         }
 
 
@@ -37,6 +41,7 @@ namespace Spartacus.Web.Controllers
 
             if (ModelState.IsValid)
             {
+                string filename = login.File.FileName;
                 UTable data = new UTable
                 {
                     Username = login.Username,
@@ -47,9 +52,18 @@ namespace Spartacus.Web.Controllers
                     Email = login.Email,
                     LastLogin = DateTime.Now,
                     LastIp = "12345678",
-                    Level = login.Level     
+                    Level = login.Level,
+                    File = login.File,
+                    FileName = filename,
                 };
-               
+
+                UFile file = new UFile()
+                {
+                    FileModel = login.File,
+                    Username = login.Username,
+                };
+
+                _main.UploadFile(file);
 
                 Session["Id"] = data.Id;
                 Session["Username"] = data.Username;
@@ -77,6 +91,7 @@ namespace Spartacus.Web.Controllers
         [HttpPost]
         public ActionResult Update(int id, UTable login)
         {
+            string filename = login.File.FileName;
             var user = _admin.GetParticularUserById(id);
 
             if (user != null)
@@ -90,7 +105,17 @@ namespace Spartacus.Web.Controllers
                 user.LastLogin = DateTime.Now;
                 user.LastIp = Request.UserHostAddress;
                 user.Level = login.Level;
-                
+                user.File = login.File;
+                user.FileName = filename;
+
+                UFile file = new UFile()
+                {
+                    FileModel = login.File,
+                    Username = login.Username
+                };
+
+                _main.UploadFile(file);
+
                 bool isTrue = _admin.UpdateUser(user,login.Id);
                 if (isTrue) { return RedirectToAction("Read"); }
                 return View(login);

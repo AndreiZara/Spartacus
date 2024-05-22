@@ -1,6 +1,7 @@
 ﻿using Grpc.Core;
 using Spartacus.BusinessLogic.DBModel;
 using Spartacus.Domain.Entities.User;
+using Spartacus.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -12,6 +13,7 @@ using System.Net.Mail;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Spartacus.BusinessLogic.Core
 {
@@ -95,6 +97,48 @@ namespace Spartacus.BusinessLogic.Core
                 return guidContext;
             }
         }
+
+        public void UploadFileAction(UFile file)
+        {
+            HttpPostedFileBase File = file.FileModel;
+
+            if (File != null && File.ContentLength > 0)
+            {
+                // Check if the file is an image
+                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
+                var extension = Path.GetExtension(File.FileName).ToLower();
+
+
+
+                if (allowedExtensions.Contains(extension))
+                {
+                    string filepath = "~/Content/Upload/" + file.Username;
+                    var uploadsDir = HttpContext.Current.Server.MapPath(filepath);
+                    if (!Directory.Exists(uploadsDir))
+                    {
+                        Directory.CreateDirectory(uploadsDir);
+                    }
+
+                    var fileName = Path.GetFileName(File.FileName);
+                    var path = Path.Combine(uploadsDir, fileName);
+                    File.SaveAs(path);
+                }
+            }
+        }
+
+        public bool CheckFilePathAction(string Filepath)
+        {
+
+            var uploadsDir = HttpContext.Current.Server.MapPath(Filepath);
+            if (!Directory.Exists(uploadsDir))
+            {
+                return false;
+            }
+            return true;
+
+        }
+
+
 
     }
 }

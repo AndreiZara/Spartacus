@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.UI.WebControls.WebParts;
 using Spartacus.Domain.Entities.User;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Spartacus.BusinessLogic.DBModel
 {

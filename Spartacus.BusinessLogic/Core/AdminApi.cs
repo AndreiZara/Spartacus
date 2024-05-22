@@ -48,6 +48,8 @@ namespace Spartacus.BusinessLogic.Core
                     data.LastIp = user.LastIp;
                     data.Id = user.Id;
                     data.Level = user.Level;
+                    data.File = user.File;
+                    data.FileName = user.FileName;
                     debil.SaveChanges();
 
                     return true;
