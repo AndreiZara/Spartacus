@@ -7,5 +7,10 @@ namespace Spartacus.BusinessLogic.Interfaces
     {
         List<CatTable> GetCats();
         CatTable GetCatById(int id);
+        Task SendEmailAsync(string email, string subject, string message);
+        string PopulateBody(string title, string url, string message);
+        void CreateToken(UToken guid);
+        List<UToken> GetTokenList();
+        UToken GetToken(string token);
     }
 }
