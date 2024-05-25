@@ -13,29 +13,28 @@
                     @Html.ValidationMessage("LoginMessage", new { @class = "text-danger fs-4" })
                     @using (Html.BeginForm("Login", "Account", new { returnUrl = ViewBag.ReturnUrl } , FormMethod.Post))
                     {
-                        <div class="form-floating mt-3">
-                            @Html.TextBoxFor(m => m.Username, new
-                            {
-                                @class = "form-control",
-                                placeholder = "",
-                                required = true,
-                                type = "text",
-                            })
-                            @Html.LabelFor(m => m.Username)
-                        </div>
-                        <div class="form-floating mt-3">
-                            @Html.TextBoxFor(m => m.Password, new
-                            {
-                                @class = "form-control",
-                                placeholder = "",
-                                required = true,
-                                type = "password"
-                            })
-                            @Html.LabelFor(m => m.Password)
-                        </div>
-
-                        <p class="m-0 py-4"><a href="" class="text-muted">Forgot password?</a></p>
-                        <button class="btn btn-success btn-lg w-100 shadow-lg">SIGN IN</button>
+                    <div class="form-floating mt-3">
+                        @Html.TextBoxFor(m => m.Username, new
+                        {
+                            @class = "form-control",
+                            placeholder = "",
+                            required = true,
+                            type = "text",
+                        })
+                        @Html.LabelFor(m => m.Username)
+                    </div>
+                    <div class="form-floating mt-3">
+                        @Html.TextBoxFor(m => m.Password, new
+                        {
+                            @class = "form-control",
+                            placeholder = "",
+                            required = true,
+                            type = "password"
+                        })
+                        @Html.LabelFor(m => m.Password)
+                    </div>
+                    <p class="m-0 py-4"><a href="@Url.Action("Forgot", "Account")" class="text-muted">Forget password?</a></p>
+                    <button class="btn btn-success btn-lg w-100 shadow-lg">SIGN IN</button>
                     }
                     <div class="text-center pt-4">
                         <span class="text-dark font-weight-bold"></span>

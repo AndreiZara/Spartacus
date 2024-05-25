@@ -1,35 +1,34 @@
-﻿@model Spartacus.Web.Models.FrogotPassword
+﻿@model Spartacus.Web.Models.ForgotPassword
 
 @{
-     ViewBag.Title = "Frogot";
-     Layout = "~/Views/Shared/_LayoutEmpty.cshtml";
+    ViewBag.Title = "Forgot";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Frogot</h2>
-
-@using (Html.BeginForm())
-{
-     @Html.AntiForgeryToken()
-
-<div class="form-horizontal">
-     <h4>FrogotPassword</h4>
-     <hr />
-     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-     <div class="form-group">
-          @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-          <div class="col-md-10">
-               @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-               @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-          </div>
-     </div>
-
-     <div class="form-group">
-          <div class="col-md-offset-2 col-md-10">
-               <input type="submit" value="Reset password" class="btn btn-default" />
-          </div>
-     </div>
-     <li class="nav-item"><a class="nav-link" href=@Url.Action("Profile", "Account")>@Session["token"]</a></li>
-     <li class="nav-item"><a class="nav-link" href=@Url.Action("Profile", "Account")>@Session["Username"]</a></li>
-</div>
-}
-
+<section class="slider bg-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <div class="p-5 bg-white rounded shadow-lg">
+                    <h2 class="mb-2 text-center">Forgot your password?</h2>
+                    <p class="m-0">Enter the email address linked to your account, and we’ll send you instructions to create a new one.</p>
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-floating mt-3">
+                            @Html.TextBoxFor(m => m.Email, new
+                            {
+                                @class = "form-control",
+                                placeholder = "",
+                                required = true,
+                                type = "text",
+                            })
+                            @Html.LabelFor(m => m.Email)
+                        </div>
+                        <button class="btn btn-success btn-lg w-100 shadow-lg mt-4">SEND EMAIL</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

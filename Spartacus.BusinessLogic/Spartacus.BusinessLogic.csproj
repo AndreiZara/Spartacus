@@ -61,6 +61,7 @@
     <Compile Include="Core\SessionApi.cs" />
     <Compile Include="DBModel\CategoryContext.cs" />
     <Compile Include="DBModel\SessionContext.cs" />
+    <Compile Include="DBModel\TokenContext.cs" />
     <Compile Include="DBModel\UserContext.cs" />
     <Compile Include="Interfaces\ICatMgmt.cs" />
     <Compile Include="Interfaces\IUserMgmt.cs" />
@@ -69,12 +70,17 @@
     <Compile Include="Logics\CatMgmtBL.cs" />
     <Compile Include="Logics\UserMgmtBL.cs" />
     <Compile Include="Logics\MainBL.cs" />
+    <Compile Include="Migrations\202405202050085_InitialCreate.cs" />
+    <Compile Include="Migrations\202405202050085_InitialCreate.Designer.cs">
+      <DependentUpon>202405202050085_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Logics\SessionBL.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Spartacus.Domain\Spartacus.Domain.csproj">
-      <Project>{bbe0f79f-cdc6-4a3f-84a3-e80b6e4aae78}</Project>
+      <Project>{BBE0F79F-CDC6-4A3F-84A3-E80B6E4AAE78}</Project>
       <Name>Spartacus.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\Spartacus.Helpers\Spartacus.Helpers.csproj">
@@ -88,10 +94,14 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DBModel\Seed\" />
-    <Folder Include="Migrations\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202405202050085_InitialCreate.resx">
+      <DependentUpon>202405202050085_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

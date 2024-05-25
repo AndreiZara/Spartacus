@@ -19,9 +19,5 @@ namespace Spartacus.BusinessLogic.DBModel
 
             base.OnModelCreating(modelBuilder);
         }
-
-        public virtual DbSet<UTable> Users{ get; set; }
-        public virtual DbSet<UToken> Tokens { get; set; }
-
     }
 }
