@@ -37,7 +37,6 @@ namespace Spartacus.Web.Models
 
         // Read only
         public int Price { get; set; }
-        //public MsDuration Duration { get; set; }
         public DateTime EndTime { get; set; }
     }
 }

@@ -17,6 +17,7 @@ namespace Spartacus.BusinessLogic.Core
             using (var debil = new UserContext())
             {
                 user = debil.Users.FirstOrDefault(u => u.Username == data.Username && u.Password == data.Password);
+                // TODO: modify login time
             }
 
             return user != null;
@@ -38,8 +39,8 @@ namespace Spartacus.BusinessLogic.Core
                     Password = data.Password,
                     Email = data.Email,
                     LastIp = data.Ip,
-                    LastLogin = data.LoginDateTime,
-                    Level = Domain.Enums.URole.Client
+                    LastLogin = DateTime.Now,
+                    Level = URole.Client
                 });
                 debil.SaveChanges();
             }

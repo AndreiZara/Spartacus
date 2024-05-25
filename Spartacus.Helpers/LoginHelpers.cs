@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Spartacus.Helpers
 {
-    internal class LoginHelpers
+    public class LoginHelpers
     {
         public static string HashGen(string password)
         {
