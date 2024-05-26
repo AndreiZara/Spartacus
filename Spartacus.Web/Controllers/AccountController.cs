@@ -1,4 +1,5 @@
-﻿using Spartacus.BusinessLogic;
+﻿using Microsoft.Win32;
+using Spartacus.BusinessLogic;
 using Spartacus.BusinessLogic.Interfaces;
 using Spartacus.Domain.Entities.User;
 using Spartacus.Web.Models;
@@ -12,6 +13,12 @@ namespace Spartacus.Web.Controllers
     public class AccountController : BaseController
     {
         private readonly IMain _sessionMain = BussinesLogic.GetMainBL();
+
+        public ActionResult Index()
+        {
+            return View();
+        }
+
         public ActionResult Login(string returnUrl = null)
         {
             if (returnUrl != null) ViewBag.ReturnUrl = returnUrl;
@@ -46,7 +53,7 @@ namespace Spartacus.Web.Controllers
                         return RedirectToAction("Index", "Home");
                 }
                 else
-                    ModelState.AddModelError("LoginMessage", "You have entered an invalid username or password");
+                    TempData["ErrorMessage"] = "You have entered an invalid username or password";
             }
             return View();
         }
@@ -92,9 +99,7 @@ namespace Spartacus.Web.Controllers
                     return RedirectToAction("Index", "Home");
                 }
                 else
-                {
-                    ModelState.AddModelError("RegMessage", "Registration failed, the current username is already taken");
-                }
+                    TempData["RegMessage"] = "Registration failed, the current username is already taken";
             }
             return View();
         }
@@ -105,43 +110,59 @@ namespace Spartacus.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Forgot(ForgotPassword pass)
+        public async Task<ActionResult> Forgot(string userEmail)
         {
             if (ModelState.IsValid)
             {
-                var token = _sessionMain.CreateToken(pass.Email);
+                var token = _sessionMain.CreateToken(userEmail);
                 if (token == null) return View(); // show email sent message even if the user does not exists
 
                 string subject = "Reset password";
+
+                var resetUrl = Url.Action("ResetPassword", "Account", new { token }, Request.Url.Scheme);
+                string body = _sessionMain.PopulateBody(userEmail, resetUrl);
                 
-                var resetUrl = Url.Action("ResetPassword", "Account", new {token = token}, Request.Url.Scheme);
-                string body = _sessionMain.PopulateBody("helloworld", resetUrl, "helloworld");
-                
-                await _sessionMain.SendEmailAsync(pass.Email, subject, body);
+                await _sessionMain.SendEmailAsync(userEmail, subject, body);
             }
+            TempData["SuccessMessage"] = "A link has been sent to your email address.";
             return View();
         }
 
 
-        [HttpGet]
         public ActionResult ResetPassword(string token)
         {
-            //Session["token"] = token;
-            //UToken guid = _sessionMain.GetToken(token);
-            //DateTime now = DateTime.Now;
-            //if(now < guid.EndDate) 
-            //{
-            //    UTable uTable = _sessionAdmin.GetUserByEmail(guid.Email);
-            //    return RedirectToAction("Update", "User", new {id = uTable.Id});
-            //}
+            if (_sessionMain.IsResetTokenValid(token) || true)
+            {
+                TempData["ResetToken"] = token;
+                return View();
 
-            return View();
+            }
+            TempData["ErrorMessage"] = "Link expired!";
+            return RedirectToAction("Forgot", "Account");
         }
 
-        public new ActionResult Profile()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ResetPassword(ResetPassword reset)
         {
-            // should load a model containing mstable and utable data
-            return View();
+            var token = TempData["ResetToken"] as string;
+            if ( ModelState.IsValid)
+            {
+                var passReseted = _sessionMain.ResetPasswordByToken(token, reset.NewPassword);
+                if (passReseted)
+                {
+                    TempData["SuccessMessage"] = "Password has been reset.";
+                    return RedirectToAction("Login", "Account");
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "Reset password failed!";
+                    return RedirectToAction("Forgot", "Account");
+                }
+            }
+
+            TempData["ResetToken"] = token;
+            return View(reset);
         }
     }
 

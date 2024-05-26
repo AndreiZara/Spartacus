@@ -10,9 +10,9 @@ namespace Spartacus.BusinessLogic.Interfaces
         List<CatTable> GetCats();
         CatTable GetCatById(int id);
         Task SendEmailAsync(string email, string subject, string message);
-        string PopulateBody(string title, string url, string message);
+        string PopulateBody(string userEmail, string url);
         string CreateToken(string email);
-        //List<UToken> GetTokenList();
-        //UToken GetToken(string token);
+        bool IsResetTokenValid(string value);
+        bool ResetPasswordByToken(string value, string newPassword);
     }
 }

@@ -17,27 +17,25 @@ namespace Spartacus.BusinessLogic.Core
 {
     public class MainApi
     {
-        public List<CatTable> GetCatsAction()
+        internal List<CatTable> GetCatsAction()
         {
-            List<CatTable> cats;
             using (var debil = new CategoryContext())
             {
-                cats = debil.Categories.ToList();
+                var cats = debil.Categories.ToList();
+                return cats;
             }
-            return cats;
         }
 
-        public CatTable GetCatByIdAction(int id)
+        internal CatTable GetCatByIdAction(int id)
         {
-            CatTable cat;
             using (var debil = new CategoryContext())
             {
-                cat = debil.Categories.FirstOrDefault(c => c.Id == id);
+                var cat = debil.Categories.FirstOrDefault(c => c.Id == id);
+                return cat;
             }
-            return cat;
         }
 
-        public Task SendEmailAsyncAction(string email, string subject, string message)
+        internal Task SendEmailAsyncAction(string email, string subject, string message)
         {
             SmtpSection smtpSection = (SmtpSection)ConfigurationManager.GetSection("system.net/mailSettings/smtp");
             
@@ -56,7 +54,7 @@ namespace Spartacus.BusinessLogic.Core
                 { IsBodyHtml = true });
         }
 
-        public string PopulateBodyAction(string title, string url, string message)
+        internal string PopulateBodyAction(string userEmail, string url)
         {
             string body = string.Empty;
             using (StreamReader reader = new StreamReader(System.Web.HttpContext.Current.Server.MapPath("~/Content/Template/Email.html")))
@@ -64,20 +62,18 @@ namespace Spartacus.BusinessLogic.Core
                 body = reader.ReadToEnd();
             }
 
-            body = body.Replace("{Title}", title);
-            body = body.Replace("{Url}", url);
-            body = body.Replace("{Description}", message);
+            body = body.Replace("{userEmail}", userEmail);
+            body = body.Replace("{actionUrl}", url);
             return body;
         }
 
-        public string CreateTokenAction(string email)
+        internal string CreateTokenAction(string email)
         {
-            UTable user;
             using (var debil = new UserContext())
             {
-                user = debil.Users.FirstOrDefault(u => u.Email == email);
+                var user = debil.Users.FirstOrDefault(u => u.Email == email);
+                if (user == null) return null;
             }
-            if (user == null) return null;
 
             string value;
             using (var rng = RandomNumberGenerator.Create())
@@ -99,32 +95,59 @@ namespace Spartacus.BusinessLogic.Core
                 {
                     Value = hashedValue,
                     Email = email,
-                    EndDate = DateTime.Now.AddMinutes(10),
+                    EndDate = DateTime.Now.AddMinutes(60),
                 });
 
                 debil.SaveChanges();
+                RemoveExpiredResetTokensAction();
             }
             return value;
         }
 
-        //public List<UToken> GetTokenListAction()
-        //{
-        //    using (var debil = new UserContext())
-        //    {
-        //        var guidContext = debil.Tokens.ToList();
-        //        return guidContext;
-        //    }
+        internal bool IsResetTokenValidAction(string value)
+        {
+            var hashedValue = LoginHelpers.HashGen(value);
+            using (var debil = new TokenContext())
+            {
+                var token = debil.ResetTokens.FirstOrDefault(t => t.Value == hashedValue);
+                if (token == null) return false;
 
-        //}
+                RemoveExpiredResetTokensAction();
+                return token.EndDate > DateTime.Now;
+            }
+        }
 
-        //public UToken GetTokenAction(string token)
-        //{
-        //    UToken guidContext;
-        //    using (var debil = new UserContext())
-        //    {
-        //        guidContext = debil.Tokens.Where(u => u.Value == token).SingleOrDefault();
-        //    }
-        //    return guidContext;
-        //}
+        internal bool ResetPasswordByTokenAction(string value, string newPassword)
+        {
+            var hashedValue = LoginHelpers.HashGen(value);
+            string userEmail;
+            using (var debil = new TokenContext())
+            {
+                var token = debil.ResetTokens.FirstOrDefault(t => t.Value == hashedValue);
+                if (token == null) return false;
+                userEmail = token.Email;
+
+                RemoveExpiredResetTokensAction();
+            }
+
+            using(var debil = new UserContext())
+            {
+                var user = debil.Users.FirstOrDefault(u => u.Email == userEmail);
+                if (user == null) return false;
+
+                user.Password = newPassword;
+                debil.SaveChanges();
+            }
+            return true;
+        }
+
+        private void RemoveExpiredResetTokensAction()
+        {
+            using (var debil = new TokenContext())
+            {
+                debil.ResetTokens.RemoveRange(debil.ResetTokens.Where(t => t.EndDate < DateTime.Now));
+                debil.SaveChanges();
+            }
+        }
     }
 }

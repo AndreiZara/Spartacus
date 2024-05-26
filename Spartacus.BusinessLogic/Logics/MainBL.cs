@@ -9,19 +9,16 @@ namespace Spartacus.BusinessLogic.Logics
 {
     public class MainBL : MainApi, IMain
     {
-        //public CatTable GetCatByHash(byte[] hash) => GetCatByHashAction(hash);
-
         public CatTable GetCatById(int id) => GetCatByIdAction(id);
 
         public List<CatTable> GetCats() => GetCatsAction();
         public Task SendEmailAsync(string recipientEmail, string body, string subject) => SendEmailAsyncAction(recipientEmail, body, subject);
 
-        public string PopulateBody(string title, string url, string message) => PopulateBodyAction(title, url, message);
+        public string PopulateBody(string userEmail, string url) => PopulateBodyAction(userEmail, url);
 
         public string CreateToken(string email) => CreateTokenAction(email);
 
-        //public List<UToken> GetTokenList() => GetTokenListAction();
-
-        //public UToken GetToken(string token) => GetTokenAction(token);
+        public bool IsResetTokenValid(string value) => IsResetTokenValidAction(value);
+        public bool ResetPasswordByToken(string value, string newPassword) => ResetPasswordByTokenAction(value, newPassword);
     }
 }
