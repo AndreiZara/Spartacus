@@ -79,10 +79,6 @@
     <Compile Include="Logics\SessionBL.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Spartacus.Domain\Spartacus.Domain.csproj">
-      <Project>{BBE0F79F-CDC6-4A3F-84A3-E80B6E4AAE78}</Project>
-      <Name>Spartacus.Domain</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Spartacus.Helpers\Spartacus.Helpers.csproj">
       <Project>{dab76adf-54ae-4c45-8574-22df0ea986b1}</Project>
       <Name>Spartacus.Helpers</Name>
