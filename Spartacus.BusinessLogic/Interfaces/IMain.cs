@@ -3,6 +3,7 @@ using Spartacus.Domain.Entities.User;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+using Spartacus.Web.Models;
 namespace Spartacus.BusinessLogic.Interfaces
 {
     public interface IMain
@@ -14,5 +15,11 @@ namespace Spartacus.BusinessLogic.Interfaces
         string CreateToken(string email);
         bool IsResetTokenValid(string value);
         bool ResetPasswordByToken(string value, string newPassword);
+        string PopulateBody(string title, string url, string message);
+        void CreateToken(UToken guid);
+        List<UToken> GetTokenList();
+        UToken GetToken(string token);
+        void UploadFile(UFile File);
+        bool CheckFilePath(string Filepath);
     }
 }

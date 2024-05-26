@@ -126,6 +126,7 @@ namespace Spartacus.Web.Controllers
             }
             TempData["SuccessMessage"] = "A link has been sent to your email address.";
             return View();
+            
         }
 
 

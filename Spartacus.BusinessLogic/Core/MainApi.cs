@@ -12,6 +12,7 @@ using System.Net.Configuration;
 using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Spartacus.BusinessLogic.Core
 {
@@ -149,5 +150,46 @@ namespace Spartacus.BusinessLogic.Core
                 debil.SaveChanges();
             }
         }
+
+        public void UploadFileAction(UFile file)
+        {
+            HttpPostedFileBase File = file.FileModel;
+
+            if (File != null && File.ContentLength > 0)
+            {
+                // Check if the file is an image
+                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
+                var extension = Path.GetExtension(File.FileName).ToLower();
+
+
+
+                if (allowedExtensions.Contains(extension))
+                {
+                    string filepath = "~/Content/Upload/" + file.Username;
+                    var uploadsDir = HttpContext.Current.Server.MapPath(filepath);
+                    if (!Directory.Exists(uploadsDir))
+                    {
+                        Directory.CreateDirectory(uploadsDir);
+                    }
+
+                    var fileName = Path.GetFileName(File.FileName);
+                    var path = Path.Combine(uploadsDir, fileName);
+                    File.SaveAs(path);
+                }
+            }
+        }
+
+        public bool CheckFilePathAction(string Filepath)
+        {
+
+            var uploadsDir = HttpContext.Current.Server.MapPath(Filepath);
+            if (!Directory.Exists(uploadsDir))
+            {
+                return false;
+            }
+            return true;
+
+        }
+
     }
 }

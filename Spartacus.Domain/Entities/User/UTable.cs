@@ -47,5 +47,12 @@ namespace Spartacus.Domain.Entities.User
         public URole Level { get; set; }
 
         public virtual MsTable Membership { get; set; }
+
+        [NotMapped]
+        [Display(Name = "File")]
+        public HttpPostedFileBase File { get; set; }
+
+        [Display(Name = "File name")]
+        public string FileName { get; set;  }
     }
 }
