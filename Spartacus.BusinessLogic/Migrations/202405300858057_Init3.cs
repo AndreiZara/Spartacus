@@ -3,29 +3,26 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Init : DbMigration
+    public partial class Init3 : DbMigration
     {
         public override void Up()
         {
             CreateTable(
-                "dbo.UTokens",
+                "dbo.MenDetTables",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Email = c.String(nullable: false, maxLength: 30),
-                        Token = c.String(),
-                        EndDate = c.DateTime(nullable: false),
+                        Username = c.String(nullable: false, maxLength: 30),
+                        Description = c.String(nullable: false, maxLength: 30),
+                        Activity = c.String(nullable: false, maxLength: 30),
                     })
                 .PrimaryKey(t => t.Id);
-            
-           
             
         }
         
         public override void Down()
         {
-            DropTable("dbo.UTables");
-            DropTable("dbo.UTokens");
+            DropTable("dbo.MenDetTables");
         }
     }
 }
