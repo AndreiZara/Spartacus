@@ -13,7 +13,7 @@ namespace Spartacus.BusinessLogic.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202406011900169_Init"; }
+            get { return "202406031706028_Init"; }
         }
         
         string IMigrationMetadata.Source

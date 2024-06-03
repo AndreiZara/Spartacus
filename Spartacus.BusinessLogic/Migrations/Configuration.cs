@@ -5,14 +5,14 @@
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Spartacus.BusinessLogic.DBModel.UserContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<Spartacus.BusinessLogic.DBModel.FeedbackContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(Spartacus.BusinessLogic.DBModel.UserContext context)
+        protected override void Seed(Spartacus.BusinessLogic.DBModel.FeedbackContext context)
         {
             //  This method will be called after migrating to the latest version.
 
