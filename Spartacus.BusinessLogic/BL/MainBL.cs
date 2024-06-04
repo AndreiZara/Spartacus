@@ -1,5 +1,6 @@
 ﻿using Spartacus.BusinessLogic.Core;
 using Spartacus.BusinessLogic.Interfaces;
+using Spartacus.Domain.Entities.Feedback;
 using Spartacus.Domain.Entities.User;
 using Spartacus.Web.Models;
 using System;
@@ -23,17 +24,22 @@ namespace Spartacus.BusinessLogic.BL
             return PopulateBodyAction(title, url, message);
         }
 
-        public void CreateToken(UToken guid)
+        public string PopulateBodyFeedback(FBTable model)
+        {
+            return PopulateBodyFeedbackAction(model);
+        }
+
+        public void CreateToken(ResetToken guid)
         {
             CreateTokenAction(guid);    
         }
 
-        public List<UToken> GetTokenList()
+        public List<ResetToken> GetTokenList()
         {
             return GetTokenListAction();
         }
 
-        public UToken GetToken(string token)
+        public ResetToken GetToken(string token)
         {
             return GetTokenAction(token);
         }
@@ -46,5 +52,11 @@ namespace Spartacus.BusinessLogic.BL
         {
             return CheckFilePathAction(Filepath);
         }
+
+        public bool DeleteFile(UFile file)
+        {
+            return DeleteFileAction(file);
+        }
+
     }
 }

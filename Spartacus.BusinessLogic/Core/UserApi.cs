@@ -165,8 +165,6 @@ namespace Spartacus.BusinessLogic.Core
             return userminimal;
         }
 
-        
-
     }
 }
 

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Spartacus.Domain.Entities.User
 {
-    public class UToken //Global Unique Identifier 
+    public class ResetToken //Global Unique Identifier 
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

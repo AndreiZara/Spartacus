@@ -1,5 +1,6 @@
 ﻿using Grpc.Core;
 using Spartacus.BusinessLogic.DBModel;
+using Spartacus.Domain.Entities.Feedback;
 using Spartacus.Domain.Entities.User;
 using Spartacus.Web.Models;
 using System;
@@ -38,39 +39,54 @@ namespace Spartacus.BusinessLogic.Core
                 smtp.Port = smtpSection.Network.Port;
                 smtp.Send(mm);
             }
-        var client = new SmtpClient("smtp.gmail.com", 587 )
-        {
-            EnableSsl = true,
-            UseDefaultCredentials = false,
-            Credentials = new NetworkCredential("cebotavictor14@gmail.com", "vqts afun ndcb facz")
-        };
-
-        await client.SendMailAsync(
-            new MailMessage(from: "cebotavictor14@gmail.com",
-            to: email,
-            subject,
-            message)
-            { IsBodyHtml = true }) ;
-        }
+            }
       }
 
 
 
-      public string PopulateBodyAction(string title, string url, string message)
-      {
-        string body = string.Empty;
-        using (StreamReader reader = new StreamReader(System.Web.HttpContext.Current.Server.MapPath("~/Content/Template/Email.html")))
-        {
-            body = reader.ReadToEnd();
-        }
-        
-        body = body.Replace("{Title}", title);
-        body = body.Replace("{Url}", url);
-        body = body.Replace("{Description}", message);
-        return body;
-      }
 
-        public void CreateTokenAction(UToken guid)
+        public string PopulateBodyAction(string title, string url, string message)  
+    {
+        var uploadFile = System.Web.HttpContext.Current.Server.MapPath("~/Content/Template/Email.html");
+            if (!Directory.Exists(uploadFile))
+            {
+                string body = string.Empty;
+                using (StreamReader reader = new StreamReader(System.Web.HttpContext.Current.Server.MapPath("~/Content/Template/Email.html")))
+                {
+                    body = reader.ReadToEnd();
+                }
+
+                body = body.Replace("{Title}", title);
+                body = body.Replace("{Url}", url);
+                body = body.Replace("{Description}", message);
+                return body;
+            }
+            return "";
+    }
+
+        public string PopulateBodyFeedbackAction(FBTable model)   
+        {
+            var uploadFile = System.Web.HttpContext.Current.Server.MapPath("~/Content/Template/Feedback.html");
+            if (!Directory.Exists(uploadFile))
+            {
+                string body = string.Empty;
+
+                using (StreamReader reader = new StreamReader(System.Web.HttpContext.Current.Server.MapPath("~/Content/Template/Feedback.html")))
+                {
+                    body = reader.ReadToEnd();
+                }
+
+                body = body.Replace("{AdminUsername}",model.AdminUsername);
+                body = body.Replace("{Username}", model.Username);
+                body = body.Replace("{Email}", model.Email);
+                body = body.Replace("{Subject}", model.Subject);
+                body = body.Replace("{Message}", model.Message);
+                return body;
+            }
+            return "";
+        }
+
+        public void CreateTokenAction(ResetToken guid)
         {
             using (var debil = new UserContext())
             {
@@ -79,7 +95,7 @@ namespace Spartacus.BusinessLogic.Core
             }
         }
 
-        public List<UToken> GetTokenListAction()
+        public List<ResetToken> GetTokenListAction()
         {
             using (var debil = new UserContext())
             {
@@ -89,7 +105,7 @@ namespace Spartacus.BusinessLogic.Core
             
         }
         
-        public UToken GetTokenAction(string token)
+        public ResetToken GetTokenAction(string token)
         {
             using (var debil = new UserContext())
             {
@@ -124,6 +140,18 @@ namespace Spartacus.BusinessLogic.Core
                     File.SaveAs(path);
                 }
             }
+        }
+
+        public bool DeleteFileAction(UFile file)
+        {
+            string filepath = "~/Content/Upload/" + file.Username;
+            var uploadsDir = HttpContext.Current.Server.MapPath(filepath);
+            if (!Directory.Exists(uploadsDir))
+            {
+                return false;
+            }
+            Directory.Delete(uploadsDir, true);
+            return true;
         }
 
         public bool CheckFilePathAction(string Filepath)

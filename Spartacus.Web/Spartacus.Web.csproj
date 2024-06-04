@@ -25,6 +25,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
+    <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -136,6 +137,7 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\css\style.css" />
+    <Content Include="Content\css\Choose.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\images\Muscles.jpg" />
@@ -148,6 +150,7 @@
     <Content Include="Content\Slick\slick.css" />
     <Content Include="Content\css\checkout.css" />
     <Content Include="Content\Template\Email.html" />
+    <Content Include="Content\Template\Feedback.html" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -311,12 +314,14 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\MembershipController.cs" />
+    <Compile Include="Controllers\ServiceController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Extension\HttpContextExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\FrogotPassword.cs" />
+    <Compile Include="Models\RoleDiv.cs" />
     <Compile Include="Models\tmpModel.cs" />
     <Compile Include="Models\UserLogin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -361,6 +366,13 @@
     <Content Include="Views\Account\Forgot.cshtml" />
     <Content Include="Views\Account\Read.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\Choose.cshtml" />
+    <Content Include="Views\Service\Create.cshtml" />
+    <Content Include="Views\Service\Read.cshtml" />
+    <Content Include="Views\User\DeleteDetail.cshtml" />
+    <None Include="Views\User\ReadDetail.cshtml" />
+    <Content Include="Views\User\UpdateDetail.cshtml" />
+    <Content Include="Views\User\CreateDetail.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -371,7 +383,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\NewFolder1\" />
-    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

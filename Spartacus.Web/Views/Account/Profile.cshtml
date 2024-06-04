@@ -1,9 +1,9 @@
-﻿
+﻿@model Spartacus.Web.Models.RoleDiv
+
 @{
      Layout = "~/Views/Shared/_LayoutNav.cshtml";
 }
 
-@model Spartacus.Web.Models.tmpModel
 
 <section style="background-color: #eee;">
      <div class="container py-5">
@@ -13,94 +13,111 @@
                <div class="col-lg-4">
                     <div class="card mb-4">
                          <div class="card-body text-center">
-                              @{ 
-                                   string path = Model.FilePath;
-                                   <img src="@path" width="380px" />
+                              @{
+
+                                   string path = Model.UModel.FilePath;
+                                   <img src="@path" width="200" />
                               }
                          </div>
                     </div>
                     <div class="card mb-4 mb-lg-0">
+
+                    </div>
+               </div>
+
+                    <div class="col-lg-8">
+
+                         <div class="card mb-4">
+                              <div class="card-body">
+                                        @using ((Html.BeginForm("Profile", "Account", FormMethod.Post)))
+                                        {
+                                   <div class="form-group">
+                                             @Html.LabelFor(model => model.UModel.Username, htmlAttributes: new { @class = "control-label col-md-2" })
+                                             <div class="col-md-10">
+                                                  @Html.EditorFor(model => model.UModel.Username, new { htmlAttributes = new { @class = "form-control" } })
+                                                  @Html.ValidationMessageFor(model => model.UModel.Username, "", new { @class = "text-danger" })
+                                             </div>
+                                         </div>
+
+                                        <div class="form-group">
+                                             @Html.LabelFor(model => model.UModel.Firstname, htmlAttributes: new { @class = "control-label col-md-2" })
+                                             <div class="col-md-10">
+                                                  @Html.EditorFor(model => model.UModel.Firstname, new { htmlAttributes = new { @class = "form-control" } })
+                                                  @Html.ValidationMessageFor(model => model.UModel.Firstname, "", new { @class = "text-danger" })
+                                             </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                             @Html.LabelFor(model => model.UModel.Lastname, htmlAttributes: new { @class = "control-label col-md-2" })
+                                             <div class="col-md-10">
+                                                  @Html.EditorFor(model => model.UModel.Lastname, new { htmlAttributes = new { @class = "form-control" } })
+                                                  @Html.ValidationMessageFor(model => model.UModel.Lastname, "", new { @class = "text-danger" })
+                                             </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                             @Html.LabelFor(model => model.UModel.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                                             <div class="col-md-10">
+                                                  @Html.EditorFor(model => model.UModel.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                                  @Html.ValidationMessageFor(model => model.UModel.Email, "", new { @class = "text-danger" })
+                                             </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                             @Html.LabelFor(model => model.UModel.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                                             <div class="col-md-10">
+                                                  @Html.EditorFor(model => model.UModel.Password, new { htmlAttributes = new { @class = "form-control" } })
+                                                  @Html.ValidationMessageFor(model => model.UModel.Password, "", new { @class = "text-danger" })
+                                             </div>
+                                        </div>
+                                       if (Model.UModel.Level == Spartacus.Domain.Enums.URole.Trainer)
+                                        {
+                                             <div class="form-group">
+                                                  @Html.LabelFor(model => model.MenDet.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                  <div class="col-md-10">
+                                                       @Html.EditorFor(model => model.MenDet.Description, new { htmlAttributes = new { @class = "form-control" } })
+                                                       @Html.ValidationMessageFor(model => model.MenDet.Description, "", new { @class = "text-danger" })
+                                                  </div>
+                                             </div>
+
+                                             <div class="form-group">
+                                                  @Html.LabelFor(model => model.MenDet.Activity, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                  <div class="col-md-10">
+                                                       @Html.EditorFor(model => model.MenDet.Activity, new { htmlAttributes = new { @class = "form-control" } })
+                                                       @Html.ValidationMessageFor(model => model.MenDet.Activity, "", new { @class = "text-danger" })
+                                                  </div>
+                                             </div>
+                                                       }
+
+                                             <div class="form-group">
+                                                  <div class="col-md-offset-2 col-md-10">
+                                                       <input type = "submit" value="Create" class="btn btn-default" />
+                                                  </div>
+                                             </div>
+                                   }
+
+
+                                        <li class="nav-item"><a class="nav-link" href=@Url.Action("Profile", "Account")>@Session["Level"]</a></li>
+
+
+                                   </div>
+                         </div>
                          
-                    </div>
-               </div>
 
-               <div class="col-lg-8">
 
-                    <div class="card mb-4">
-                         <div class="card-body">
-                              <div class="row">
-                                   <div class="col-sm-3">
-                                        <p class="mb-0">Username</p>
-                                   </div>
-                                   <div class="col-sm-9">
-                                        <p class="text-muted mb-0">@Html.DisplayFor(modelitem => modelitem.Username)</p>
-                                        @*<p class="text-muted mb-0">@Session["Username"]</p>*@
-                                   </div>
-                              </div>
-                              <hr>
-                              <div class="row">
-                                   <div class="col-sm-3">
-                                        <p class="mb-0">Firstname</p>
-                                   </div>
-                                   <div class="col-sm-9">
-                                        <p class="text-muted mb-0">@Html.DisplayFor(modelitem => modelitem.Firstname)</p>
-                                        @*<p class="text-muted mb-0">@Session["Firstname"]</p>*@
-                                   </div>
-                              </div>
-                              <hr>
-                              <div class="row">
-                                   <div class="col-sm-3">
-                                        <p class="mb-0">Lastname</p>
-                                   </div>
-                                   <div class="col-sm-9">
-                                        <p class="text-muted mb-0">@Html.DisplayFor(modelitem => modelitem.Lastname)</p>
-                                        @*<p class="text-muted mb-0">@Session["Lastname"]</p>*@
-                                   </div>
-                              </div>
-                              <hr>
-                              <div class="row">
-                                   <div class="col-sm-3">
-                                        <p class="mb-0">Email</p>
-                                   </div>
-                                   <div class="col-sm-9">
-                                        <p class="text-muted mb-0">@Html.DisplayFor(modelitem => modelitem.Email)</p>
-                                        @*<p class="text-muted mb-0">@Session["Email"]</p>*@
-                                   </div>
-                              </div>
-                              <hr>
-                              @*<div class="row">
-                                        <div class="col-sm-3">
-                                             <p class="mb-0">Mobile</p>
-                                        </div>
-                                        <div class="col-sm-9">
-                                             <p class="text-muted mb-0">(098) 765-4321</p>
-                                        </div>
-                                   </div>
-                                   <hr>
-                                   <div class="row">
-                                        <div class="col-sm-3">
-                                             <p class="mb-0">Address</p>
-                                        </div>
-                                        <div class="col-sm-9">
-                                             <p class="text-muted mb-0">Bay Area, San Francisco, CA</p>
-                                        </div>
-                                   </div>*@
-                         </div>
-                    </div>
+                         <div class="row">
+                              <div class="col-md-6">
+                                   <div class="card mb-4 mb-md-0">
 
-                    <div class="row">
-                         <div class="col-md-6">
-                              <div class="card mb-4 mb-md-0">
-                                   
+                                   </div>
                               </div>
-                         </div>
-                         <div class="col-md-6">
-                              <div class="card mb-4 mb-md-0">
-                                  
+                              <div class="col-md-6">
+                                   <div class="card mb-4 mb-md-0">
+
+                                   </div>
                               </div>
                          </div>
                     </div>
-               </div>
           </div>
      </div>
 </section>

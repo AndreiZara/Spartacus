@@ -1,0 +1,60 @@
+﻿
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Choose Account Type</title>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<style>
+     body {
+          background-color: black;
+          color: white;
+     }
+
+     h1 {
+          color: white;
+     }
+
+     .card-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          text-align: center;
+     }
+
+     .card {
+          margin: 15px;
+          transition: transform 0.2s;
+     }
+
+          .card:hover {
+               transform: scale(1.05);
+          }
+</style>
+
+@using ((Html.BeginForm("Choose", "Account", FormMethod.Post))) { 
+<div class="container card-container">
+     <div>
+          <h1>Choose what you want</h1>
+          <div class="d-flex justify-content-center">
+              <button type="submit"  class="btn p-0" name="card" value="card1">
+                   <div class="card text-dark bg-light" style="width: 18rem;" >
+
+                        <div class="card-body">
+                             <h5 class="card-title">Consumer</h5>
+                        </div>
+                   </div>
+              </button>
+               <button type="submit"  class="btn p-0" name="card" value="card2">
+                    <div class="card text-dark bg-light" style="width: 18rem;">
+                         <div class="card-body">
+                              <h5 class="card-title">Trainer</h5>
+                         </div>
+                    </div>
+               </button>
+</div>
+     </div>
+</div     >
+}
+
+

@@ -9,7 +9,7 @@ using Spartacus.Domain.Entities.Membership;
 
 namespace Spartacus.BusinessLogic.DBModel
 {
-    class CategoryContext : DbContext
+    class CategoryContext : DbContext   
     {
         public CategoryContext() : base("name=Spartacus")  {}
 

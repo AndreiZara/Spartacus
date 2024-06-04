@@ -7,18 +7,30 @@ using System.Threading.Tasks;
 using System.Web.UI.WebControls.WebParts;
 using Spartacus.Domain.Entities.User;
 using System.ComponentModel.DataAnnotations.Schema;
+using Spartacus.Domain.Entities.Membership;
+using Spartacus.Domain.Entities.Services;
 
 namespace Spartacus.BusinessLogic.DBModel
 {
-    class UserContext : DbContext
+    public class UserContext : DbContext
     {
         public UserContext() : 
-            base("name=Spartacus") // connectionstring name define in your web.config
+            base("name=Spartacus") 
         {
         }
 
         public virtual DbSet<UTable> Users{ get; set; }
-        public virtual DbSet<UToken> Tokens { get; set; }
+        public virtual DbSet<ResetToken> Tokens { get; set; }
+        public virtual DbSet<MenDetTable> Details { get; set; }
+        public virtual DbSet<SerTable> Services { get; set; }
 
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            
+            modelBuilder.Entity<SerTable>()
+                .HasMany(s => s.MenDetTables)
+                .WithRequired(md => md.SerTable)
+                .HasForeignKey(md => md.ServiceId);
+        }
     }
 }

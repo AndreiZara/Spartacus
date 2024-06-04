@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using System.Security.Policy;
 using System.Data;
 using Microsoft.Ajax.Utilities;
+using Spartacus.Domain.Enums;
+using Spartacus.Domain.Entities.Services;
 
 namespace Spartacus.Web.Controllers
 {
@@ -31,14 +33,15 @@ namespace Spartacus.Web.Controllers
             _sessionAdmin = Abl.GetAdminBL();
         }
 
-        public ActionResult Register()
+        public ActionResult Register(int level)
         {
-            ViewBag.Roles = new List<SelectListItem>
+            URole role = (URole)level;
+
+            UTable user = new UTable()
             {
-                new SelectListItem { Value = "Admin", Text = "Administrator" },
-                new SelectListItem { Value = "User", Text = "Regular User" }
+                Level = role
             };
-            return View();
+            return View(user);
         }
 
         [HttpPost]
@@ -148,11 +151,10 @@ namespace Spartacus.Web.Controllers
                     }
                 }
             }
-
             return RedirectToAction("Index", "Home");
-
-
         }
+
+
 
 
         public ActionResult Profile()
@@ -169,21 +171,55 @@ namespace Spartacus.Web.Controllers
                     UTable userTable = _sessionAdmin.GetUserByUsername(user.Username);
 
                     string FilePath = "/Content/Upload/" + userTable.Username + "/" + userTable.FileName;
-
-                    //bool itTrue = _sessionMain.CheckFilePath(FilePath);
                     
+                    //bool itTrue = _sessionMain.CheckFilePath(FilePath);
+
                     tmpModel Model = new tmpModel()
                     {
-                        Username = userTable.Username,
+                        id = userTable.Id,
+                        Username =  userTable.Username,
                         Password = userTable.Password,
                         Firstname = userTable.Firstname,
                         Lastname = userTable.Lastname,
-                        FilePath = FilePath
+                        Email = userTable.Email,
+                        FilePath = "/Content/Upload/shrek/shrexy.jpg",
+                        Level = userTable.Level,
 
                     };
-                    Session["Path"] = FilePath;
 
-                    return View(Model);
+                    if(_sessionAdmin.GetDetailByUsername(userTable.Username) == null)
+                    {
+
+                        MenDetTable trainer = new MenDetTable()
+                        {
+                            Username = userTable.Username,
+                            Activity = "",
+                            Description = ""
+                        };
+
+                        RoleDiv role = new RoleDiv
+                        {
+                            UModel = Model,
+                            MenDet = trainer
+                        };
+
+                        Session["Path"] = FilePath;
+                        Session["Level"] = userTable.Level.ToString();
+
+                        return View(role);
+                    }
+
+                    MenDetTable mentor = _sessionAdmin.GetDetailByUsername(userTable.Username);
+
+                    RoleDiv newRole = new RoleDiv
+                    {
+                        UModel = Model,
+                        MenDet = mentor,
+                    };
+
+                    Session["Path"] = FilePath;
+                    Session["Level"] = userTable.Level.ToString();
+                    return View(newRole);
                 }
             
             }
@@ -191,6 +227,92 @@ namespace Spartacus.Web.Controllers
             
         }
 
+        [HttpPost]
+        public ActionResult Profile(RoleDiv role)
+        {
+            UTable user = _sessionAdmin.GetUserByUsername(role.UModel.Username);
+
+            UTable tmpUser = new UTable()
+            {
+                Id = user.Id,
+                Username = role.UModel.Username,
+                Firstname = role.UModel.Firstname,
+                Lastname = role.UModel.Lastname,
+                Email = role.UModel.Email,
+                Password = role.UModel.Password,
+                Level = user.Level,
+                LastIp = user.LastIp,
+                LastLogin = user.LastLogin,
+                File = user.File,
+            };
+
+            role.UModel.Level = user.Level;
+            _sessionAdmin.UpdateUser(tmpUser,tmpUser.Id);
+
+            tmpModel newModel = new tmpModel
+            {
+                Username = tmpUser.Username,
+                Firstname = tmpUser.Firstname,
+                Lastname = tmpUser.Lastname,
+                Email= tmpUser.Email,
+                Password = tmpUser.Password,
+                Level = tmpUser.Level,  
+                File = tmpUser.File,
+                FilePath = "/Content/Upload/shrek/shrexy.jpg"
+            };
+
+
+            if(_sessionAdmin.GetServiceByTitle(role.MenDet.Activity) != null)
+            {
+                SerTable service = _sessionAdmin.GetServiceByTitle(role.MenDet.Activity);
+                MenDetTable mentor = new MenDetTable()
+                {
+                    Username = user.Username,
+                    Description = role.MenDet.Description,
+                    Activity = role.MenDet.Activity,
+                    SerTable = service
+                };
+
+
+                MenDetTable menTable = _sessionAdmin.GetDetailByUsername(mentor.Username);
+
+                if (menTable == null)
+                {
+                    _sessionAdmin.AddDetail(mentor);
+                    return View();
+                }
+
+                _sessionAdmin.UpdateDetail(mentor, mentor.Id);
+
+                role.UModel = newModel;
+                role.MenDet = mentor;
+
+                return View(role);
+            }
+
+            return View(role);
+
+
+        }
+
+        public ActionResult Choose()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Choose(string card)
+        {
+            if(card == "card1")
+            {
+                return RedirectToAction("Register", "Account", new {level = 1});
+            }
+            else if(card == "card2")
+            {
+                return RedirectToAction("Register", "Account", new {level = 4});
+            }
+            return View();
+        }
 
         public ActionResult Forgot()
         {
@@ -210,7 +332,7 @@ namespace Spartacus.Web.Controllers
                 Session["Emali"] = pass.Email;
 
                 string token = Guid.NewGuid().ToString();
-                UToken guid = new UToken()
+                ResetToken guid = new ResetToken()
                 {
                     Token = token,
                     EndDate = DateTime.Now.AddMinutes(5),
@@ -231,7 +353,7 @@ namespace Spartacus.Web.Controllers
 
                 await _sessionMain.SendEmailAsync(pass.Email, subject, body);
             }
-
+            
             return View();
         }
 
@@ -239,7 +361,7 @@ namespace Spartacus.Web.Controllers
         public ActionResult ResetPassword(string token)
         {
             Session["token"] = token;
-            UToken guid = _sessionMain.GetToken(token);
+            ResetToken guid = _sessionMain.GetToken(token);
             DateTime now = DateTime.Now;
             if(now < guid.EndDate) 
             {
@@ -253,7 +375,7 @@ namespace Spartacus.Web.Controllers
         [HttpGet]
         public ActionResult Read()
         {
-            List<UToken> Clist = new List<UToken>();
+            List<ResetToken> Clist = new List<ResetToken>();
             Clist = _sessionMain.GetTokenList();
             return View(Clist);
         }

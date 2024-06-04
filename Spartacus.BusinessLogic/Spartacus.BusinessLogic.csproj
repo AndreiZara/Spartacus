@@ -15,6 +15,7 @@
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -100,30 +101,15 @@
     <Compile Include="Core\UserApi.cs" />
     <Compile Include="DBModel\CatContext.cs" />
     <Compile Include="DBModel\CategoryContext.cs" />
+    <Compile Include="DBModel\FeedbackContext.cs" />
     <Compile Include="DBModel\SessionContext.cs" />
     <Compile Include="DBModel\UserContext.cs" />
     <Compile Include="Interfaces\IAdmin.cs" />
     <Compile Include="Interfaces\IMain.cs" />
     <Compile Include="Interfaces\ISession.cs" />
-    <Compile Include="Migrations\202405210630296_Init.cs" />
-    <Compile Include="Migrations\202405210630296_Init.Designer.cs">
-      <DependentUpon>202405210630296_Init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202405210750487_Init1.cs" />
-    <Compile Include="Migrations\202405210750487_Init1.Designer.cs">
-      <DependentUpon>202405210750487_Init1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202405210919381_Init2.cs" />
-    <Compile Include="Migrations\202405210919381_Init2.Designer.cs">
-      <DependentUpon>202405210919381_Init2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202405210933357_Init3.cs" />
-    <Compile Include="Migrations\202405210933357_Init3.Designer.cs">
-      <DependentUpon>202405210933357_Init3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202405211607380_Init4.cs" />
-    <Compile Include="Migrations\202405211607380_Init4.Designer.cs">
-      <DependentUpon>202405211607380_Init4.cs</DependentUpon>
+    <Compile Include="Migrations\202406031706028_Init.cs" />
+    <Compile Include="Migrations\202406031706028_Init.Designer.cs">
+      <DependentUpon>202406031706028_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -147,20 +133,8 @@
     <Folder Include="DBModel\Seed\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202405210630296_Init.resx">
-      <DependentUpon>202405210630296_Init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202405210750487_Init1.resx">
-      <DependentUpon>202405210750487_Init1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202405210919381_Init2.resx">
-      <DependentUpon>202405210919381_Init2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202405210933357_Init3.resx">
-      <DependentUpon>202405210933357_Init3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202405211607380_Init4.resx">
-      <DependentUpon>202405211607380_Init4.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202406031706028_Init.resx">
+      <DependentUpon>202406031706028_Init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -168,10 +142,10 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Grpc.Core.2.46.6\build\net45\Grpc.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Grpc.Core.2.46.6\build\net45\Grpc.Core.targets'))" />
     <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
     <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
-    <Error Condition="!Exists('..\packages\Grpc.Core.2.46.6\build\net45\Grpc.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Grpc.Core.2.46.6\build\net45\Grpc.Core.targets'))" />
   </Target>
-  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
   <Import Project="..\packages\Grpc.Core.2.46.6\build\net45\Grpc.Core.targets" Condition="Exists('..\packages\Grpc.Core.2.46.6\build\net45\Grpc.Core.targets')" />
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
 </Project>

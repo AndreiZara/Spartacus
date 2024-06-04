@@ -56,7 +56,7 @@
      </div>
 
      <div class="form-group">
-          @Html.DropDownListFor(Model => Model.Level, new SelectList(new string[] { "Moderator", "Consmer", "Admin" }), htmlAttributes: new { @class = "form-control" });
+          @Html.DropDownListFor(Model => Model.Level, new SelectList(new string[] { "Moderator", "Consmer", "Admin", "Mentor" }), htmlAttributes: new { @class = "form-control" });
           <div class="col-md-8">
                @Html.ValidationMessageFor(model => model.Level, "", new { @class = "text-danger" })
           </div>
@@ -78,14 +78,6 @@
      </div>
 </div>
 }
-
-@*<li class="nav-item">>@Session["Id"]</li>
-<li class="nav-item">@Session["Email"]</li>
- <li class="nav-item">@Session["Password"]</li>
- <li class="nav-item">@Session["LastLogin"]</li>
- <li class="nav-item">@Session["LastIp"]</li>*@
-
-@*<li class="nav-item"><a class="nav-link" href=@Url.Action("Login", "Account")>@Session["Username"]</a></li>*@
 
 <div>
     @Html.ActionLink("Back to List", "Index")

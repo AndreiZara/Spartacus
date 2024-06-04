@@ -2,6 +2,7 @@
 using Spartacus.BusinessLogic.Core;
 using Spartacus.BusinessLogic.Interfaces;
 using Spartacus.Domain.Entities.Membership;
+using Spartacus.Web.ActionFilters;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
@@ -11,19 +12,22 @@ namespace Spartacus.Web.Controllers
     {
         private readonly IAdmin _admin;
 
+        public MembershipController()
+        {
+            var bl = new BussinesLogic();
+            _admin = bl.GetAdminBL();
+        }
+
+        [AdminMod(Domain.Enums.URole.Admin)]
         public ActionResult Create()
         {
             
             return View();
         }
 
-        public MembershipController()
-        {
-            var bl = new BussinesLogic();
-            _admin = bl.GetAdminBL();
-        }
         // GET: Membership
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(CategoryTable table)
         {
             if (ModelState.IsValid) 
@@ -47,7 +51,7 @@ namespace Spartacus.Web.Controllers
 
         }
 
-
+        [AdminMod(Domain.Enums.URole.Admin, Domain.Enums.URole.Moderator)]
         public ActionResult Update(CategoryTable table)
         {
             var category = _admin.GetCategoryById(table.Id);
@@ -74,7 +78,9 @@ namespace Spartacus.Web.Controllers
             return View();
         }
 
+        [AdminMod(Domain.Enums.URole.Admin, Domain.Enums.URole.Moderator)]
         [HttpGet]
+        [ValidateAntiForgeryToken]
         public ActionResult Read() 
         {
             List<CategoryTable> Clist = new List<CategoryTable>();

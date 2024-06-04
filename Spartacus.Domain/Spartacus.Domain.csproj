@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -68,13 +69,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Feedback\FBTable.cs" />
+    <Compile Include="Entities\Services\SerTable.cs" />
+    <Compile Include="Entities\User\MenDetTable.cs" />
     <Compile Include="Entities\User\UFile.cs" />
     <Compile Include="Entities\Membership\CategoryTable.cs" />
     <Compile Include="Entities\Membership\CatTable.cs" />
     <Compile Include="Entities\Membership\Period.cs" />
     <Compile Include="Entities\Membership\Prices.cs" />
     <Compile Include="Entities\Membership\MsTable.cs" />
-    <Compile Include="Entities\User\UToken.cs" />
+    <Compile Include="Entities\Tokens\ResetToken.cs" />
     <Compile Include="Enums\URole.cs" />
     <Compile Include="Entities\User\Session.cs" />
     <Compile Include="Entities\User\UTable.cs" />
@@ -93,5 +97,6 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
