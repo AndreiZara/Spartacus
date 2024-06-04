@@ -18,12 +18,12 @@ namespace Spartacus.Domain.Entities.User
 
         [Required]
         [Display(Name = "First name")]
-        [StringLength(20, MinimumLength = 1, ErrorMessage = "Sorry, First name too long.")]
+        [StringLength(20, MinimumLength = 1, ErrorMessage = "Sorry, First name is too long.")]
         public string Firstname { get; set; }
 
         [Required]
         [Display(Name = "Last name")]
-        [StringLength(20, MinimumLength = 1, ErrorMessage = "Sorry, Last name too long.")]
+        [StringLength(20, MinimumLength = 1, ErrorMessage = "Sorry, Last name is too long.")]
         public string Lastname { get; set; }
 
         [Required]

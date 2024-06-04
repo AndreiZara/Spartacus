@@ -9,6 +9,7 @@ namespace Spartacus.BusinessLogic.DBModel
         public UserContext() : base("name=Spartacus") { }
         public virtual DbSet<UTable> Users { get; set; }
         public virtual DbSet<MsTable> Memberships { get; set; }
+        public virtual DbSet<FBTable> Feedbacks { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

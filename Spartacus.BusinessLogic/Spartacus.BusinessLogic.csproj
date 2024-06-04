@@ -18,7 +18,7 @@
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-</PropertyGroup>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="BussinesLogic.cs" />
     <Compile Include="Core\CatMgmtApi.cs" />
+    <Compile Include="Core\FeedMgmtApi.cs" />
     <Compile Include="Core\UserMgmtApi.cs" />
     <Compile Include="Core\MainApi.cs" />
     <Compile Include="Core\SessionApi.cs" />
@@ -73,10 +74,12 @@
     <Compile Include="DBModel\TokenContext.cs" />
     <Compile Include="DBModel\UserContext.cs" />
     <Compile Include="Interfaces\ICatMgmt.cs" />
+    <Compile Include="Interfaces\IFeedMgmt.cs" />
     <Compile Include="Interfaces\IUserMgmt.cs" />
     <Compile Include="Interfaces\IMain.cs" />
     <Compile Include="Interfaces\ISession.cs" />
     <Compile Include="Logics\CatMgmtBL.cs" />
+    <Compile Include="Logics\FeedMgmtBL.cs" />
     <Compile Include="Logics\UserMgmtBL.cs" />
     <Compile Include="Logics\MainBL.cs" />
     <Compile Include="Migrations\202405301608173_AddFileName.cs" />
@@ -94,6 +97,10 @@
     <Compile Include="Migrations\202406011901271_AddAccessToken.cs" />
     <Compile Include="Migrations\202406011901271_AddAccessToken.Designer.cs">
       <DependentUpon>202406011901271_AddAccessToken.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202406041611005_AddFeedback.cs" />
+    <Compile Include="Migrations\202406041611005_AddFeedback.Designer.cs">
+      <DependentUpon>202406041611005_AddFeedback.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -131,6 +138,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202406011901271_AddAccessToken.resx">
       <DependentUpon>202406011901271_AddAccessToken.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202406041611005_AddFeedback.resx">
+      <DependentUpon>202406041611005_AddFeedback.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,6 +1,7 @@
 ﻿using Spartacus.BusinessLogic.Core;
 using Spartacus.BusinessLogic.Interfaces;
 using Spartacus.Domain.Entities.Membership;
+using Spartacus.Domain.Entities.User;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -17,5 +18,7 @@ namespace Spartacus.BusinessLogic.Logics
         public bool IsResetTokenValid(string value) => IsResetTokenValidAction(value);
 
         public bool ResetPasswordByToken(string value, string newPassword) => ResetPasswordByTokenAction(value, newPassword);
+
+        public void SendFeedback(FeedData data) => SendFeedbackAction(data);
     }
 }
