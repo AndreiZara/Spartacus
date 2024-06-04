@@ -25,16 +25,13 @@
             @Html.DisplayNameFor(model => model.Email)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Password)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.LastLogin)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.LastIp)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Membership.StartTime) 
+            @Html.DisplayNameFor(model => model.Membership.StartTime)
             /
             @Html.DisplayNameFor(model => model.Membership.EndTime)
         </th>
@@ -59,16 +56,14 @@
             @Html.DisplayFor(modelItem => item.Email)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Password)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.LastLogin)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.LastIp)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Membership.StartTime) <br />
+            @Html.DisplayFor(modelItem => item.Membership.StartTime) 
+            -
             @Html.DisplayFor(modelItem => item.Membership.EndTime)
         </td>
         <td>
@@ -76,6 +71,7 @@
         </td>
         <td>
             @Html.ActionLink("Edit", "Update", new { id = item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
             @Html.ActionLink("Delete", "Delete", new { id = item.Id })
         </td>
     </tr>

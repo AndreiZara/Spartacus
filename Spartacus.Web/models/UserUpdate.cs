@@ -1,11 +1,16 @@
-﻿using System;
+﻿using Spartacus.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace Spartacus.Web.Models
 {
-    public class UserProfile
+    public class UserUpdate
     {
         [Required]
+        public int Id { get; set; }
+
+        [Required]
+        [Display(Name = "Username")]
         [StringLength(30, MinimumLength = 5, ErrorMessage = "Must be between 5 and 30 characters.")]
         public string Username { get; set; }
 
@@ -21,25 +26,23 @@ namespace Spartacus.Web.Models
 
         [Required]
         [EmailAddress]
-        [Display(Name = "Email Address")]
+        [Display(Name = "Email address")]
         [StringLength(30)]
         public string Email { get; set; }
 
-        [Required]
-        [DataType(DataType.Password)]
-        [StringLength(50, MinimumLength = 8, ErrorMessage = "Must be between 8 and 50 characters.")]
-        public string Password { get; set; }
+        public URole Level { get; set; }
 
+        [Display(Name = "Select membership")]
+        public int? CatId { get; set; }
 
-        // read only
+        [Display(Name = "Select period")]
+        public MsDuration? Period { get; set; }
+
+        [Display(Name = "File name")]
+        [StringLength(50)]
         public string FileName { get; set; }
-        [DataType(DataType.Date)]
-        public DateTime StartTime { get; set; }
-        [DataType(DataType.Date)]
-        public DateTime EndTime { get; set; }
-        public int RemainingDays { get; set; }
-        // and something related to category
-        public string Title { get; set; }
-        public string Description { get; set; }
+
+        // readonly
+        public SelectList Categories { get; set; }
     }
 }

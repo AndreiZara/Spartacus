@@ -891,4 +891,9 @@ ul.dropdown-menu li {
     padding: 0px;
   }
 }
+@media (max-width: 992px) {
+    .navbar {
+        background: #181a23 !important;
+    }
+}
 /*# sourceMappingURL=style.css.map */

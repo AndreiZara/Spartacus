@@ -2,7 +2,7 @@
      <a class="navbar-brand" href=@Url.Action("Index", "Home")>
           <h2 class="text-white text-capitalize">Spartac<span class="text-color">us</span></h2>
      </a>
-     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsid" aria-controls="navbarsid" aria-expanded="false" aria-label="Toggle navigation">
+     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsid" aria-controls="navbarsid" aria-expanded="false" aria-label="Toggle navigation">
           <span class="ti-view-list"></span>
      </button>
      <div class="collapse text-center navbar-collapse" id="navbarsid">
@@ -14,21 +14,22 @@
                <li class="nav-item"><a class="nav-link" href=@Url.Action("About", "Home")>About us</a></li>
           </ul>
           <ul class="navbar-nav">
-
-
-               @if (Session["LoginStatus"] as string == "logout")
-               {
-                    <li class="nav-item"><a class="nav-link" href=@Url.Action("Login", "Account")>Login</a></li>
-                    <li class="vr text-white opacity-100 px-0"></li>
-                    <li class="nav-item pe-0"><a class="nav-link" href=@Url.Action("Register", "Account")>Join</a></li>
-               }
-               else
-               {
-                    <li class="nav-item"><a class="nav-link" href=@Url.Action("Profile", "Account")>@Session["Username"]</a></li>
-                    <li class="vr text-white opacity-100 px-0"></li>
-                    <li class="nav-item"><a class="nav-link" href=@Url.Action("Logout", "Account")>Disconect</a></li>
-               }
-
+              @if (Session["LoginStatus"] as string == "logout")
+              {
+                    <li class="nav-item d-flex mx-auto">
+                        <a class="nav-link d-inline" href=@Url.Action("Login", "Account")>Login</a>
+                        <div class="vr text-white opacity-100 mx-1"></div>
+                        <a class="nav-link d-inline" href=@Url.Action("Register", "Account")>Join</a>
+                    </li>
+              }
+              else
+              {
+                  <li class="nav-item d-flex mx-auto">
+                      <a class="nav-link d-inline" href=@Url.Action("Index", "Account")>@Session["Username"]</a>
+                        <div class="vr text-white opacity-100 mx-1"></div>
+                      <a class="nav-link d-inline" href=@Url.Action("Logout", "Account")>Disconect</a>
+                  </li>
+              }
           </ul>
      </div>
 </div>

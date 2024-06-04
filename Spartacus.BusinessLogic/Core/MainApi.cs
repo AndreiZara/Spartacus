@@ -1,6 +1,6 @@
 ﻿using Spartacus.BusinessLogic.DBModel;
 using Spartacus.Domain.Entities.Membership;
-using Spartacus.Domain.Entities.User;
+using Spartacus.Domain.Entities.Tokens;
 using Spartacus.Helpers;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,6 @@ using System.Net.Configuration;
 using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace Spartacus.BusinessLogic.Core
 {
@@ -20,26 +19,22 @@ namespace Spartacus.BusinessLogic.Core
     {
         internal List<CatTable> GetCatsAction()
         {
-            using (var debil = new CategoryContext())
-            {
-                var cats = debil.Categories.ToList();
-                return cats;
-            }
+            using var debil = new CategoryContext();
+            var cats = debil.Categories.ToList();
+            return cats;
         }
 
         internal CatTable GetCatByIdAction(int id)
         {
-            using (var debil = new CategoryContext())
-            {
-                var cat = debil.Categories.FirstOrDefault(c => c.Id == id);
-                return cat;
-            }
+            using var debil = new CategoryContext();
+            var cat = debil.Categories.FirstOrDefault(c => c.Id == id);
+            return cat;
         }
 
         internal Task SendEmailAsyncAction(string email, string subject, string message)
         {
             SmtpSection smtpSection = (SmtpSection)ConfigurationManager.GetSection("system.net/mailSettings/smtp");
-            
+
             var client = new SmtpClient("smtp.gmail.com", 587)
             {
                 EnableSsl = true,
@@ -108,14 +103,12 @@ namespace Spartacus.BusinessLogic.Core
         internal bool IsResetTokenValidAction(string value)
         {
             var hashedValue = LoginHelpers.HashGen(value);
-            using (var debil = new TokenContext())
-            {
-                var token = debil.ResetTokens.FirstOrDefault(t => t.Value == hashedValue);
-                if (token == null) return false;
+            using var debil = new TokenContext();
+            var token = debil.ResetTokens.FirstOrDefault(t => t.Value == hashedValue);
+            if (token == null) return false;
 
-                RemoveExpiredResetTokensAction();
-                return token.EndDate > DateTime.Now;
-            }
+            RemoveExpiredResetTokensAction();
+            return token.EndDate > DateTime.Now;
         }
 
         internal bool ResetPasswordByTokenAction(string value, string newPassword)
@@ -131,7 +124,7 @@ namespace Spartacus.BusinessLogic.Core
                 RemoveExpiredResetTokensAction();
             }
 
-            using(var debil = new UserContext())
+            using (var debil = new UserContext())
             {
                 var user = debil.Users.FirstOrDefault(u => u.Email == userEmail);
                 if (user == null) return false;
@@ -144,52 +137,9 @@ namespace Spartacus.BusinessLogic.Core
 
         private void RemoveExpiredResetTokensAction()
         {
-            using (var debil = new TokenContext())
-            {
-                debil.ResetTokens.RemoveRange(debil.ResetTokens.Where(t => t.EndDate < DateTime.Now));
-                debil.SaveChanges();
-            }
+            using var debil = new TokenContext();
+            debil.ResetTokens.RemoveRange(debil.ResetTokens.Where(t => t.EndDate < DateTime.Now));
+            debil.SaveChanges();
         }
-
-        public void UploadFileAction(UFile file)
-        {
-            HttpPostedFileBase File = file.FileModel;
-
-            if (File != null && File.ContentLength > 0)
-            {
-                // Check if the file is an image
-                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
-                var extension = Path.GetExtension(File.FileName).ToLower();
-
-
-
-                if (allowedExtensions.Contains(extension))
-                {
-                    string filepath = "~/Content/Upload/" + file.Username;
-                    var uploadsDir = HttpContext.Current.Server.MapPath(filepath);
-                    if (!Directory.Exists(uploadsDir))
-                    {
-                        Directory.CreateDirectory(uploadsDir);
-                    }
-
-                    var fileName = Path.GetFileName(File.FileName);
-                    var path = Path.Combine(uploadsDir, fileName);
-                    File.SaveAs(path);
-                }
-            }
-        }
-
-        public bool CheckFilePathAction(string Filepath)
-        {
-
-            var uploadsDir = HttpContext.Current.Server.MapPath(Filepath);
-            if (!Directory.Exists(uploadsDir))
-            {
-                return false;
-            }
-            return true;
-
-        }
-
     }
 }

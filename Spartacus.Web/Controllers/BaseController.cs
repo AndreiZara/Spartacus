@@ -23,7 +23,6 @@ namespace Spartacus.Web.Controllers
                 }
                 else
                 {
-                    Session.Abandon();
                     EatCookie();
                     return false;
                 }

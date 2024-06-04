@@ -16,10 +16,12 @@ namespace Spartacus.BusinessLogic
 
         public UserMinimal GetUserByCookie(string cookie) => GetUserByCookieAction(cookie);
 
-        public bool AddMembershipFor(string username, MsDuration? duration) => AddMembershipForAction(username, duration);
+        public UProfData GetProfileByCookie(string cookie) => GetProfileByCookieAction(cookie);
 
-        public bool SetMsDurationFor(string userCookie, MsDuration dur) => SetMsDurationForAction(userCookie, dur);
+        public SaveProfResp SaveProfileByCookie(string cookie, UProfData data) => SaveProfileByCookieAction(cookie, data);
 
-        public MsDuration? GetMsDurationFor(string userCookie) => GetMsDurationForAction(userCookie);
+        public bool AddMembershipFor(string username, int? catId, MsDuration? duration) => AddMembershipForAction(username, catId, duration);
+
+        public string GetQrById(int id) => GetQrByIdAction(id);
     }
 }

@@ -1,5 +1,7 @@
 ﻿using Spartacus.Domain.Entities.User;
+using Spartacus.Domain.Enums;
 using System.Collections.Generic;
+using System.Web;
 
 namespace Spartacus.BusinessLogic.Interfaces
 {
@@ -11,7 +13,7 @@ namespace Spartacus.BusinessLogic.Interfaces
 
         UTable GetUserById(int id);
 
-        bool UpdateUser(UTable data);
+        SaveProfResp UpdateUser(UTable data, HttpPostedFileBase image);
 
         bool DeleteUserById(int id);
     }

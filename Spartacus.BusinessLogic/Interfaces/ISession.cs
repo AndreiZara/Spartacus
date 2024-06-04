@@ -10,8 +10,9 @@ namespace Spartacus.BusinessLogic.Interfaces
         bool UserReg(URegData data);
         HttpCookie GetCookie(string data);
         UserMinimal GetUserByCookie(string cookie);
-        bool AddMembershipFor(string username, MsDuration? duration);
-        bool SetMsDurationFor(string userCookie, MsDuration duration);
-        MsDuration? GetMsDurationFor(string userCookie);
+        UProfData GetProfileByCookie(string cookie);
+        SaveProfResp SaveProfileByCookie(string cookie, UProfData data);
+        bool AddMembershipFor(string username, int? catId, MsDuration? duration);
+        string GetQrById(int id);
     }
 }

@@ -6,12 +6,7 @@ namespace Spartacus.Web.Controllers
 {
     public class HomeController : BaseController
     {
-        private readonly IMain _main;
-
-        public HomeController()
-        {
-            _main = BussinesLogic.GetMainBL();
-        }
+        private readonly ICatMgmt _mgmt = BussinesLogic.GetCatMgmtBL();
 
         public ActionResult Index()
         {
@@ -34,7 +29,7 @@ namespace Spartacus.Web.Controllers
         public ActionResult Membership()
         {
             SessionStatus();
-            var data = _main.GetCats();
+            var data = _mgmt.GetCats();
             return View(data);
         }
 

@@ -8,6 +8,7 @@
 <h2 class="mb-2 text-center">Sign In</h2>
 @using (Html.BeginForm("Login", "Account", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
 {
+    @Html.AntiForgeryToken()
     <div class="form-floating mt-3">
         @Html.TextBoxFor(m => m.Username, new
         {

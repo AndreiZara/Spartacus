@@ -1,9 +1,12 @@
-﻿using Spartacus.BusinessLogic;
+﻿using AutoMapper;
+using Spartacus.BusinessLogic;
 using Spartacus.BusinessLogic.Interfaces;
 using Spartacus.Domain.Entities.User;
 using Spartacus.Domain.Enums;
 using Spartacus.Web.Filters;
+using Spartacus.Web.Models;
 using System;
+using System.Web;
 using System.Web.Mvc;
 
 namespace Spartacus.Web.Controllers
@@ -12,6 +15,7 @@ namespace Spartacus.Web.Controllers
     public class UserController : BaseController
     {
         private readonly IUserMgmt _userMgmt = BussinesLogic.GetUserMgmtBL();
+        private readonly ICatMgmt _catMgmt = BussinesLogic.GetCatMgmtBL();
 
         public ActionResult Read()
         {
@@ -20,7 +24,7 @@ namespace Spartacus.Web.Controllers
             return View(users);
         }
 
-        [Allow(URole.Admin)] 
+        [Allow(URole.Admin)]
         public ActionResult Create()
         {
             SessionStatus();
@@ -50,26 +54,54 @@ namespace Spartacus.Web.Controllers
         {
             SessionStatus();
             var user = _userMgmt.GetUserById(id);
-            return View(user);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<UTable, UserUpdate>());
+            var userUpdate = config.CreateMapper().Map<UserUpdate>(user);
+
+            userUpdate.Categories = new SelectList(_catMgmt.GetCats(), "Id", "Title");
+
+            return View(userUpdate);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Update(UTable data)
+        public ActionResult Update(UserUpdate data, HttpPostedFileBase Image)
         {
             if (ModelState.IsValid)
             {
-                data.LastLogin = DateTime.Now;
-                data.LastIp = Request.UserHostAddress;
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<UserUpdate, UTable>());
+                var user = config.CreateMapper().Map<UTable>(data);
+                user.LastLogin = DateTime.Now;
+                user.LastIp = Request.UserHostAddress;
 
-                var userUpdated = _userMgmt.UpdateUser(data);
+                var userUpdated = _userMgmt.UpdateUser(user, Image);
 
-                if (userUpdated)
-                    return RedirectToAction("Read");
-                else
-                    ModelState.AddModelError("UpdateMessage", "Update failed!");
+                TempData["ErrorMessage"] = userUpdated switch
+                {
+                    SaveProfResp.Failed => "Changes failed to save.",
+                    SaveProfResp.FailedUsername => "Username is taken.",
+                    SaveProfResp.FailedImage => "Your image could not be saved.",
+                    SaveProfResp.Success => null,
+                    _ => throw new InvalidOperationException()
+                };
+
+
+                if (userUpdated == SaveProfResp.Success && data.CatId != null && data.Period != null)
+                {
+                    var memUpdated = _session.AddMembershipFor(data.Username, data.CatId, data.Period);
+                    if (!memUpdated)
+                    {
+                        TempData["ErrorMessage"] = "Membership not saved.";
+                        return RedirectToAction("Update");
+                    }
+                }
+
+                if (userUpdated == SaveProfResp.Success)
+                {
+                    TempData["SuccessMessage"] = "User updated.";
+                    return RedirectToAction("Update");
+                }
             }
-            return View(data);
+            return RedirectToAction("Update");
         }
 
         [Allow(URole.Admin)]
@@ -88,6 +120,13 @@ namespace Spartacus.Web.Controllers
             var userDeleted = _userMgmt.DeleteUserById(id);
             if (userDeleted == false) return HttpNotFound();
             return RedirectToAction("Read");
+        }
+
+        public ActionResult Details(int id)
+        {
+            SessionStatus();
+            var user = _userMgmt.GetUserById(id);
+            return View(user);
         }
     }
 }

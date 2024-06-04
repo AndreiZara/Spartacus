@@ -12,9 +12,11 @@ namespace Spartacus.Domain.Entities.Membership
         public int UserId { get; set; }
 
         [Required]
+        [DataType(DataType.Date)]
         public DateTime StartTime { get; set; }
 
         [Required]
+        [DataType(DataType.Date)]
         public DateTime EndTime { get; set; }
 
         [Required]

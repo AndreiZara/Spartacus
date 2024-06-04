@@ -1,8 +1,6 @@
 ﻿using Spartacus.BusinessLogic.DBModel;
 using Spartacus.Domain.Entities.Membership;
-using Spartacus.Domain.Entities.User;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 
 namespace Spartacus.BusinessLogic.Core
@@ -15,7 +13,7 @@ namespace Spartacus.BusinessLogic.Core
             {
                 var cat = debil.Categories.FirstOrDefault(c => c.Title == data.Title);
                 if (cat != null) return false;
-                
+
                 debil.Categories.Add(data);
                 debil.SaveChanges();
             }
@@ -41,6 +39,7 @@ namespace Spartacus.BusinessLogic.Core
             }
             return cat;
         }
+        
         internal bool UpdateCatAction(CatTable data)
         {
             using (var debil = new CategoryContext())
@@ -60,6 +59,7 @@ namespace Spartacus.BusinessLogic.Core
             }
             return true;
         }
+        
         internal bool DeleteCatByIdAction(int id)
         {
             using (var debil = new CategoryContext())

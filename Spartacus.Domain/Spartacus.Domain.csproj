@@ -2,6 +2,9 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
+    <LangVersion>8.0</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{BBE0F79F-CDC6-4A3F-84A3-E80B6E4AAE78}</ProjectGuid>
@@ -31,17 +34,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,10 +50,12 @@
   <ItemGroup>
     <Compile Include="Entities\Membership\CatTable.cs" />
     <Compile Include="Entities\Membership\MsTable.cs" />
-    <Compile Include="Entities\User\URegData.cs" />
+    <Compile Include="Entities\Tokens\AccessToken.cs" />
     <Compile Include="Entities\User\UProfData.cs" />
+    <Compile Include="Entities\User\URegData.cs" />
     <Compile Include="Entities\Tokens\ResetToken.cs" />
     <Compile Include="Enums\MsDuration.cs" />
+    <Compile Include="Enums\SaveProfResp.cs" />
     <Compile Include="Enums\URole.cs" />
     <Compile Include="Entities\User\Session.cs" />
     <Compile Include="Entities\User\UTable.cs" />
@@ -64,14 +64,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Spartacus.Helpers\Spartacus.Helpers.csproj">
-      <Project>{dab76adf-54ae-4c45-8574-22df0ea986b1}</Project>
-      <Name>Spartacus.Helpers</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

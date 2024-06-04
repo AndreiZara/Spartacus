@@ -1,10 +1,5 @@
-﻿using Spartacus.Domain.Entities.User;
-using System;
-using System.Collections.Generic;
+﻿using Spartacus.Domain.Entities.Tokens;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Spartacus.BusinessLogic.DBModel
 {
@@ -13,5 +8,6 @@ namespace Spartacus.BusinessLogic.DBModel
         public TokenContext() : base("name=Spartacus") { }
 
         public virtual DbSet<ResetToken> ResetTokens { get; set; }
+        public virtual DbSet<AccessToken> AccessTokens { get; set; }
     }
 }

@@ -1,9 +1,12 @@
-﻿using Spartacus.BusinessLogic.DBModel;
-using Spartacus.Domain.Entities.Membership;
+﻿using AutoMapper;
+using Spartacus.BusinessLogic.DBModel;
 using Spartacus.Domain.Entities.User;
+using Spartacus.Domain.Enums;
+using Spartacus.Helpers;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Web;
 
 namespace Spartacus.BusinessLogic.Core
 {
@@ -24,45 +27,62 @@ namespace Spartacus.BusinessLogic.Core
 
         internal List<UTable> GetUsersAction()
         {
-            List<UTable> users;
             using (var debil = new UserContext())
             {
-                users = debil.Users.Include(u => u.Membership).ToList();
+                var users = debil.Users.Include(u => u.Membership).ToList();
+                return users;
             }
-            return users;
         }
 
         internal UTable GetUserByIdAction(int id)
         {
-            UTable user;
             using (var debil = new UserContext())
             {
-                user = debil.Users.SingleOrDefault(u => u.Id == id);
+                var user = debil.Users.Include(u => u.Membership).SingleOrDefault(u => u.Id == id);
+                return user;
             }
-            return user;
         }
 
-        internal bool UpdateUserAction(UTable data)
+        internal SaveProfResp UpdateUserAction(UTable data, HttpPostedFileBase image)
         {
             using (var debil = new UserContext())
             {
                 var user = debil.Users.FirstOrDefault(x => x.Id == data.Id);
+                if (user == null) return SaveProfResp.Failed;
 
-                if (user == null) return false;
+                if (data.Username != user.Username)
+                {
+                    var exists = debil.Users.FirstOrDefault(u => u.Username == data.Username);
+                    if (exists != null) return SaveProfResp.FailedUsername;
 
-                user.Username = data.Username;
-                user.Firstname = data.Firstname;
-                user.Lastname = data.Lastname;
-                user.Email = data.Email;
-                user.Password = data.Password;
-                user.LastIp = data.LastIp;
-                user.LastLogin = data.LastLogin;
-                user.Level = data.Level;
+                    using (var debil1 = new SessionContext())
+                    {
+                        var current = debil1.Sessions.FirstOrDefault(s => s.Username == user.Username);
+                        if (current != null)
+                        {
+                            debil1.Sessions.Remove(current);
+                            debil1.SaveChanges();
+                        }
+                    }
+                    user.Username = data.Username;
+                }
 
+                if (image != null)
+                {
+                    var newFileName = MediaHelper.SaveImageByUser(image, user);
+                    if (newFileName == null) return SaveProfResp.FailedImage;
+                    user.FileName = newFileName;
+                }
+
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<UTable, UTable>()
+                    .ForMember(u => u.FileName, opt => opt.Ignore())
+                    .ForMember(u => u.Password, opt => opt.Ignore())
+                    .ForMember(u => u.Membership, opt => opt.Ignore())
+                    .ForMember(u => u.Period, opt => opt.Ignore()));
+                config.CreateMapper().Map(data, user);
                 debil.SaveChanges();
             }
-            return true;
-
+            return SaveProfResp.Success;
         }
 
         internal bool DeleteUserByIdAction(int id)

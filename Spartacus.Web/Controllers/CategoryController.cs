@@ -1,5 +1,4 @@
 ﻿using Spartacus.BusinessLogic;
-using Spartacus.BusinessLogic.Core;
 using Spartacus.BusinessLogic.Interfaces;
 using Spartacus.Domain.Entities.Membership;
 using Spartacus.Domain.Enums;
