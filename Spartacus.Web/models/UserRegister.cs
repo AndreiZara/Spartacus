@@ -4,14 +4,6 @@ namespace Spartacus.Web.Models
 {
     public class UserRegister
     {
-        public UserRegister(UserRegister register)
-        {
-            Username = register.Username;
-            Firstname = register.Firstname;
-            Lastname = register.Lastname;
-            Email = register.Email;
-            Password = register.Password;
-        }
         public UserRegister() { }
 
         [Required]

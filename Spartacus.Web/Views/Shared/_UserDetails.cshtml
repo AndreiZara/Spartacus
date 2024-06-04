@@ -1,0 +1,108 @@
+﻿@model Spartacus.Domain.Entities.User.UTable
+
+<div class="row">
+
+    <dl class="dl-horizontal col">
+        <dt>
+            @Html.DisplayNameFor(model => model.Username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Username)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Firstname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Firstname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lastname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lastname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastLogin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastLogin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastIp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastIp)
+        </dd>
+    </dl>
+    <dl class="dl-horizontal col">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastUsernameChange)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastUsernameChange)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Level)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Level)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Membership.StartTime)
+            /
+            @Html.DisplayNameFor(model => model.Membership.EndTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Membership.StartTime)
+            -
+            @Html.DisplayFor(model => model.Membership.EndTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CatId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CatId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Period)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Period)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FileName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FileName)
+        </dd>
+    </dl>
+</div>

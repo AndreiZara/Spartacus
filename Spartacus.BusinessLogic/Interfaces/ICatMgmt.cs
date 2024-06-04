@@ -1,5 +1,4 @@
 ﻿using Spartacus.Domain.Entities.Membership;
-using Spartacus.Domain.Entities.User;
 using System.Collections.Generic;
 
 namespace Spartacus.BusinessLogic.Interfaces

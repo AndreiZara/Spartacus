@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Spartacus.Web.Models
 {
@@ -15,10 +11,10 @@ namespace Spartacus.Web.Models
         public string NewPassword { get; set; }
 
         [Required]
-        [StringLength(50, MinimumLength = 8, ErrorMessage = "Must be between 5 and 50 characters.")]
         [DataType(DataType.Password)]
-        [Compare("NewPassword", ErrorMessage = "Passwords should be the same.")]
         [Display(Name = "Confirm new password")]
+        [Compare("NewPassword", ErrorMessage = "Passwords should be the same.")]
+        [StringLength(50, MinimumLength = 8, ErrorMessage = "Must be between 5 and 50 characters.")]
         public string ConfirmNewPassword { get; set; }
     }
 }

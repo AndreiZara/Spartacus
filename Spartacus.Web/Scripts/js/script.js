@@ -4,7 +4,6 @@
  * FACEBOOK: https://www.facebook.com/themefisher
  * GITHUB: https://github.com/themefisher/
  */
-
 (function ($) {
 	'use strict';
 

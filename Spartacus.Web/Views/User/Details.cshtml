@@ -1,14 +1,13 @@
 ﻿@model Spartacus.Domain.Entities.User.UTable
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_LayoutEmpty.cshtml";
     var filename = (Model.FileName != null) ? @Model.FileName : "no_image.svg";
 }
 
-<h2>Delete</h2>
+<h2>Details</h2>
 
-<h3>Are you sure you want to delete this?</h3>
 <div>
     <h4>UTable</h4>
     <hr />
@@ -18,15 +17,9 @@
         </div>
         <div class="col-lg-6">
             @Html.Partial("_UserDetails", Model)
-            @using (Html.BeginForm())
-            {
-                @Html.AntiForgeryToken()
-
-                <div class="form-actions no-color">
-                    <input type="submit" value="Delete" class="btn btn-default" /> |
-                    @Html.ActionLink("Back to List", "Read")
-                </div>
-            }
+            @Html.ActionLink("Edit", "Update", new { id = Model.Id }) |
+            @Html.ActionLink("Back to List", "Read")
         </div>
     </div>
 </div>
+

@@ -1,0 +1,130 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var filename = (Model.FileName != null) ? @Model.FileName : "no_image.svg";
+}
+
+@model Spartacus.Web.Models.UserProfile
+
+<section class="page-title bg-2">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <ul class="list-inline mb-0">
+                    <li class="list-inline-item"><a href=@Url.Action("Index", "Home") class="text-sm letter-spacing text-white text-uppercase font-weight-bold">Home</a></li>
+                    <li class="list-inline-item"><span class="text-white">|</span></li>
+                    <li class="list-inline-item"><a href="#" class="text-color text-uppercase text-sm letter-spacing">Account</a></li>
+                </ul>
+                <h1 class="text-lg text-white mt-2">Your Account</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section bg-gray">
+    <div class="container">
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger" role="alert">
+                @TempData["ErrorMessage"]
+            </div>
+        }
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success" role="alert">
+                @TempData["SuccessMessage"]
+            </div>
+        }
+        <div class="row bg-white rounded shadow-sm my-3">
+            <div class="col-lg-4 my-3">
+                <h2>Your membership</h2>
+                <div>@Model.Title</div>
+                <div>@Model.Description</div>
+            </div>
+            <div class="col-lg-4 text-center my-auto">
+                <p class="my-3">You bought it on <strong>@Html.DisplayFor(m => m.StartTime)</strong><br/>
+                and it will end on <strong>@Html.DisplayFor(m => m.EndTime)</strong>
+                <h3>@Model.RemainingDays</h3>
+                days, you have left</p>
+            </div>
+            <div class="col-lg-4 text-center my-auto">
+                <a class="btn btn-main my-3" href=@Url.Action("ShowQr")>Get access</a>
+                @if (TempData["ShowQr"] as string == "Show")
+                {
+                    <img src=@Url.Action("GetQr", "Account") width="300" class="d-block mx-auto" />
+                }
+            </div>
+        </div>
+            @using (Html.BeginForm("Index", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="row bg-white rounded shadow-sm">
+                    @Html.AntiForgeryToken()
+                    <div class="col-lg-5 justify-content-center mx-auto my-4" style="max-width:400px;">
+                        <img src="~/Content/Users/@filename" alt="" class="img-fluid rounded">
+                        <label for="Image">Your photo</label>
+                        <input type="file" accept=".jpg,.jpeg,.png" class="form-control mb-2" name="Image" id="Image" />
+                    </div>
+                    <div class="col-lg-7 p-4">
+                        <h2 class="mb-2">Details</h2>
+                        <div class="form-floating mt-3">
+                            @Html.TextBoxFor(m => m.Username, new
+                       {
+                           @class = "form-control",
+                           placeholder = "",
+                           type = "text",
+                       })
+                            @Html.LabelFor(m => m.Username)
+                            @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
+                        </div>
+                        <p class="ms-1">you can change you username once in 30 days.</p>
+                        <div class="form-floating mt-3">
+                            @Html.TextBoxFor(m => m.Firstname, new
+                       {
+                           @class = "form-control",
+                           placeholder = "",
+                           type = "text",
+                       })
+                            @Html.LabelFor(m => m.Firstname)
+                            @Html.ValidationMessageFor(m => m.Firstname, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-floating mt-3">
+                            @Html.TextBoxFor(m => m.Lastname, new
+                       {
+                           @class = "form-control",
+                           placeholder = "",
+                           type = "text",
+                       })
+                            @Html.LabelFor(m => m.Lastname)
+                            @Html.ValidationMessageFor(m => m.Lastname, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-floating mt-3">
+                            @Html.TextBoxFor(m => m.Email, new
+                       {
+                           @class = "form-control",
+                           placeholder = "",
+                           type = "email"
+                       })
+                            @Html.LabelFor(m => m.Email)
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-floating mt-3">
+                            @Html.TextBoxFor(m => m.Password, new
+                       {
+                           @class = "form-control",
+                           placeholder = "",
+                           type = "password",
+                       })
+                            @Html.LabelFor(m => m.Password)
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        </div>
+                        @*@Html.DisplayFor(m => m.RemainingDays)*@
+                        @Html.HiddenFor(m => m.StartTime)
+                        @Html.HiddenFor(m => m.EndTime)
+                        <div class="text-center">
+                            <button class="btn btn-success btn-lg shadow-lg mt-3">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+</section>

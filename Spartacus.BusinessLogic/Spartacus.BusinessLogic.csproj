@@ -3,6 +3,9 @@
   <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
+    <LangVersion>8.0</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{DDE29F9D-7A98-49B0-AAC4-C3C95301832E}</ProjectGuid>
@@ -15,7 +18,7 @@
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-  </PropertyGroup>
+</PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
@@ -24,6 +27,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -34,6 +38,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.10.1.1\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -42,7 +49,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web" />
@@ -70,9 +79,21 @@
     <Compile Include="Logics\CatMgmtBL.cs" />
     <Compile Include="Logics\UserMgmtBL.cs" />
     <Compile Include="Logics\MainBL.cs" />
-    <Compile Include="Migrations\202405202050085_InitialCreate.cs" />
-    <Compile Include="Migrations\202405202050085_InitialCreate.Designer.cs">
-      <DependentUpon>202405202050085_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\202405301608173_AddFileName.cs" />
+    <Compile Include="Migrations\202405301608173_AddFileName.Designer.cs">
+      <DependentUpon>202405301608173_AddFileName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202405302052020_AddLastUsernameChange.cs" />
+    <Compile Include="Migrations\202405302052020_AddLastUsernameChange.Designer.cs">
+      <DependentUpon>202405302052020_AddLastUsernameChange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202405312010183_AddCatAndPeriodToUser.cs" />
+    <Compile Include="Migrations\202405312010183_AddCatAndPeriodToUser.Designer.cs">
+      <DependentUpon>202405312010183_AddCatAndPeriodToUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202406011901271_AddAccessToken.cs" />
+    <Compile Include="Migrations\202406011901271_AddAccessToken.Designer.cs">
+      <DependentUpon>202406011901271_AddAccessToken.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -99,8 +120,17 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202405202050085_InitialCreate.resx">
-      <DependentUpon>202405202050085_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202405301608173_AddFileName.resx">
+      <DependentUpon>202405301608173_AddFileName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202405302052020_AddLastUsernameChange.resx">
+      <DependentUpon>202405302052020_AddLastUsernameChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202405312010183_AddCatAndPeriodToUser.resx">
+      <DependentUpon>202405312010183_AddCatAndPeriodToUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202406011901271_AddAccessToken.resx">
+      <DependentUpon>202406011901271_AddAccessToken.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

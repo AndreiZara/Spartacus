@@ -3,7 +3,7 @@ using System.Data.Entity;
 
 namespace Spartacus.BusinessLogic.DBModel
 {
-    class CategoryContext : DbContext
+    public class CategoryContext : DbContext
     {
         public CategoryContext() : base("name=Spartacus") { }
 

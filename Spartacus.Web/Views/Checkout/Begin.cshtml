@@ -20,116 +20,117 @@
                 @Html.AntiForgeryToken();
                 @Html.HiddenFor(m => m.Price, Model.Price)
                 @Html.HiddenFor(m => m.EndTime, Model.EndTime)
-                <div class="card p-3">
-                    <h5 class="text-uppercase">Payment details</h5>
-                    @Html.ValidationMessage("CheckoutMessage", new { @class = "text-danger fs-4" })
-                    <div class="form-floating mt-3">
-                        @Html.TextBoxFor(m => m.NameOnCard, new
-                        {
-                            @class = "form-control",
-                            placeholder = "",
-                            type = "text",
-                            pattern = "[a-zA-Z ]+"
-                        })
-                        @Html.LabelFor(m => m.NameOnCard)
-                        @Html.ValidationMessageFor(m => m.NameOnCard, "", new { @class = "text-danger" })
+                @Html.HiddenFor(m => m.CatId, Model.CatId)
+            <div class="card p-3">
+                <h5 class="text-uppercase">Payment details</h5>
+                <div class="form-floating mt-3">
+                    @Html.TextBoxFor(m => m.NameOnCard, new
+                    {
+                        @class = "form-control",
+                        placeholder = "",
+                        type = "text",
+                        pattern = "[a-zA-Z ]+"
+                    })
+                    @Html.LabelFor(m => m.NameOnCard)
+                    @Html.ValidationMessageFor(m => m.NameOnCard, "", new { @class = "text-danger" })
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-floating mt-3 mr-2">
+                            @Html.TextBoxFor(m => m.CardNumber, new
+                            {
+                                @class = "form-control",
+                                placeholder = "",
+                                type = "text"
+                            })
+                            @Html.LabelFor(m => m.CardNumber)
+                            @Html.ValidationMessageFor(m => m.CardNumber, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                    <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-floating mt-3 mr-2">
+                            @Html.TextBoxFor(m => m.Expiry, new
+                            {
+                                @class = "form-control",
+                                placeholder = "",
+                                type = "text"
+                            })
+                            @Html.LabelFor(m => m.Expiry)
+                            @Html.ValidationMessageFor(m => m.Expiry, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-floating mt-3 mr-2">
+                            @Html.TextBoxFor(m => m.CVV, new
+                            {
+                                @class = "form-control",
+                                placeholder = "",
+                                type = "number",
+                                min = 100,
+                                max = 9999
+                            })
+                            @Html.LabelFor(m => m.CVV)
+                            @Html.ValidationMessageFor(m => m.CVV, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4 mb-4">
+                    <h5 class="text-uppercase">Billing Address</h5>
+                    <div class="row mt-3">
                         <div class="col-md-6">
                             <div class="form-floating mt-3 mr-2">
-                                @Html.TextBoxFor(m => m.CardNumber, new
+                                @Html.TextBoxFor(m => m.StreetAddress, new
                                 {
                                     @class = "form-control",
                                     placeholder = "",
                                     type = "text"
                                 })
-                                @Html.LabelFor(m => m.CardNumber)
-                                @Html.ValidationMessageFor(m => m.CardNumber, "", new { @class = "text-danger" })
+                                @Html.LabelFor(m => m.StreetAddress)
+                                @Html.ValidationMessageFor(m => m.StreetAddress, "", new { @class = "text-danger" })
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-6">
                             <div class="form-floating mt-3 mr-2">
-                                @Html.TextBoxFor(m => m.Expiry, new
+                                @Html.TextBoxFor(m => m.City, new
                                 {
                                     @class = "form-control",
                                     placeholder = "",
                                     type = "text"
                                 })
-                                @Html.LabelFor(m => m.Expiry)
-                                @Html.ValidationMessageFor(m => m.Expiry, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-floating mt-3 mr-2">
-                                @Html.TextBoxFor(m => m.CVV, new
-                                {
-                                    @class = "form-control",
-                                    placeholder = "",
-                                    min = 100,
-                                    max = 9999
-                                })
-                                @Html.LabelFor(m => m.CVV)
-                                @Html.ValidationMessageFor(m => m.CVV, "", new { @class = "text-danger" })
+                                @Html.LabelFor(m => m.City)
+                                @Html.ValidationMessageFor(m => m.City, "", new { @class = "text-danger" })
                             </div>
                         </div>
                     </div>
-                    <div class="mt-4 mb-4">
-                        <h5 class="text-uppercase">Billing Address</h5>
-                        <div class="row mt-3">
-                            <div class="col-md-6">
-                                <div class="form-floating mt-3 mr-2">
-                                    @Html.TextBoxFor(m => m.StreetAddress, new
-                                    {
-                                        @class = "form-control",
-                                        placeholder = "",
-                                        type = "text"
-                                    })
-                                    @Html.LabelFor(m => m.StreetAddress)
-                                    @Html.ValidationMessageFor(m => m.StreetAddress, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-floating mt-3 mr-2">
-                                    @Html.TextBoxFor(m => m.City, new
-                                    {
-                                        @class = "form-control",
-                                        placeholder = "",
-                                        type = "text"
-                                    })
-                                    @Html.LabelFor(m => m.City)
-                                    @Html.ValidationMessageFor(m => m.City, "", new { @class = "text-danger" })
-                                </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <div class="form-floating mt-3 mr-2">
+                                @Html.TextBoxFor(m => m.Country, new
+                                {
+                                    @class = "form-control",
+                                    placeholder = "",
+                                    type = "text"
+                                })
+                                @Html.LabelFor(m => m.Country)
+                                @Html.ValidationMessageFor(m => m.Country, "", new { @class = "text-danger" })
                             </div>
                         </div>
-                        <div class="row mt-2">
-                            <div class="col-md-6">
-                                <div class="form-floating mt-3 mr-2">
-                                    @Html.TextBoxFor(m => m.Country, new
-                                    {
-                                        @class = "form-control",
-                                        placeholder = "",
-                                        type = "text"
-                                    })
-                                    @Html.LabelFor(m => m.Country)
-                                    @Html.ValidationMessageFor(m => m.Country, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-floating mt-3 mr-2">
-                                    @Html.TextBoxFor(m => m.ZipCode, new
-                                    {
-                                        @class = "form-control",
-                                        placeholder = "",
-                                        type = "text",
-                                        maxlength = 7
-                                    })
-                                    @Html.LabelFor(m => m.ZipCode)
-                                    @Html.ValidationMessageFor(m => m.ZipCode, "", new { @class = "text-danger" })
-                                </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mt-3 mr-2">
+                                @Html.TextBoxFor(m => m.ZipCode, new
+                                {
+                                    @class = "form-control",
+                                    placeholder = "",
+                                    type = "text",
+                                    maxlength = 7
+                                })
+                                @Html.LabelFor(m => m.ZipCode)
+                                @Html.ValidationMessageFor(m => m.ZipCode, "", new { @class = "text-danger" })
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
                 <div class="mt-4 mb-4 d-flex justify-content-between">
                     <a href=@Url.Action("Index", "Home")>Back to home</a>
                     <button type="submit" class="btn btn-main px-3">Pay @Model.Price lei</button>

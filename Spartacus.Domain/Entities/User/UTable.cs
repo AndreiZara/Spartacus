@@ -13,7 +13,6 @@ namespace Spartacus.Domain.Entities.User
         public int Id { get; set; }
 
         [Required]
-        [Display(Name = "Username")]
         [StringLength(30, MinimumLength = 5, ErrorMessage = "Must be between 5 and 30 characters.")]
         public string Username { get; set; }
 
@@ -29,7 +28,7 @@ namespace Spartacus.Domain.Entities.User
 
         [Required]
         [EmailAddress]
-        [Display(Name = "Email Address")]
+        [Display(Name = "Email address")]
         [StringLength(30)]
         public string Email { get; set; }
 
@@ -38,14 +37,31 @@ namespace Spartacus.Domain.Entities.User
         [StringLength(50, MinimumLength = 8, ErrorMessage = "Must be between 8 and 50 characters.")]
         public string Password { get; set; }
 
-        [DataType(DataType.Date)]
+        [Display(Name = "Last login")]
         public DateTime LastLogin { get; set; }
 
+        [Display(Name = "Last ip")]
         [StringLength(16)]
         public string LastIp { get; set; }
+
+        [Display(Name = "Last username change")]
+        [DisplayFormat(NullDisplayText = "No data")]
+        public DateTime? LastUsernameChange { get; set; }
 
         public URole Level { get; set; }
 
         public virtual MsTable Membership { get; set; }
+
+        [Display(Name = "Category Id")]
+        [DisplayFormat(NullDisplayText = "No data")]
+        public int? CatId { get; set; }
+
+        [DisplayFormat(NullDisplayText = "No data")]
+        public MsDuration? Period { get; set; }
+
+        [Display(Name = "File name")]
+        [DisplayFormat(NullDisplayText = "No data")]
+        [StringLength(50)]
+        public string FileName { get; set; }
     }
 }

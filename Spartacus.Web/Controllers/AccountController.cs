@@ -1,9 +1,13 @@
-﻿using Microsoft.Win32;
+﻿using AutoMapper;
+using QRCoder;
 using Spartacus.BusinessLogic;
 using Spartacus.BusinessLogic.Interfaces;
 using Spartacus.Domain.Entities.User;
+using Spartacus.Domain.Enums;
+using Spartacus.Web.Filters;
 using Spartacus.Web.Models;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -12,20 +16,73 @@ namespace Spartacus.Web.Controllers
 {
     public class AccountController : BaseController
     {
-        private readonly IMain _sessionMain = BussinesLogic.GetMainBL();
+        private readonly IMain _main = BussinesLogic.GetMainBL();
 
         public ActionResult Index()
         {
-            return View();
+            // TODO: verify if cookie is necessary here
+            SessionStatus();
+            var cookie = Request.Cookies["UserCookie"];
+            if (cookie == null)
+            {
+                TempData["ErrorMessage"] = "Please log in.";
+                return RedirectToAction("Login", new { returnUrl = Request.Url.PathAndQuery });
+            }
+
+            var prof = _session.GetProfileByCookie(cookie.Value);
+            if (prof == null)
+            {
+                TempData["ErrorMessage"] = "Please log in.";
+                return RedirectToAction("Login", new { returnUrl = Request.Url.PathAndQuery });
+            }
+
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<UProfData, UserProfile>());
+            var profile = config.CreateMapper().Map<UserProfile>(prof);
+
+
+            profile.Title = "Titlul abonamentului";
+            profile.Description = "Long description of an membership or not so long.";
+
+            if (profile.EndTime != DateTime.MinValue)
+                profile.RemainingDays = (profile.EndTime - DateTime.Now).Days;
+
+            return View(profile);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Index(UserProfile profile, HttpPostedFileBase Image)
+        {
+            if (ModelState.IsValid)
+            {
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<UserProfile, UProfData>());
+                var prof = config.CreateMapper().Map<UProfData>(profile);
+                prof.Image = Image;
+
+                var profSaved = _session.SaveProfileByCookie(Request.Cookies["UserCookie"].Value, prof);
+
+                TempData["ErrorMessage"] = profSaved switch
+                {
+                    SaveProfResp.Failed => "Changes failed to save.",
+                    SaveProfResp.FailedUsername => "You can't change your username at the moment.",
+                    SaveProfResp.FailedImage => "Your image could not be saved.",
+                    SaveProfResp.Success => null,
+                    _ => throw new InvalidOperationException()
+                };
+                TempData["SuccessMessage"] = (profSaved == SaveProfResp.Success) ? "Your changes has been saved." : null;
+            }
+            return RedirectToAction("Index");
         }
 
         public ActionResult Login(string returnUrl = null)
         {
+            SessionStatus();
             if (returnUrl != null) ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Login(UserLogin login, string returnUrl = null)
         {
 
@@ -39,7 +96,7 @@ namespace Spartacus.Web.Controllers
                     LoginTime = DateTime.Now
                 };
 
-                var userLogin = _session.UserLogin(data); // RESULT FROM THE Business Logic
+                var userLogin = _session.UserLogin(data);
 
                 if (userLogin)
                 {
@@ -68,6 +125,7 @@ namespace Spartacus.Web.Controllers
 
         public ActionResult Register()
         {
+            SessionStatus();
             return View();
         }
 
@@ -114,24 +172,27 @@ namespace Spartacus.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var token = _sessionMain.CreateToken(userEmail);
-                if (token == null) return View(); // show email sent message even if the user does not exists
+                var token = _main.CreateToken(userEmail);
+                if (token == null)
+                {
+                    TempData["SuccessMessage"] = "A link has been sent to your email address.";
+                    return View(); // show email sent message even if the user does not exists
+                }
 
                 string subject = "Reset password";
 
                 var resetUrl = Url.Action("ResetPassword", "Account", new { token }, Request.Url.Scheme);
-                string body = _sessionMain.PopulateBody(userEmail, resetUrl);
-                
-                await _sessionMain.SendEmailAsync(userEmail, subject, body);
+                string body = _main.PopulateBody(userEmail, resetUrl);
+
+                await _main.SendEmailAsync(userEmail, subject, body);
             }
             TempData["SuccessMessage"] = "A link has been sent to your email address.";
             return View();
         }
 
-
         public ActionResult ResetPassword(string token)
         {
-            if (_sessionMain.IsResetTokenValid(token) || true)
+            if (_main.IsResetTokenValid(token))
             {
                 TempData["ResetToken"] = token;
                 return View();
@@ -146,9 +207,9 @@ namespace Spartacus.Web.Controllers
         public ActionResult ResetPassword(ResetPassword reset)
         {
             var token = TempData["ResetToken"] as string;
-            if ( ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                var passReseted = _sessionMain.ResetPasswordByToken(token, reset.NewPassword);
+                var passReseted = _main.ResetPasswordByToken(token, reset.NewPassword);
                 if (passReseted)
                 {
                     TempData["SuccessMessage"] = "Password has been reset.";
@@ -163,6 +224,25 @@ namespace Spartacus.Web.Controllers
 
             TempData["ResetToken"] = token;
             return View(reset);
+        }
+
+        public ActionResult GetQr()
+        {
+            SessionStatus();
+
+            var current = _session.GetUserByCookie(Request.Cookies["UserCookie"].Value);
+            string qrToken = _session.GetQrById(current.Id);
+
+            var data = new QRCodeGenerator().CreateQrCode(qrToken, QRCodeGenerator.ECCLevel.Q);
+            BitmapByteQRCode qr = new BitmapByteQRCode(data);
+            return File(qr.GetGraphic(20), "image/png");
+        }
+
+        public ActionResult ShowQr()
+        {
+            SessionStatus();
+            TempData["ShowQr"] = "Show";
+            return RedirectToAction("Index");
         }
     }
 

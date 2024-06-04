@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Spartacus.Domain.Entities.Tokens
 {
-    public class ResetToken
+    public class AccessToken
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -14,13 +14,10 @@ namespace Spartacus.Domain.Entities.Tokens
         public string Value { get; set; }
 
         [Required]
-        [EmailAddress]
-        [Display(Name = "Email Address")]
-        [StringLength(30)]
-        public string Email { get; set; }
+        public int UserId { get; set; }
 
         [Required]
         [DataType(DataType.DateTime)]
-        public DateTime EndDate { get; set; }
+        public DateTime EndTime { get; set; }
     }
 }
