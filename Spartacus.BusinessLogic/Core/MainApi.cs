@@ -1,6 +1,8 @@
-﻿using Spartacus.BusinessLogic.DBModel;
+﻿using AutoMapper;
+using Spartacus.BusinessLogic.DBModel;
 using Spartacus.Domain.Entities.Membership;
 using Spartacus.Domain.Entities.Tokens;
+using Spartacus.Domain.Entities.User;
 using Spartacus.Helpers;
 using System;
 using System.Collections.Generic;
@@ -139,6 +141,16 @@ namespace Spartacus.BusinessLogic.Core
         {
             using var debil = new TokenContext();
             debil.ResetTokens.RemoveRange(debil.ResetTokens.Where(t => t.EndDate < DateTime.Now));
+            debil.SaveChanges();
+        }
+
+        internal void SendFeedbackAction(FeedData data)
+        {
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<FeedData, FBTable>());
+            var feed = config.CreateMapper().Map<FBTable>(data);
+
+            using var debil = new UserContext();
+            debil.Feedbacks.Add(feed);
             debil.SaveChanges();
         }
     }
