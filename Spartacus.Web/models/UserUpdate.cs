@@ -32,17 +32,20 @@ namespace Spartacus.Web.Models
 
         public URole Level { get; set; }
 
-        [Display(Name = "Select membership")]
+        [Display(Name = "Membership")]
         public int? CatId { get; set; }
 
-        [Display(Name = "Select period")]
+        [Display(Name = "Period")]
         public MsDuration? Period { get; set; }
 
+        [Display(Name = "Set membership?")]
+        public bool SetMembership { get; set; }
+
+        // readonly
         [Display(Name = "File name")]
         [StringLength(50)]
         public string FileName { get; set; }
 
-        // readonly
         public SelectList Categories { get; set; }
     }
 }

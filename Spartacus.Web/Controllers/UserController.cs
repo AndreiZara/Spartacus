@@ -85,7 +85,7 @@ namespace Spartacus.Web.Controllers
                 };
 
 
-                if (userUpdated == SaveProfResp.Success && data.CatId != null && data.Period != null)
+                if (userUpdated == SaveProfResp.Success && data.SetMembership)
                 {
                     var memUpdated = _session.AddMembershipFor(data.Username, data.CatId, data.Period);
                     if (!memUpdated)

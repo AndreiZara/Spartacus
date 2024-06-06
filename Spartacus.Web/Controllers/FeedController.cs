@@ -18,6 +18,13 @@ namespace Spartacus.Web.Controllers
             return View(feeds);
         }
 
+        public ActionResult Details(int id)
+        {
+            SessionStatus();
+            var feed = _mgmt.GetFeedById(id);
+            return View(feed);
+        }
+
         public ActionResult Delete(int id)
         {
             SessionStatus();

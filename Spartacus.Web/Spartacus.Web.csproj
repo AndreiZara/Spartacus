@@ -371,6 +371,7 @@
     <Content Include="Views\Shared\_UserDetails.cshtml" />
     <Content Include="Views\Feed\Read.cshtml" />
     <Content Include="Views\Feed\Delete.cshtml" />
+    <Content Include="Views\Feed\Details.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

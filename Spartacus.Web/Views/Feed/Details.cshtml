@@ -1,0 +1,63 @@
+﻿@model Spartacus.Domain.Entities.User.FBTable
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutEmpty.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>FBTable</h4>
+    <hr />
+    <div class="row justify-content-center">
+
+    <div class="col-lg-6">
+
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Subject)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Subject)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Message)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Message)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DateSent)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DateSent)
+            </dd>
+
+        </dl>
+        @Html.ActionLink("Edit", "Update", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Read")
+    </div>
+    </div>
+</div>
