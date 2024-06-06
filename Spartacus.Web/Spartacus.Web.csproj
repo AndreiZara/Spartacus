@@ -298,6 +298,7 @@
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Filters\AllowAttribute.cs" />
+    <Compile Include="Filters\RequiredIfAttribute.cs" />
     <Compile Include="Models\Checkout.cs" />
     <Compile Include="Models\ResetPassword.cs" />
     <Compile Include="Models\UserUpdate.cs" />
@@ -371,7 +372,6 @@
     <Content Include="Views\Shared\_UserDetails.cshtml" />
     <Content Include="Views\Feed\Read.cshtml" />
     <Content Include="Views\Feed\Delete.cshtml" />
-    <Content Include="Views\Feed\Details.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

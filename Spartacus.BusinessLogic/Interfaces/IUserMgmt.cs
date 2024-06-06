@@ -1,4 +1,5 @@
-﻿using Spartacus.Domain.Entities.User;
+﻿using Spartacus.Domain.Entities.Trainer;
+using Spartacus.Domain.Entities.User;
 using Spartacus.Domain.Enums;
 using System.Collections.Generic;
 using System.Web;
@@ -13,7 +14,7 @@ namespace Spartacus.BusinessLogic.Interfaces
 
         UTable GetUserById(int id);
 
-        SaveProfResp UpdateUser(UTable data, HttpPostedFileBase image);
+        SaveProfResp UpdateUser(UTable data, HttpPostedFileBase image, TrainerData tdata);
 
         bool DeleteUserById(int id);
     }

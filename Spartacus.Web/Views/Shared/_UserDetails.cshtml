@@ -50,8 +50,6 @@
         <dd>
             @Html.DisplayFor(model => model.LastIp)
         </dd>
-    </dl>
-    <dl class="dl-horizontal col">
 
         <dt>
             @Html.DisplayNameFor(model => model.LastUsernameChange)
@@ -60,14 +58,34 @@
         <dd>
             @Html.DisplayFor(model => model.LastUsernameChange)
         </dd>
-
+    </dl>
+    <dl class="dl-horizontal col">
         <dt>
-            @Html.DisplayNameFor(model => model.Level)
+            @Html.DisplayNameFor(model => model.Role)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Level)
+            @Html.DisplayFor(model => model.Role)
         </dd>
+
+        @if (Model.Role == Spartacus.Domain.Enums.URole.Trainer)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.Trainer.Activity)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Trainer.Activity)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Trainer.Bio)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Trainer.Bio)
+            </dd>
+        }
 
         <dt>
             @Html.DisplayNameFor(model => model.Membership.StartTime)

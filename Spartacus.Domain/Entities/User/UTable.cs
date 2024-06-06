@@ -1,4 +1,5 @@
 ﻿using Spartacus.Domain.Entities.Membership;
+using Spartacus.Domain.Entities.Trainer;
 using Spartacus.Domain.Enums;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -48,9 +49,11 @@ namespace Spartacus.Domain.Entities.User
         [DisplayFormat(NullDisplayText = "No data")]
         public DateTime? LastUsernameChange { get; set; }
 
-        public URole Level { get; set; }
+        public URole Role { get; set; }
 
         public virtual MsTable Membership { get; set; }
+        
+        public virtual TDTable Trainer { get; set; }
 
         [Display(Name = "Category Id")]
         [DisplayFormat(NullDisplayText = "No data")]

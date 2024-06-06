@@ -45,7 +45,7 @@ namespace Spartacus.BusinessLogic.Core
                 Email = data.Email,
                 LastIp = data.Ip,
                 LastLogin = DateTime.Now,
-                Level = URole.Client
+                Role = URole.Client
             });
             debil.SaveChanges();
 
@@ -121,7 +121,7 @@ namespace Spartacus.BusinessLogic.Core
             UTable user;
             using (var debil = new UserContext())
             {
-                user = debil.Users.Include(u => u.Membership).FirstOrDefault(u => u.Username == current.Username);
+                user = debil.Users.Include(u => u.Membership).Include(u => u.Trainer).FirstOrDefault(u => u.Username == current.Username);
                 if (user == null) return null;
 
                 UProfData userProf;
@@ -134,6 +134,11 @@ namespace Spartacus.BusinessLogic.Core
                     userProf.StartTime = user.Membership.StartTime;
                     userProf.EndTime = user.Membership.EndTime;
                 }
+
+                userProf.Activity = user.Trainer?.Activity;
+                userProf.Bio = user.Trainer?.Bio;
+                userProf.InstagramUrl = user.Trainer?.InstagramUrl;
+                userProf.FacebookUrl = user.Trainer?.FacebookUrl;
 
                 return userProf;
             }
@@ -151,8 +156,7 @@ namespace Spartacus.BusinessLogic.Core
 
             if (data.Username != user.Username)
             {
-                //var userExists = debil1.Users.FirstOrDefault(u => u.Username == data.Username) != null;
-                var userExists = false;
+                var userExists = debil1.Users.FirstOrDefault(u => u.Username == data.Username) != null;
                 if (!userExists && (user.LastUsernameChange == null || user.LastUsernameChange.Value.AddDays(30) < DateTime.Now))
                 {
                     user.LastUsernameChange = DateTime.Now;
@@ -169,6 +173,28 @@ namespace Spartacus.BusinessLogic.Core
                 if (newFileName == null) return SaveProfResp.FailedImage;
                 user.FileName = newFileName;
             }
+
+            if (user.Role == URole.Trainer)
+            {
+                if (user.Trainer == null)
+                {
+                    user.Trainer = new Domain.Entities.Trainer.TDTable
+                    {
+                        Activity = data.Activity,
+                        Bio = data.Bio,
+                        InstagramUrl = data.InstagramUrl,
+                        FacebookUrl = data.FacebookUrl
+                    };
+                }
+                else
+                {
+                    user.Trainer.Activity = data.Activity;
+                    user.Trainer.Bio = data.Bio;
+                    user.Trainer.InstagramUrl = data.InstagramUrl;
+                    user.Trainer.FacebookUrl = data.FacebookUrl;
+                }
+            }
+
             // ignore FileName as it can be null if no new photo is specified
             var config = new MapperConfiguration(cfg => cfg.CreateMap<UProfData, UTable>().ForMember(u => u.FileName, opt => opt.Ignore()));
             config.CreateMapper().Map(data, user);

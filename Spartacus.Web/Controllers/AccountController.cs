@@ -71,7 +71,7 @@ namespace Spartacus.Web.Controllers
                 };
                 TempData["SuccessMessage"] = (profSaved == SaveProfResp.Success) ? "Your changes has been saved." : null;
             }
-            return RedirectToAction("Index");
+            return View(profile);
         }
 
         public ActionResult Login(string returnUrl = null)
@@ -130,6 +130,7 @@ namespace Spartacus.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Register(UserRegister register)
         {
             if (ModelState.IsValid)
@@ -168,6 +169,7 @@ namespace Spartacus.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Forgot(string userEmail)
         {
             if (ModelState.IsValid)

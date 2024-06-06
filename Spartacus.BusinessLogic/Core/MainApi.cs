@@ -14,6 +14,8 @@ using System.Net.Configuration;
 using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using Spartacus.Domain.Entities.Trainer;
+using System.Data.Entity;
 
 namespace Spartacus.BusinessLogic.Core
 {
@@ -152,6 +154,23 @@ namespace Spartacus.BusinessLogic.Core
             using var debil = new UserContext();
             debil.Feedbacks.Add(feed);
             debil.SaveChanges();
+        }
+
+        internal List<TrainerData> GetTrainersAction()
+        {
+            using var debil = new UserContext();
+            var trainers = debil.Trainers.Include(t => t.User).Select(t => 
+                new TrainerData
+                {
+                    Firstname = t.User.Firstname,
+                    Lastname = t.User.Lastname,
+                    FileName = t.User.FileName,
+                    FacebookUrl = t.FacebookUrl,
+                    InstagramUrl = t.InstagramUrl,
+                    Activity = t.Activity,
+                    Bio = t.Bio
+                }).ToList();
+            return trainers;
         }
     }
 }

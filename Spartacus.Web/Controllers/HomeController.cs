@@ -24,6 +24,7 @@ namespace Spartacus.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Contact(FeedData data)
         {
             if (ModelState.IsValid)
@@ -51,7 +52,8 @@ namespace Spartacus.Web.Controllers
         public ActionResult Trainers()
         {
             SessionStatus();
-            return View();
+            var data = _main.GetTrainers();
+            return View(data);
         }
 
         public ActionResult Services()

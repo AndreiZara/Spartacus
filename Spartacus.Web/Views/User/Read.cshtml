@@ -36,7 +36,7 @@
             @Html.DisplayNameFor(model => model.Membership.EndTime)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Level)
+            @Html.DisplayNameFor(model => model.Role)
         </th>
         <th></th>
     </tr>
@@ -67,7 +67,7 @@
             @Html.DisplayFor(modelItem => item.Membership.EndTime)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Level)
+            @Html.DisplayFor(modelItem => item.Role)
         </td>
         <td>
             @Html.ActionLink("Edit", "Update", new { id = item.Id }) |

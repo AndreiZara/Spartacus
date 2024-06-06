@@ -1,4 +1,5 @@
 ﻿using Spartacus.Domain.Enums;
+using Spartacus.Web.Filters;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
@@ -30,7 +31,7 @@ namespace Spartacus.Web.Models
         [StringLength(30)]
         public string Email { get; set; }
 
-        public URole Level { get; set; }
+        public URole Role { get; set; }
 
         [Display(Name = "Membership")]
         public int? CatId { get; set; }
@@ -40,6 +41,22 @@ namespace Spartacus.Web.Models
 
         [Display(Name = "Set membership?")]
         public bool SetMembership { get; set; }
+
+        [RequiredIf("Role", URole.Trainer)]
+        [StringLength(400)]
+        public string Bio { get; set; }
+
+        [RequiredIf("Role", URole.Trainer)]
+        [StringLength(30)]
+        public string Activity { get; set; }
+
+        [StringLength(64)]
+        [Display(Name = "Instagram url")]
+        public string InstagramUrl { get; set; }
+
+        [StringLength(64)]
+        [Display(Name = "Facebook url")]
+        public string FacebookUrl { get; set; }
 
         // readonly
         [Display(Name = "File name")]

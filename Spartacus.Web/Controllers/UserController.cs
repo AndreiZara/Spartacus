@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Spartacus.BusinessLogic;
 using Spartacus.BusinessLogic.Interfaces;
+using Spartacus.Domain.Entities.Trainer;
 using Spartacus.Domain.Entities.User;
 using Spartacus.Domain.Enums;
 using Spartacus.Web.Filters;
@@ -58,6 +59,9 @@ namespace Spartacus.Web.Controllers
             var userUpdate = config.CreateMapper().Map<UserUpdate>(user);
 
             userUpdate.Categories = new SelectList(_catMgmt.GetCats(), "Id", "Title");
+            
+            userUpdate.Activity = user.Trainer?.Activity;
+            userUpdate.Bio = user.Trainer?.Bio;
 
             return View(userUpdate);
         }
@@ -73,7 +77,13 @@ namespace Spartacus.Web.Controllers
                 user.LastLogin = DateTime.Now;
                 user.LastIp = Request.UserHostAddress;
 
-                var userUpdated = _userMgmt.UpdateUser(user, Image);
+                var userUpdated = _userMgmt.UpdateUser(user, Image, new TrainerData
+                {
+                    Bio = data.Bio,
+                    Activity = data.Activity,
+                    InstagramUrl = data.InstagramUrl,
+                    FacebookUrl = data.FacebookUrl
+                });
 
                 TempData["ErrorMessage"] = userUpdated switch
                 {
@@ -101,7 +111,8 @@ namespace Spartacus.Web.Controllers
                     return RedirectToAction("Update");
                 }
             }
-            return RedirectToAction("Update");
+            data.Categories = new SelectList(_catMgmt.GetCats(), "Id", "Title");
+            return View(data);
         }
 
         [Allow(URole.Admin)]
@@ -115,6 +126,7 @@ namespace Spartacus.Web.Controllers
 
         [Allow(URole.Admin)]
         [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             var userDeleted = _userMgmt.DeleteUserById(id);

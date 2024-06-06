@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Spartacus.BusinessLogic.DBModel;
+using Spartacus.Domain.Entities.Trainer;
 using Spartacus.Domain.Entities.User;
 using Spartacus.Domain.Enums;
 using Spartacus.Helpers;
@@ -36,14 +37,12 @@ namespace Spartacus.BusinessLogic.Core
 
         internal UTable GetUserByIdAction(int id)
         {
-            using (var debil = new UserContext())
-            {
-                var user = debil.Users.Include(u => u.Membership).SingleOrDefault(u => u.Id == id);
-                return user;
-            }
+            using var debil = new UserContext();
+            var user = debil.Users.Include(u => u.Membership).Include(u => u.Trainer).SingleOrDefault(u => u.Id == id);
+            return user;
         }
 
-        internal SaveProfResp UpdateUserAction(UTable data, HttpPostedFileBase image)
+        internal SaveProfResp UpdateUserAction(UTable data, HttpPostedFileBase image, TrainerData tdata)
         {
             using (var debil = new UserContext())
             {
@@ -67,6 +66,7 @@ namespace Spartacus.BusinessLogic.Core
                     user.Username = data.Username;
                 }
 
+
                 if (image != null)
                 {
                     var newFileName = MediaHelper.SaveImageByUser(image, user);
@@ -80,6 +80,28 @@ namespace Spartacus.BusinessLogic.Core
                     .ForMember(u => u.Membership, opt => opt.Ignore())
                     .ForMember(u => u.Period, opt => opt.Ignore()));
                 config.CreateMapper().Map(data, user);
+
+                if (user.Role == URole.Trainer)
+                {
+                    if (user.Trainer == null)
+                    {
+                        user.Trainer = new TDTable
+                        {
+                            Activity = tdata.Activity,
+                            Bio = tdata.Bio,
+                            InstagramUrl = tdata.InstagramUrl,
+                            FacebookUrl = tdata.FacebookUrl
+                        };
+                    }
+                    else
+                    {
+                        user.Trainer.Activity = tdata.Activity;
+                        user.Trainer.Bio = tdata.Bio;
+                        user.Trainer.InstagramUrl = tdata.InstagramUrl;
+                        user.Trainer.FacebookUrl = tdata.FacebookUrl;
+                    }
+                }
+
                 debil.SaveChanges();
             }
             return SaveProfResp.Success;

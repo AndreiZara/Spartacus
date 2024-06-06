@@ -1,5 +1,6 @@
 ﻿using Spartacus.BusinessLogic.Core;
 using Spartacus.BusinessLogic.Interfaces;
+using Spartacus.Domain.Entities.Trainer;
 using Spartacus.Domain.Entities.User;
 using Spartacus.Domain.Enums;
 using System.Collections.Generic;
@@ -13,6 +14,6 @@ namespace Spartacus.BusinessLogic.Logics
         public bool DeleteUserById(int id) => DeleteUserByIdAction(id);
         public UTable GetUserById(int id) => GetUserByIdAction(id);
         public List<UTable> GetUsers() => GetUsersAction();
-        public SaveProfResp UpdateUser(UTable data, HttpPostedFileBase image) => UpdateUserAction(data, image);
+        public SaveProfResp UpdateUser(UTable data, HttpPostedFileBase image, TrainerData tdata) => UpdateUserAction(data, image, tdata);
     }
 }
