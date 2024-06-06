@@ -13,6 +13,7 @@ using System.Data;
 using Microsoft.Ajax.Utilities;
 using Spartacus.Domain.Enums;
 using Spartacus.Domain.Entities.Services;
+using Spartacus.Domain.Entities.Tokens;
 
 namespace Spartacus.Web.Controllers
 {
@@ -45,11 +46,12 @@ namespace Spartacus.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(UTable login)
+        public async Task<ActionResult> Register(UTable login)
         {
 
             if (ModelState.IsValid)
             {
+                string filename = login.File.FileName;
                 UTable data = new UTable
                 {
                     Username = login.Username,
@@ -59,27 +61,56 @@ namespace Spartacus.Web.Controllers
                     Lastname = login.Lastname,
                     Email = login.Email,
                     LastLogin = DateTime.Now,
-                    LastIp = "12345678",
-                    Level = login.Level
+                    LastIp = Request.UserHostAddress,
+                    Level = login.Level,
+                    File = login.File,
+                    FileName = filename,
+                };
+
+                UFile file = new UFile()
+                {
+                    FileModel = login.File,
+                    Username = login.Username,
                 };
 
 
-                Session["Id"] = data.Id;
-                Session["Username"] = data.Username;
-                Session["Password"] = data.Password;
-                Session["Email"] = data.Email;
-                Session["LastLogin"] = data.LastLogin;
-                Session["LastIp"] = data.LastIp;
-
-
+                _sessionMain.UploadFile(file);
                 _sessionAdmin.AddUser(data);
 
 
+                string token = Guid.NewGuid().ToString();
+
+                RegisterToken guid = new RegisterToken()
+                {
+                    Token = token,
+                    EndDate = DateTime.Now.AddMinutes(5),
+                    Email = data.Email,
+                    Status = Domain.Enums.TokenStatus.Default,
+                };
+
+                _sessionMain.CreateRegToken(guid);
+
+                Session["token"] = token;
+
+
+                string subject = "ConfirmRegistration";
+
+
+                string resetUrl = "http://localhost:51229/Account/ConfirmRegist?token=" + token;
+
+                string[] PageParameters = {"{Prologue}","{Url}" ,"{Title}", "{Description}"};
+                string[] EmailParameters = {"Hello, you need to confirm you account", resetUrl, "HelloWorld", "HelloWord"};
+                string PagePath = "~/Content/Template/Email.html";  
+
+                string body = _sessionMain.PopulateBody(PagePath, PageParameters, EmailParameters);
+
+                await _sessionMain.SendEmailAsync(data.Email, subject, body);
+
             }
-            
             return View(login);
 
         }
+            
 
 
         public ActionResult Login()
@@ -347,9 +378,13 @@ namespace Spartacus.Web.Controllers
                 string subject = "helloworld";
 
 
-                string resetUrl = "http://localhost:51229/Account/ResetPassword?token=" + token;
+                string resetUrl = "http://localhost:51229/Account/RessetPassword?token=" + token;
 
-                string body = _sessionMain.PopulateBody("helloworld", resetUrl, "helloworld");
+                string[] PageParameters = { "{Prologue}", "{Url}", "{Title}", "{Description}" };
+                string[] EmailParameters = { "Hello, here is your resset password link", resetUrl, "HelloWorld", "HelloWord" };
+                string PagePath = "~/Content/Template/Email.html";
+
+                string body = _sessionMain.PopulateBody(PagePath, PageParameters, EmailParameters);
 
                 await _sessionMain.SendEmailAsync(pass.Email, subject, body);
             }
@@ -362,8 +397,7 @@ namespace Spartacus.Web.Controllers
         {
             Session["token"] = token;
             ResetToken guid = _sessionMain.GetToken(token);
-            DateTime now = DateTime.Now;
-            if(now < guid.EndDate) 
+            if(DateTime.Now < guid.EndDate) 
             {
                 UTable uTable = _sessionAdmin.GetUserByEmail(guid.Email);
                 return RedirectToAction("Update", "User", new {id = uTable.Id});
@@ -373,11 +407,25 @@ namespace Spartacus.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult Read()
+        public ActionResult ConfirmRegist(string token)
         {
-            List<ResetToken> Clist = new List<ResetToken>();
-            Clist = _sessionMain.GetTokenList();
-            return View(Clist);
+            Session["token"] = token;
+            RegisterToken guid = _sessionMain.GetRegToken(token);
+            if(guid == null) { RedirectToAction("Register", "Account"); }
+            if (DateTime.Now < guid.EndDate)
+            {
+                RegisterToken newToken = new RegisterToken
+                {
+                    Email = guid.Email,
+                    Token = guid.Token,
+                    EndDate = DateTime.Now.AddYears(100),
+                    Status = Domain.Enums.TokenStatus.Confirmed,
+                };
+                _sessionMain.UpdateRegToken(newToken,guid.Id);
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View();
         }
 
     }

@@ -1,15 +1,15 @@
-﻿using System;
+﻿using Spartacus.Domain.Enums;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web.UI.WebControls;
 
-namespace Spartacus.Domain.Entities.User
+namespace Spartacus.Domain.Entities.Tokens
 {
-    public class ResetToken //Global Unique Identifier 
+    public class RegisterToken
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -27,5 +27,7 @@ namespace Spartacus.Domain.Entities.User
         [Display(Name = "Unique Token")]
         [DataType(DataType.Date)]
         public DateTime EndDate { get; set; }
+
+        public TokenStatus Status { get; set; }
     }
 }

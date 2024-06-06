@@ -1,6 +1,7 @@
 ﻿using Grpc.Core;
 using Spartacus.BusinessLogic.DBModel;
 using Spartacus.Domain.Entities.Feedback;
+using Spartacus.Domain.Entities.Tokens;
 using Spartacus.Domain.Entities.User;
 using Spartacus.Web.Models;
 using System;
@@ -43,54 +44,32 @@ namespace Spartacus.BusinessLogic.Core
       }
 
 
-
-
-        public string PopulateBodyAction(string title, string url, string message)  
-    {
-        var uploadFile = System.Web.HttpContext.Current.Server.MapPath("~/Content/Template/Email.html");
-            if (!Directory.Exists(uploadFile))
-            {
-                string body = string.Empty;
-                using (StreamReader reader = new StreamReader(System.Web.HttpContext.Current.Server.MapPath("~/Content/Template/Email.html")))
-                {
-                    body = reader.ReadToEnd();
-                }
-
-                body = body.Replace("{Title}", title);
-                body = body.Replace("{Url}", url);
-                body = body.Replace("{Description}", message);
-                return body;
-            }
-            return "";
-    }
-
-        public string PopulateBodyFeedbackAction(FBTable model)   
+        public string PopulateBodyAction(string PagePath, string[] pageParameters,params string[] emailParameters)
         {
-            var uploadFile = System.Web.HttpContext.Current.Server.MapPath("~/Content/Template/Feedback.html");
+            var uploadFile = System.Web.HttpContext.Current.Server.MapPath(PagePath);
             if (!Directory.Exists(uploadFile))
             {
                 string body = string.Empty;
 
-                using (StreamReader reader = new StreamReader(System.Web.HttpContext.Current.Server.MapPath("~/Content/Template/Feedback.html")))
+                using (StreamReader reader = new StreamReader(System.Web.HttpContext.Current.Server.MapPath(PagePath)))
                 {
                     body = reader.ReadToEnd();
                 }
-
-                body = body.Replace("{AdminUsername}",model.AdminUsername);
-                body = body.Replace("{Username}", model.Username);
-                body = body.Replace("{Email}", model.Email);
-                body = body.Replace("{Subject}", model.Subject);
-                body = body.Replace("{Message}", model.Message);
+                for(int i = 0; i<pageParameters.Length; i++)
+                {
+                    body = body.Replace(pageParameters[i], emailParameters[i]);
+                }
                 return body;
             }
             return "";
         }
 
+
         public void CreateTokenAction(ResetToken guid)
         {
             using (var debil = new UserContext())
             {
-                debil.Tokens.Add(guid);
+                debil.ResTokens.Add(guid);
                 debil.SaveChanges();
             }
         }
@@ -99,7 +78,7 @@ namespace Spartacus.BusinessLogic.Core
         {
             using (var debil = new UserContext())
             {
-                var guidContext = debil.Tokens.ToList();
+                var guidContext = debil.ResTokens.ToList();
                 return guidContext;
             }
             
@@ -109,8 +88,103 @@ namespace Spartacus.BusinessLogic.Core
         {
             using (var debil = new UserContext())
             {
-                var guidContext = debil.Tokens.Where(u => u.Token == token).SingleOrDefault();
+                var guidContext = debil.ResTokens.Where(u => u.Token == token).SingleOrDefault();
                 return guidContext;
+            }
+        }
+
+        public ResetToken GetTokenByIdAction(int Id)
+        {
+            using (var debil = new UserContext())
+            {
+                var guidContext = debil.ResTokens.Where(u => u.Id == Id).SingleOrDefault();
+                return guidContext;
+            }
+        }
+
+        internal bool DeleteTokenAction(int Id)
+        {
+            using (var debil = new UserContext())
+            {
+                var user = debil.ResTokens.SingleOrDefault(u => u.Id == Id);
+                if (user != null)
+                {
+                    debil.ResTokens.Remove(user);
+                    debil.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        public void CreateRegTokenAction(RegisterToken guid)
+        {
+            using (var debil = new UserContext())
+            {
+                debil.RegTokens.Add(guid);
+                debil.SaveChanges();
+            }
+        }
+
+        internal bool UpdateRegTokenAction(RegisterToken user, int Id)
+        {
+            using (var debil = new UserContext())
+            {
+                var data = debil.RegTokens.FirstOrDefault(x => x.Id == Id);
+
+                if (data != null)
+                {
+                    data.Email = user.Email;
+                    data.Token = user.Token;
+                    data.EndDate = user.EndDate;
+                    data.Status = user.Status;
+                    debil.SaveChanges();
+
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public RegisterToken GetRegTokenAction(string token)
+        {
+            using (var debil = new UserContext())
+            {
+                var guidContext = debil.RegTokens.Where(u => u.Token == token).SingleOrDefault();
+                return guidContext;
+            }
+        }
+
+        public RegisterToken GetRegTokenByIdAction(int Id)
+        {
+            using (var debil = new UserContext())
+            {
+                var guidContext = debil.RegTokens.Where(u => u.Id == Id).SingleOrDefault();
+                return guidContext;
+            }
+        }
+
+        public List<RegisterToken> GetRegTokenListAction()
+        {
+            using (var debil = new UserContext())
+            {
+                var guidContext = debil.RegTokens.ToList();
+                return guidContext;
+            }
+        }
+
+        internal bool DeleteRegTokenAction(int Id)
+        {
+            using (var debil = new UserContext())
+            {
+                var user = debil.RegTokens.FirstOrDefault(u => u.Id == Id);
+                if (user != null)
+                {
+                    debil.RegTokens.Remove(user);
+                    debil.SaveChanges();
+                    return true;
+                }
+                return false;
             }
         }
 

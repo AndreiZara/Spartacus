@@ -5,11 +5,13 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Web;
 using AutoMapper;
 using Grpc.Core;
 using Microsoft.AspNetCore.Http;
 using Spartacus.BusinessLogic.DBModel;
+using Spartacus.Domain.Entities.Tokens;
 using Spartacus.Domain.Entities.User;
 using Spartacus.Helpers;
 
@@ -20,7 +22,7 @@ namespace Spartacus.BusinessLogic.Core
         internal ULoginResp UserLoginAction(ULoginData data)
         {
             UTable result;
-
+            RegisterToken token;
             var validate = new EmailAddressAttribute();
             if (validate.IsValid(data.Credential))
             {
@@ -36,10 +38,23 @@ namespace Spartacus.BusinessLogic.Core
 
                 using (var todo = new UserContext())
                 {
-                    result.LastIp = data.Ip;
-                    result.LastLogin = data.LoginDateTime;
-                    todo.Entry(result).State = EntityState.Modified;
-                    todo.SaveChanges();
+                    token = todo.RegTokens.FirstOrDefault(t => t.Email == result.Email);
+                    if(token != null)
+                    {
+                        if(DateTime.Now < token.EndDate && token.Status == Domain.Enums.TokenStatus.Default)
+                        {
+                            result.LastIp = data.Ip;
+                            result.LastLogin = data.LoginDateTime;
+                            todo.Entry(result).State = EntityState.Modified;
+                            todo.SaveChanges();
+                        }
+                        else if (DateTime.Now > token.EndDate&& token.Status == Domain.Enums.TokenStatus.Default)
+                        {
+                            new AdminApi().DeleteUserAction(result.Id);
+                            new MainApi().DeleteRegTokenAction(token.Id);
+                            return new ULoginResp { Status = false, StatusMsg = "The Username or Password is Incorrect" };
+                        }
+                    }
                 }
 
                 return new ULoginResp() { Status = true };
@@ -60,10 +75,23 @@ namespace Spartacus.BusinessLogic.Core
 
                 using (var todo = new UserContext())
                 {
-                    result.LastIp = data.Ip;
-                    result.LastLogin = data.LoginDateTime;
-                    todo.Entry(result).State = EntityState.Modified;
-                    todo.SaveChanges();
+                    token = todo.RegTokens.FirstOrDefault(t => t.Email == result.Email);
+                    if (token != null)
+                    {
+                        if (DateTime.Now < token.EndDate && token.Status == Domain.Enums.TokenStatus.Default)
+                        {
+                            result.LastIp = data.Ip;
+                            result.LastLogin = data.LoginDateTime;
+                            todo.Entry(result).State = EntityState.Modified;
+                            todo.SaveChanges();
+                        }
+                        else if (DateTime.Now > token.EndDate && token.Status == Domain.Enums.TokenStatus.Default)
+                        {
+                            new AdminApi().DeleteUserAction(result.Id);
+                            new MainApi().DeleteRegTokenAction(token.Id);
+                            return new ULoginResp { Status = false, StatusMsg = "The Username or Password is Incorrect" };
+                        }
+                    }
                 }
 
                 return new ULoginResp { Status = true };

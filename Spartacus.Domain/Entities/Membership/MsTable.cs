@@ -19,6 +19,5 @@ namespace Spartacus.Domain.Entities.Membership
 
         [Required]
         public DateTime EndTime { get; set; }
-
     }
 }

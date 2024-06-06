@@ -74,9 +74,12 @@ namespace Spartacus.Web.Controllers
                 };
 
                 _admin.AddFeedback(newTabel);
-                
 
-                string body = _main.PopulateBodyFeedback(newTabel);
+                string[] PageParameters = { "{AdminUsername}", "{Username}", "{Email}", "{Subject}", "{Message}" };
+                string[] EmailParameters = {newTabel.AdminUsername, newTabel.Username, newTabel.Email, newTabel.Subject, newTabel.Message};
+                string PagePath = "~/Content/Template/Feedback.html";
+
+                string body = _main.PopulateBody(PagePath, PageParameters, EmailParameters);
 
                 await _main.SendEmailAsync(userTable.Email, "helloWorld" , body);
 

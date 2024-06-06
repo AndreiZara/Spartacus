@@ -1,0 +1,50 @@
+﻿@model IEnumerable<Spartacus.Domain.Entities.User.ResetToken>
+
+@{
+     ViewBag.Title = "ReadResToken";
+     Layout = "~/Views/Shared/_LayoutEmpty.cshtml";
+}
+
+<h2>ReadResToken</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+     <tr>
+          <th>
+               @Html.DisplayNameFor(model => model.Id)
+          </th>
+          <th>
+               @Html.DisplayNameFor(model => model.Email)
+          </th>
+          <th>
+               @Html.DisplayNameFor(model => model.Token)
+          </th>
+          <th>
+               @Html.DisplayNameFor(model => model.EndDate)
+          </th>
+          <th></th>
+     </tr>
+
+@foreach (var item in Model) {
+    <tr>
+         <td>
+              @Html.DisplayFor(modelItem => item.Id)
+         </td>
+         <td>
+              @Html.DisplayFor(modelItem => item.Email)
+         </td>
+         <td>
+              @Html.DisplayFor(modelItem => item.Token)
+         </td>
+         <td>
+              @Html.DisplayFor(modelItem => item.EndDate)
+         </td>
+         <td>
+              @Html.ActionLink("Delete", "DeleteResToken", new { id = item.Id })
+         </td>
+    </tr>
+}
+
+</table>

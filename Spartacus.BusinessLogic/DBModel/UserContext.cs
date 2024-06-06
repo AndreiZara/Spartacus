@@ -9,6 +9,7 @@ using Spartacus.Domain.Entities.User;
 using System.ComponentModel.DataAnnotations.Schema;
 using Spartacus.Domain.Entities.Membership;
 using Spartacus.Domain.Entities.Services;
+using Spartacus.Domain.Entities.Tokens;
 
 namespace Spartacus.BusinessLogic.DBModel
 {
@@ -20,7 +21,8 @@ namespace Spartacus.BusinessLogic.DBModel
         }
 
         public virtual DbSet<UTable> Users{ get; set; }
-        public virtual DbSet<ResetToken> Tokens { get; set; }
+        public virtual DbSet<ResetToken> ResTokens { get; set; }
+        public virtual DbSet<RegisterToken> RegTokens { get; set; }
         public virtual DbSet<MenDetTable> Details { get; set; }
         public virtual DbSet<SerTable> Services { get; set; }
 

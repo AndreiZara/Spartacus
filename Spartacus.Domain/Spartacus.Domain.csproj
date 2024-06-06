@@ -71,6 +71,7 @@
   <ItemGroup>
     <Compile Include="Entities\Feedback\FBTable.cs" />
     <Compile Include="Entities\Services\SerTable.cs" />
+    <Compile Include="Entities\Tokens\RegisterToken.cs" />
     <Compile Include="Entities\User\MenDetTable.cs" />
     <Compile Include="Entities\User\UFile.cs" />
     <Compile Include="Entities\Membership\CategoryTable.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Entities\Membership\Prices.cs" />
     <Compile Include="Entities\Membership\MsTable.cs" />
     <Compile Include="Entities\Tokens\ResetToken.cs" />
+    <Compile Include="Enums\TokenStatus.cs" />
     <Compile Include="Enums\URole.cs" />
     <Compile Include="Entities\User\Session.cs" />
     <Compile Include="Entities\User\UTable.cs" />

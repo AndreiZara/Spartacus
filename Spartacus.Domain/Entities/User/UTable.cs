@@ -20,12 +20,12 @@ namespace Spartacus.Domain.Entities.User
 
         [Required]
         [Display(Name = "Firstname")]
-        [StringLength(30, MinimumLength = 5, ErrorMessage = "Firstname cannot be longer than 30 characters.")]
+        [StringLength(30, MinimumLength = 3, ErrorMessage = "Firstname cannot be longer than 30 characters.")]
         public string Firstname { get; set; }
 
         [Required]
         [Display(Name = "Lastname")]
-        [StringLength(30, MinimumLength = 5, ErrorMessage = "Lastname cannot be longer than 30 characters.")]
+        [StringLength(30, MinimumLength = 3, ErrorMessage = "Lastname cannot be longer than 30 characters.")]
         public string Lastname { get; set; }
 
         [Required]

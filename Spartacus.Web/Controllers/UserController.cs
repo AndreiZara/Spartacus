@@ -51,7 +51,7 @@ namespace Spartacus.Web.Controllers
                     Lastname = login.Lastname,
                     Email = login.Email,
                     LastLogin = DateTime.Now,
-                    LastIp = "12345678",
+                    LastIp = Request.UserHostAddress,
                     Level = login.Level,
                     File = login.File,
                     FileName = filename,
@@ -234,6 +234,7 @@ namespace Spartacus.Web.Controllers
             return RedirectToAction("Create", new {id = Id});
         }
 
+        [HttpGet]
         [AdminMod(Domain.Enums.URole.Admin, Domain.Enums.URole.Moderator)]
         public ActionResult ReadDetail()
         {

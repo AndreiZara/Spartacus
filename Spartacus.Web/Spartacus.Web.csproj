@@ -315,6 +315,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\MembershipController.cs" />
     <Compile Include="Controllers\ServiceController.cs" />
+    <Compile Include="Controllers\TokenController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Extension\HttpContextExtensions.cs" />
     <Compile Include="Global.asax.cs">
@@ -370,6 +371,11 @@
     <Content Include="Views\Service\Create.cshtml" />
     <Content Include="Views\Service\Read.cshtml" />
     <Content Include="Views\User\DeleteDetail.cshtml" />
+    <Content Include="Views\Account\ConfirmRegist.cshtml" />
+    <Content Include="Views\Token\ReadRegToken.cshtml" />
+    <Content Include="Views\Token\DeleteRegToken.cshtml" />
+    <Content Include="Views\Token\ReadResToken.cshtml" />
+    <Content Include="Views\Token\DeleteResToken.cshtml" />
     <None Include="Views\User\ReadDetail.cshtml" />
     <Content Include="Views\User\UpdateDetail.cshtml" />
     <Content Include="Views\User\CreateDetail.cshtml" />

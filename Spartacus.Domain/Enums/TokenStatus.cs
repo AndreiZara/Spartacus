@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace Spartacus.Domain.Enums
 {
-    public enum URole:int
+    public enum TokenStatus :int
     {
-        Consumer = 1,
-        Moderator = 2,
-        Admin = 3,
-        Trainer = 4,
+        Confirmed = 0,
+        Unconfirmed = 1,
+        Default = 2
     }
 }

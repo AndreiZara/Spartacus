@@ -21,7 +21,6 @@ namespace Spartacus.Web.Controllers
         [AdminMod(Domain.Enums.URole.Admin)]
         public ActionResult Create()
         {
-            
             return View();
         }
 
