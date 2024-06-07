@@ -28,5 +28,7 @@ namespace Spartacus.Domain.Entities.Membership
 
         [Required]
         public int PriceOneYear { get; set; }
+
+        // TODO: add last sale, and number of sales
     }
 }

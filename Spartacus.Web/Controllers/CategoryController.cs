@@ -72,6 +72,7 @@ namespace Spartacus.Web.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             var catDeleted = _catMgmt.DeleteCatById(id);

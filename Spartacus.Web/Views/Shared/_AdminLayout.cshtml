@@ -1,0 +1,112 @@
+﻿@using System.Web.Optimization
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="GYm,fitness,business,company,agency,multipurpose,modern,bootstrap4">
+
+    <!-- theme meta -->
+    <meta name="theme-name" content="gymfit">
+
+    <meta name="author" content="Themefisher.com">
+
+    <title>GymFit| Fitness template</title>
+
+    <!-- bootstrap.min css -->
+    @Styles.Render("~/bundles/bootstrap/css")
+    <!-- Icofont Css -->
+    @Styles.Render("~/bundles/icofont/css")
+    <!-- Themify Css -->
+    @Styles.Render("~/bundles/themify/css")
+    <!-- animate.css -->
+    @Styles.Render("~/bundles/animate/css")
+    <!-- Magnify Popup -->
+    @Styles.Render("~/bundles/magnify/css")
+    <!-- Owl Carousel CSS -->
+    @Styles.Render("~/bundles/Slick/css")
+    @Styles.Render("~/bundles/Slick/tcss")
+
+    <!-- Add local styles, mostly for plugins css file -->
+    @if (IsSectionDefined("Styles"))
+    {@RenderSection("Styles", required: false)}
+
+    <!-- Main Stylesheet -->
+    @Styles.Render("~/bundles/main/css")
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navigation" id="navbar" style="background: #181a23 !important">
+        <div class="container-fluid">
+            <a class="navbar-brand" href=@Url.Action("Index", "Home")>
+                <h2 class="text-capitalize text-white">Spartac<span class="text-color">us</span></h2>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsid" aria-controls="navbarsid" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="ti-view-list"></span>
+            </button>
+            <div class="collapse text-center navbar-collapse" id="navbarsid">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href=@Url.Action("Read", "Location")>Locations</a></li>
+                    <li class="nav-item"><a class="nav-link" href=@Url.Action("Read", "Category")>Categories</a></li>
+                    <li class="nav-item"><a class="nav-link" href=@Url.Action("Read", "User")>Users</a></li>
+                    <li class="nav-item"><a class="nav-link" href=@Url.Action("Read", "Feed")>Feedbacks</a></li>
+                </ul>
+                <ul class="navbar-nav">
+                    @if (Session["LoginStatus"] as string == "logout")
+                    {
+                        <li class="nav-item d-flex mx-auto">
+                            <a class="nav-link d-inline" href=@Url.Action("Login", "Account")>Login</a>
+                            <div class="vr text-white opacity-100 mx-1"></div>
+                            <a class="nav-link d-inline" href=@Url.Action("Register", "Account")>Join</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item d-flex mx-auto">
+                            <a class="nav-link d-inline" href=@Url.Action("Index", "Account")>@Session["Username"]</a>
+                            <div class="vr text-white opacity-100 mx-1"></div>
+                            <a class="nav-link d-inline" href=@Url.Action("Logout", "Account")>Disconect</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="main-wrapper ">
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger" role="alert">
+                @TempData["ErrorMessage"]
+            </div>
+        }
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success" role="alert">
+                @TempData["SuccessMessage"]
+            </div>
+        }
+        @RenderBody()
+    </div>
+
+    <!-- Section for main scripts render -->
+    <!-- Main jQuery -->
+    @Scripts.Render("~/bundles/jquery/js")
+    <!-- Bootstrap 4.3.1 -->
+    @Scripts.Render("~/bundles/bootstrap/js")
+    <!-- Slick Slider -->
+    @Scripts.Render("~/bundles/Slick/js")
+    <!--  Magnific Popup-->
+    @Scripts.Render("~/bundles/magnific/dist/js")
+    <!-- Form Validator -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.32/jquery.form.js"></script>
+    @Scripts.Render("~/bundles/jquery/valid/js")
+
+    @*<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu5nZKbeK-WHQ70oqOWo-_4VmwOwKP9YQ"></script>*@
+    @*<script src="External/google-map/gmap.js"></script>*@
+
+    @Scripts.Render("~/bundles/js")
+    <!-- Handler for local scripts -->
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

@@ -2,16 +2,18 @@
 
 @{
     ViewBag.Title = "Delete";
-    Layout = "~/Views/Shared/_LayoutEmpty.cshtml";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <h2>Delete</h2>
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>UTable</h4>
+    <h4>CatTable</h4>
     <hr />
-    <dl class="dl-horizontal">
+    <div class="row justify-content-center">
+    <div class="col-lg-5">
+        <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Title)
         </dt>
@@ -69,4 +71,6 @@
             @Html.ActionLink("Back to List", "Read")
         </div>
     }
+    </div>
+    </div>
 </div>

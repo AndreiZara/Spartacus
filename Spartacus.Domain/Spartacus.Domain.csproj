@@ -48,14 +48,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Location\LTable.cs" />
     <Compile Include="Entities\Membership\CatTable.cs" />
+    <Compile Include="Entities\Membership\MsData.cs" />
     <Compile Include="Entities\Membership\MsTable.cs" />
     <Compile Include="Entities\Tokens\AccessToken.cs" />
+    <Compile Include="Entities\Tokens\IToken.cs" />
+    <Compile Include="Entities\Tokens\RegisterToken.cs" />
+    <Compile Include="Entities\Trainer\TrainerData.cs" />
     <Compile Include="Entities\User\FBTable.cs" />
     <Compile Include="Entities\User\FeedData.cs" />
+    <Compile Include="Entities\Trainer\TDTable.cs" />
     <Compile Include="Entities\User\UProfData.cs" />
     <Compile Include="Entities\User\URegData.cs" />
     <Compile Include="Entities\Tokens\ResetToken.cs" />
+    <Compile Include="Enums\AddMemResp.cs" />
     <Compile Include="Enums\MsDuration.cs" />
     <Compile Include="Enums\SaveProfResp.cs" />
     <Compile Include="Enums\URole.cs" />

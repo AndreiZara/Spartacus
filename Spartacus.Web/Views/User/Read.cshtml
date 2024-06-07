@@ -2,13 +2,14 @@
 
 @{
     ViewBag.Title = "Read";
-    Layout = "~/Views/Shared/_LayoutEmpty.cshtml";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <h2>Read</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create") <br />
+    @Html.ActionLink("Remove unconfirmed", "RemoveUnconfirmed")
 </p>
 <table class="table">
     <tr>
@@ -36,9 +37,13 @@
             @Html.DisplayNameFor(model => model.Membership.EndTime)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Level)
+            @Html.DisplayNameFor(model => model.Role)
         </th>
-        <th></th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsConfirmed)
+        </th>
+        <th>
+        </th>
     </tr>
 
 @foreach (var item in Model) {
@@ -62,12 +67,15 @@
             @Html.DisplayFor(modelItem => item.LastIp)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Membership.StartTime) 
+            @Html.DisplayFor(modelItem => item.Membership.StartTime)
             -
             @Html.DisplayFor(modelItem => item.Membership.EndTime)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Level)
+            @Html.DisplayFor(modelItem => item.Role)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsConfirmed)
         </td>
         <td>
             @Html.ActionLink("Edit", "Update", new { id = item.Id }) |

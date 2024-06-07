@@ -10,5 +10,6 @@ namespace Spartacus.BusinessLogic
         public static ICatMgmt GetCatMgmtBL() => new CatMgmtBL();
         public static IMain GetMainBL() => new MainBL();
         public static IFeedMgmt GetFeedMgmtBL() => new FeedMgmtBL();
+        public static ILocMgmt GetLocMgmtBL() => new LocMgmtBL();
     }
 }

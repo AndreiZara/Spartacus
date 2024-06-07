@@ -10,6 +10,7 @@ namespace Spartacus.Domain.Entities.User
         public string Email { get; set; }
         public DateTime LastLogin { get; set; }
         public string LastIp { get; set; }
-        public URole Level { get; set; }
+        public URole Role { get; set; }
+        public bool IsConfirmed { get; set; }
     }
 }

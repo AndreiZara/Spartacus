@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace Spartacus.Web.Controllers
 {
-    [Allow(URole.Admin,  URole.Manager)]
+    [Allow(URole.Admin, URole.Manager)]
     public class FeedController : BaseController
     {
         private readonly IFeedMgmt _mgmt = BussinesLogic.GetFeedMgmtBL();
@@ -27,6 +27,7 @@ namespace Spartacus.Web.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             var feedDeleted = _mgmt.DeleteFeedById(id);

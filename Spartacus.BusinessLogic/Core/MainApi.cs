@@ -2,11 +2,13 @@
 using Spartacus.BusinessLogic.DBModel;
 using Spartacus.Domain.Entities.Membership;
 using Spartacus.Domain.Entities.Tokens;
+using Spartacus.Domain.Entities.Trainer;
 using Spartacus.Domain.Entities.User;
 using Spartacus.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -21,14 +23,14 @@ namespace Spartacus.BusinessLogic.Core
     {
         internal List<CatTable> GetCatsAction()
         {
-            using var debil = new CategoryContext();
+            using var debil = new GymContext();
             var cats = debil.Categories.ToList();
             return cats;
         }
 
         internal CatTable GetCatByIdAction(int id)
         {
-            using var debil = new CategoryContext();
+            using var debil = new GymContext();
             var cat = debil.Categories.FirstOrDefault(c => c.Id == id);
             return cat;
         }
@@ -52,10 +54,10 @@ namespace Spartacus.BusinessLogic.Core
                 { IsBodyHtml = true });
         }
 
-        internal string PopulateBodyAction(string userEmail, string url)
+        internal string PopulateBodyAction(string userEmail, string url, string templatePath)
         {
             string body = string.Empty;
-            using (StreamReader reader = new StreamReader(System.Web.HttpContext.Current.Server.MapPath("~/Content/Template/Email.html")))
+            using (StreamReader reader = new StreamReader(System.Web.HttpContext.Current.Server.MapPath(templatePath)))
             {
                 body = reader.ReadToEnd();
             }
@@ -65,7 +67,7 @@ namespace Spartacus.BusinessLogic.Core
             return body;
         }
 
-        internal string CreateTokenAction(string email)
+        internal string CreateTokenAction<TEntity>(string email, int minutes) where TEntity : class, IToken, new()
         {
             using (var debil = new UserContext())
             {
@@ -86,18 +88,19 @@ namespace Spartacus.BusinessLogic.Core
             using (var debil = new TokenContext())
             {
                 var hashedValue = LoginHelpers.HashGen(value);
-                var token = debil.ResetTokens.FirstOrDefault(t => t.Value == hashedValue);
+                var token = debil.Set<TEntity>().FirstOrDefault(t => t.Value == hashedValue);
+                //var token = debil.ResetTokens.FirstOrDefault(t => t.Value == hashedValue);
                 if (token != null) return null;
 
-                debil.ResetTokens.Add(new ResetToken
+                debil.Set<TEntity>().Add(new TEntity
                 {
                     Value = hashedValue,
                     Email = email,
-                    EndDate = DateTime.Now.AddMinutes(60),
+                    EndDate = DateTime.Now.AddMinutes(minutes),
                 });
 
                 debil.SaveChanges();
-                RemoveExpiredResetTokensAction();
+                //RemoveExpiredResetTokensAction();
             }
             return value;
         }
@@ -109,8 +112,40 @@ namespace Spartacus.BusinessLogic.Core
             var token = debil.ResetTokens.FirstOrDefault(t => t.Value == hashedValue);
             if (token == null) return false;
 
-            RemoveExpiredResetTokensAction();
+            RemoveExpiredTokensAction<ResetToken>();
             return token.EndDate > DateTime.Now;
+        }
+
+        internal bool ConfirmRegisterTokenAction(string value)
+        {
+            var hashedValue = LoginHelpers.HashGen(value);
+            using (var debil = new TokenContext())
+            {
+                var token = debil.RegisterTokens.FirstOrDefault(t => t.Value == hashedValue);
+                if (token == null) return false;
+
+                using (var debil1 = new UserContext())
+                {
+                    var user = debil1.Users.FirstOrDefault(u => u.Email == token.Email);
+                    if (user == null) return false;
+
+                    if (token.EndDate < DateTime.Now)
+                    {
+                        debil1.Users.Remove(user);
+                    }
+                    else
+                    {
+                        user.IsConfirmed = true;
+                        debil.RegisterTokens.Remove(token);
+                    }
+
+                    debil.SaveChanges();
+                    debil1.SaveChanges();
+                }
+            }
+
+            //RemoveExpiredResetTokensAction();
+            return true;
         }
 
         internal bool ResetPasswordByTokenAction(string value, string newPassword)
@@ -123,7 +158,7 @@ namespace Spartacus.BusinessLogic.Core
                 if (token == null) return false;
                 userEmail = token.Email;
 
-                RemoveExpiredResetTokensAction();
+                RemoveExpiredTokensAction<ResetToken>();
             }
 
             using (var debil = new UserContext())
@@ -137,10 +172,10 @@ namespace Spartacus.BusinessLogic.Core
             return true;
         }
 
-        private void RemoveExpiredResetTokensAction()
+        private void RemoveExpiredTokensAction<TEntity>() where TEntity : class, IToken, new()
         {
             using var debil = new TokenContext();
-            debil.ResetTokens.RemoveRange(debil.ResetTokens.Where(t => t.EndDate < DateTime.Now));
+            debil.Set<TEntity>().RemoveRange(debil.Set<TEntity>().Where(t => t.EndDate < DateTime.Now));
             debil.SaveChanges();
         }
 
@@ -152,6 +187,23 @@ namespace Spartacus.BusinessLogic.Core
             using var debil = new UserContext();
             debil.Feedbacks.Add(feed);
             debil.SaveChanges();
+        }
+
+        internal List<TrainerData> GetTrainersAction()
+        {
+            using var debil = new UserContext();
+            var trainers = debil.Trainers.Include(t => t.User).Select(t =>
+                new TrainerData
+                {
+                    Firstname = t.User.Firstname,
+                    Lastname = t.User.Lastname,
+                    FileName = t.User.FileName,
+                    FacebookUrl = t.FacebookUrl,
+                    InstagramUrl = t.InstagramUrl,
+                    Activity = t.Activity,
+                    Bio = t.Bio
+                }).ToList();
+            return trainers;
         }
     }
 }

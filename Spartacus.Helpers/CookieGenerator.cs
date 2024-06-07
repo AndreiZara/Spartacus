@@ -2,7 +2,6 @@
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-using System.Web.Configuration;
 
 namespace Spartacus.Helpers
 {
@@ -37,7 +36,7 @@ namespace Spartacus.Helpers
                 // prepend the IV and it's size
                 msEncrypt.Write(BitConverter.GetBytes(aesAlg.IV.Length), 0, sizeof(int));
                 msEncrypt.Write(aesAlg.IV, 0, aesAlg.IV.Length);
-                
+
                 using (var csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
                 {
                     using var swEncrypt = new StreamWriter(csEncrypt);

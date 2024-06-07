@@ -28,7 +28,7 @@ namespace Spartacus.Web.Filters
                     bool isAuthorized = false;
                     foreach (var role in _roles)
                     {
-                        if (user.Level == role) isAuthorized = true;
+                        if (user.Role == role) isAuthorized = true;
                     }
                     if (!isAuthorized) filterContext.Result = new HttpNotFoundResult();
                 }

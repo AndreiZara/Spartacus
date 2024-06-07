@@ -13,6 +13,7 @@ namespace Spartacus.BusinessLogic.Logics
         public bool DeleteUserById(int id) => DeleteUserByIdAction(id);
         public UTable GetUserById(int id) => GetUserByIdAction(id);
         public List<UTable> GetUsers() => GetUsersAction();
-        public SaveProfResp UpdateUser(UTable data, HttpPostedFileBase image) => UpdateUserAction(data, image);
+        public void RemoveUnconfirmedUsers() => RemoveUnconfirmedUsersAction();
+        public SaveProfResp UpdateUser(UProfData data, HttpPostedFileBase image) => UpdateUserAction(data, image);
     }
 }

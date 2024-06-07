@@ -2,15 +2,12 @@
 
 @{
     ViewBag.Title = "Read";
-    Layout = "~/Views/Shared/_LayoutEmpty.cshtml";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <h2>Read</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+<table class="table" >
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Name)
@@ -41,17 +38,15 @@
         <td>
             @Html.DisplayFor(modelItem => item.Subject)
         </td>
-        <td>
+        <td style="max-width: 600px">
             @Html.DisplayFor(modelItem => item.Message)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.DateSent)
         </td>
         <td>
-            @*@Html.ActionLink("Details", "Details", new { id=item.Id }) |*@
             @Html.ActionLink("Delete", "Delete", new { id=item.Id })
         </td>
     </tr>
 }
-
 </table>

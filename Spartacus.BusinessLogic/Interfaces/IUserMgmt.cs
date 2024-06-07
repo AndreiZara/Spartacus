@@ -13,8 +13,9 @@ namespace Spartacus.BusinessLogic.Interfaces
 
         UTable GetUserById(int id);
 
-        SaveProfResp UpdateUser(UTable data, HttpPostedFileBase image);
+        SaveProfResp UpdateUser(UProfData data, HttpPostedFileBase image);
 
         bool DeleteUserById(int id);
+        void RemoveUnconfirmedUsers();
     }
 }
