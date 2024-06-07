@@ -1,14 +1,19 @@
 ﻿using AutoMapper;
+using Microsoft.Win32;
 using Spartacus.BusinessLogic;
 using Spartacus.BusinessLogic.Interfaces;
-using Spartacus.Domain.Entities.Trainer;
+using Spartacus.Domain.Entities.Membership;
+using Spartacus.Domain.Entities.Tokens;
 using Spartacus.Domain.Entities.User;
 using Spartacus.Domain.Enums;
+using Spartacus.Helpers;
 using Spartacus.Web.Filters;
 using Spartacus.Web.Models;
 using System;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using static QRCoder.PayloadGenerator;
 
 namespace Spartacus.Web.Controllers
 {
@@ -17,6 +22,8 @@ namespace Spartacus.Web.Controllers
     {
         private readonly IUserMgmt _userMgmt = BussinesLogic.GetUserMgmtBL();
         private readonly ICatMgmt _catMgmt = BussinesLogic.GetCatMgmtBL();
+        private readonly ILocMgmt _locMgmt = BussinesLogic.GetLocMgmtBL();
+        private readonly IMain _main = BussinesLogic.GetMainBL();
 
         public ActionResult Read()
         {
@@ -35,18 +42,29 @@ namespace Spartacus.Web.Controllers
         [Allow(URole.Admin)]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(UTable data)
+        public async Task<ActionResult> Create(UTable data)
         {
             if (ModelState.IsValid)
             {
                 data.LastLogin = DateTime.Now;
                 data.LastIp = Request.UserHostAddress;
+                data.Password = LoginHelpers.HashGen(data.Password);
                 var userCreated = _userMgmt.AddUser(data);
 
-                if (userCreated)
+                var token = _main.CreateToken<RegisterToken>(data.Email, 1440);
+                if (userCreated && token != null)
+                {
+                    TempData["SuccessMessage"] = "Account needs to be activated through link sent to your email.";
+                    string subject = "Registration on Spartacus";
+                    var resetUrl = Url.Action("ConfirmRegister", "Account", new { token }, Request.Url.Scheme);
+                    string body = _main.PopulateBody(data.Email, resetUrl, "~/Content/Template/RegisterEmail.html");
+
+                    await _main.SendEmailAsync(data.Email, subject, body);
+                
                     return RedirectToAction("Read");
+                }
                 else
-                    ModelState.AddModelError("CreateMessage", "Creation failed!");
+                    TempData["ErrorMessage"] = "Creation failed.";
             }
             return View(data);
         }
@@ -57,9 +75,13 @@ namespace Spartacus.Web.Controllers
             var user = _userMgmt.GetUserById(id);
             var config = new MapperConfiguration(cfg => cfg.CreateMap<UTable, UserUpdate>());
             var userUpdate = config.CreateMapper().Map<UserUpdate>(user);
+            userUpdate.CatId = user.Membership?.CatId;
+            userUpdate.LocId = user.Membership?.LocId;
+            userUpdate.Period = user.Membership?.Period;
 
             userUpdate.Categories = new SelectList(_catMgmt.GetCats(), "Id", "Title");
-            
+            userUpdate.Locations = new SelectList(_locMgmt.GetLocs(), "Id", "Name");
+
             userUpdate.Activity = user.Trainer?.Activity;
             userUpdate.Bio = user.Trainer?.Bio;
 
@@ -72,18 +94,10 @@ namespace Spartacus.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var config = new MapperConfiguration(cfg => cfg.CreateMap<UserUpdate, UTable>());
-                var user = config.CreateMapper().Map<UTable>(data);
-                user.LastLogin = DateTime.Now;
-                user.LastIp = Request.UserHostAddress;
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<UserUpdate, UProfData>());
+                var user = config.CreateMapper().Map<UProfData>(data);
 
-                var userUpdated = _userMgmt.UpdateUser(user, Image, new TrainerData
-                {
-                    Bio = data.Bio,
-                    Activity = data.Activity,
-                    InstagramUrl = data.InstagramUrl,
-                    FacebookUrl = data.FacebookUrl
-                });
+                var userUpdated = _userMgmt.UpdateUser(user, Image);
 
                 TempData["ErrorMessage"] = userUpdated switch
                 {
@@ -95,23 +109,34 @@ namespace Spartacus.Web.Controllers
                 };
 
 
+                AddMemResp memUpdated = AddMemResp.Success;
                 if (userUpdated == SaveProfResp.Success && data.SetMembership)
                 {
-                    var memUpdated = _session.AddMembershipFor(data.Username, data.CatId, data.Period);
-                    if (!memUpdated)
+                    memUpdated = _session.AddMembershipFor(data.Username, new MsData
                     {
-                        TempData["ErrorMessage"] = "Membership not saved.";
-                        return RedirectToAction("Update");
-                    }
+                        CatId = data.CatId,
+                        Period = data.Period,
+                        LocId = data.LocId
+                    });
+
+                    TempData["ErrorMessage"] = memUpdated switch
+                    {
+                        AddMemResp.Failed => "Membership not saved.",
+                        AddMemResp.FullCapacity => "Location is full.",
+                        AddMemResp.Success => null,
+                        _ => throw new InvalidOperationException()
+                    };
                 }
 
-                if (userUpdated == SaveProfResp.Success)
+                if (userUpdated == SaveProfResp.Success && memUpdated == AddMemResp.Success)
                 {
                     TempData["SuccessMessage"] = "User updated.";
                     return RedirectToAction("Update");
                 }
             }
             data.Categories = new SelectList(_catMgmt.GetCats(), "Id", "Title");
+            data.Locations = new SelectList(_locMgmt.GetLocs(), "Id", "Name");
+
             return View(data);
         }
 
@@ -139,6 +164,12 @@ namespace Spartacus.Web.Controllers
             SessionStatus();
             var user = _userMgmt.GetUserById(id);
             return View(user);
+        }
+
+        public ActionResult RemoveUnconfirmed()
+        {
+            _userMgmt.RemoveUnconfirmedUsers();
+            return RedirectToAction("Read", "User");
         }
     }
 }

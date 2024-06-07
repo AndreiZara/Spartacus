@@ -66,27 +66,38 @@
     <Compile Include="BussinesLogic.cs" />
     <Compile Include="Core\CatMgmtApi.cs" />
     <Compile Include="Core\FeedMgmtApi.cs" />
+    <Compile Include="Core\LocMgmtApi.cs" />
     <Compile Include="Core\UserMgmtApi.cs" />
     <Compile Include="Core\MainApi.cs" />
     <Compile Include="Core\SessionApi.cs" />
-    <Compile Include="DBModel\CategoryContext.cs" />
+    <Compile Include="DBModel\GymContext.cs" />
     <Compile Include="DBModel\SessionContext.cs" />
     <Compile Include="DBModel\TokenContext.cs" />
     <Compile Include="DBModel\UserContext.cs" />
     <Compile Include="Interfaces\ICatMgmt.cs" />
     <Compile Include="Interfaces\IFeedMgmt.cs" />
+    <Compile Include="Interfaces\ILocMgmt.cs" />
     <Compile Include="Interfaces\IUserMgmt.cs" />
     <Compile Include="Interfaces\IMain.cs" />
     <Compile Include="Interfaces\ISession.cs" />
     <Compile Include="Logics\CatMgmtBL.cs" />
     <Compile Include="Logics\FeedMgmtBL.cs" />
+    <Compile Include="Logics\LocMgmtBL.cs" />
     <Compile Include="Logics\UserMgmtBL.cs" />
     <Compile Include="Logics\MainBL.cs" />
-    <Compile Include="Migrations\CategoryContext\202406061509010_InitialCreate.cs" />
-    <Compile Include="Migrations\CategoryContext\202406061509010_InitialCreate.Designer.cs">
+    <Compile Include="Migrations\GymContext\202406061509010_InitialCreate.cs" />
+    <Compile Include="Migrations\GymContext\202406061509010_InitialCreate.Designer.cs">
       <DependentUpon>202406061509010_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\CategoryContext\Configuration.cs" />
+    <Compile Include="Migrations\GymContext\202406071203403_AddLocations.cs" />
+    <Compile Include="Migrations\GymContext\202406071203403_AddLocations.Designer.cs">
+      <DependentUpon>202406071203403_AddLocations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\GymContext\202406071413326_AddAvgSales.cs" />
+    <Compile Include="Migrations\GymContext\202406071413326_AddAvgSales.Designer.cs">
+      <DependentUpon>202406071413326_AddAvgSales.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\GymContext\Configuration.cs" />
     <Compile Include="Migrations\SessionContext\202406061509547_InitialCreate.cs" />
     <Compile Include="Migrations\SessionContext\202406061509547_InitialCreate.Designer.cs">
       <DependentUpon>202406061509547_InitialCreate.cs</DependentUpon>
@@ -95,6 +106,10 @@
     <Compile Include="Migrations\TokenContext\202406061510299_InitialCreate.cs" />
     <Compile Include="Migrations\TokenContext\202406061510299_InitialCreate.Designer.cs">
       <DependentUpon>202406061510299_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\TokenContext\202406070935556_AddRegisterToken.cs" />
+    <Compile Include="Migrations\TokenContext\202406070935556_AddRegisterToken.Designer.cs">
+      <DependentUpon>202406070935556_AddRegisterToken.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\TokenContext\Configuration.cs" />
     <Compile Include="Migrations\UserContext\202406061511002_InitialCreate.cs" />
@@ -108,6 +123,14 @@
     <Compile Include="Migrations\UserContext\202406061800377_AddSocialLinks.cs" />
     <Compile Include="Migrations\UserContext\202406061800377_AddSocialLinks.Designer.cs">
       <DependentUpon>202406061800377_AddSocialLinks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\UserContext\202406070855029_AddIsConfirmed.cs" />
+    <Compile Include="Migrations\UserContext\202406070855029_AddIsConfirmed.Designer.cs">
+      <DependentUpon>202406070855029_AddIsConfirmed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\UserContext\202406071314364_MoveToMembership.cs" />
+    <Compile Include="Migrations\UserContext\202406071314364_MoveToMembership.Designer.cs">
+      <DependentUpon>202406071314364_MoveToMembership.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\UserContext\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -134,14 +157,23 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\CategoryContext\202406061509010_InitialCreate.resx">
+    <EmbeddedResource Include="Migrations\GymContext\202406061509010_InitialCreate.resx">
       <DependentUpon>202406061509010_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\GymContext\202406071203403_AddLocations.resx">
+      <DependentUpon>202406071203403_AddLocations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\GymContext\202406071413326_AddAvgSales.resx">
+      <DependentUpon>202406071413326_AddAvgSales.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\SessionContext\202406061509547_InitialCreate.resx">
       <DependentUpon>202406061509547_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\TokenContext\202406061510299_InitialCreate.resx">
       <DependentUpon>202406061510299_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\TokenContext\202406070935556_AddRegisterToken.resx">
+      <DependentUpon>202406070935556_AddRegisterToken.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\UserContext\202406061511002_InitialCreate.resx">
       <DependentUpon>202406061511002_InitialCreate.cs</DependentUpon>
@@ -151,6 +183,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\UserContext\202406061800377_AddSocialLinks.resx">
       <DependentUpon>202406061800377_AddSocialLinks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\UserContext\202406070855029_AddIsConfirmed.resx">
+      <DependentUpon>202406070855029_AddIsConfirmed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\UserContext\202406071314364_MoveToMembership.resx">
+      <DependentUpon>202406071314364_MoveToMembership.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

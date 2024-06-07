@@ -13,6 +13,7 @@ namespace Spartacus.Domain.Entities.User
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        #region GeneralInfo
         [Required]
         [StringLength(30, MinimumLength = 5, ErrorMessage = "Must be between 5 and 30 characters.")]
         public string Username { get; set; }
@@ -49,18 +50,17 @@ namespace Spartacus.Domain.Entities.User
         [DisplayFormat(NullDisplayText = "No data")]
         public DateTime? LastUsernameChange { get; set; }
 
+        [Required]
+        [Display(Name = "Is confirmed")]
+        public bool IsConfirmed { get; set; }
+        #endregion
+
+        [Required]
         public URole Role { get; set; }
 
         public virtual MsTable Membership { get; set; }
-        
+
         public virtual TDTable Trainer { get; set; }
-
-        [Display(Name = "Category Id")]
-        [DisplayFormat(NullDisplayText = "No data")]
-        public int? CatId { get; set; }
-
-        [DisplayFormat(NullDisplayText = "No data")]
-        public MsDuration? Period { get; set; }
 
         [Display(Name = "File name")]
         [DisplayFormat(NullDisplayText = "No data")]

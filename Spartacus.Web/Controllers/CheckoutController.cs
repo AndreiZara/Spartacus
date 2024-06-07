@@ -1,6 +1,8 @@
 ﻿using Spartacus.BusinessLogic;
 using Spartacus.BusinessLogic.Interfaces;
+using Spartacus.Domain.Entities.Membership;
 using Spartacus.Domain.Enums;
+using Spartacus.Web.Filters;
 using Spartacus.Web.Models;
 using System;
 using System.Globalization;
@@ -8,10 +10,12 @@ using System.Web.Mvc;
 
 namespace Spartacus.Web.Controllers
 {
+    [Confirmed]
     public class CheckoutController : BaseController
     {
-        private readonly ICatMgmt _mgmt = BussinesLogic.GetCatMgmtBL();
-        
+        private readonly ICatMgmt _catMgmt = BussinesLogic.GetCatMgmtBL();
+        private readonly ILocMgmt _locMgmt = BussinesLogic.GetLocMgmtBL();
+
         public ActionResult Begin(int? cid, MsDuration? dur)
         {
             SessionStatus();
@@ -20,7 +24,7 @@ namespace Spartacus.Web.Controllers
             var isLoggedIn = SessionStatus();
             if (!isLoggedIn) return RedirectToAction("Login", "Account", new { returnUrl = Request.Url.PathAndQuery });
 
-            var cat = _mgmt.GetCatById(cid.Value);
+            var cat = _catMgmt.GetCatById(cid.Value);
             if (cat == null) return HttpNotFound();
 
             int price = dur switch
@@ -39,6 +43,7 @@ namespace Spartacus.Web.Controllers
             {
                 Price = price,
                 EndTime = DateTime.Now.AddMonths((int)dur),
+                Locations = new SelectList(_locMgmt.GetLocs(), "Id", "Name")
             });
         }
 
@@ -67,20 +72,36 @@ namespace Spartacus.Web.Controllers
                 DateTime expDate = new DateTime(CultureInfo.InvariantCulture.Calendar.ToFourDigitYear(year), month, 1);
                 // get last day of the month
                 expDate = expDate.AddMonths(1).AddDays(-1);
-                
+
                 if (expDate > DateTime.Now)
                 {
                     var user = _session.GetUserByCookie(Request.Cookies["UserCookie"].Value);
-                    var membershipCreated = _session.AddMembershipFor(user.Username, cid, dur);
-                    if (membershipCreated)
-                        return RedirectToAction("Index", "Account");
-                    else
-                        TempData["ErrorMessage"] = "Payment failed";
+                    var membershipCreated = _session.AddMembershipFor(user.Username, new MsData
+                    {
+                        CatId = cid,
+                        Period = dur,
+                        LocId = check.LocId
+                    });
+                    switch(membershipCreated)
+                    {
+                        case AddMemResp.Failed: TempData["ErrorMessage"] = "Payment failed!"; break;
+                        
+                        case AddMemResp.FullCapacity: ModelState.AddModelError("LocId", "Selected location is full."); break;
+                        
+                        case AddMemResp.Success: return RedirectToAction("Index", "Account");
+                    
+                        default: throw new InvalidOperationException();                     
+                    }
                 }
                 else
                     ModelState.AddModelError("Expiry", "Card expired!");
             }
-            return RedirectToAction("Begin", new { cid, dur });
+
+            TempData["Period"] = dur;
+            TempData["CategoryId"] = cid;
+            check.Locations = new SelectList(_locMgmt.GetLocs(), "Id", "Name");
+
+            return View(check);
         }
     }
 }

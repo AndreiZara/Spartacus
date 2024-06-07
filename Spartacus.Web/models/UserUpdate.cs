@@ -39,6 +39,9 @@ namespace Spartacus.Web.Models
         [Display(Name = "Period")]
         public MsDuration? Period { get; set; }
 
+        [Display(Name = "Location")]
+        public int? LocId { get; set; }
+
         [Display(Name = "Set membership?")]
         public bool SetMembership { get; set; }
 
@@ -64,5 +67,6 @@ namespace Spartacus.Web.Models
         public string FileName { get; set; }
 
         public SelectList Categories { get; set; }
+        public SelectList Locations { get; set; }
     }
 }

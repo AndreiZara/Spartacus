@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace Spartacus.Web.Models
 {
@@ -35,9 +36,15 @@ namespace Spartacus.Web.Models
         [Display(Name = "Zip code")]
         public string ZipCode { get; set; }
 
+        [Required]
+        [Display(Name = "Location")]
+        public int LocId { get; set; }
+
         // Read only
         public int Price { get; set; }
         public DateTime EndTime { get; set; }
-        public int CatId { get; set; }
+        //public int CatId { get; set; }
+        public SelectList Locations { get; set; }
+
     }
 }

@@ -156,7 +156,8 @@
     <Content Include="Content\Slick\fonts\slick.svg" />
     <Content Include="Content\Slick\slick-theme.css" />
     <Content Include="Content\Slick\slick.css" />
-    <Content Include="Content\Template\Email.html" />
+    <Content Include="Content\Template\RegisterEmail.html" />
+    <Content Include="Content\Template\ResetEmail.html" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -198,6 +199,8 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="Content\Users\2024\0607182219-1016-aaron-brogden-9y4matz2js0.jpg" />
+    <Content Include="Content\Users\2024\0607184149-1019-anastase-maragos-7kepupb8.jpg" />
     <Content Include="Content\Users\no_image.svg" />
     <Content Include="External\icofont\fonts\icofont.svg" />
     <Content Include="External\icofont\icofont.css" />
@@ -296,8 +299,10 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Filters\AllowAttribute.cs" />
+    <Compile Include="Filters\ConfirmedAttribute.cs" />
     <Compile Include="Filters\RequiredIfAttribute.cs" />
     <Compile Include="Models\Checkout.cs" />
     <Compile Include="Models\ResetPassword.cs" />
@@ -319,7 +324,7 @@
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Checkout\Begin.cshtml" />
-    <Content Include="Views\Shared\_LayoutEmpty.cshtml" />
+    <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Membership.cshtml" />
@@ -372,6 +377,11 @@
     <Content Include="Views\Shared\_UserDetails.cshtml" />
     <Content Include="Views\Feed\Read.cshtml" />
     <Content Include="Views\Feed\Delete.cshtml" />
+    <Content Include="Views\Shared\_EmptyLayout.cshtml" />
+    <Content Include="Views\Location\Read.cshtml" />
+    <Content Include="Views\Location\Delete.cshtml" />
+    <Content Include="Views\Location\Update.cshtml" />
+    <Content Include="Views\Location\Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -393,6 +403,10 @@
     <ProjectReference Include="..\Spartacus.Domain\Spartacus.Domain.csproj">
       <Project>{bbe0f79f-cdc6-4a3f-84a3-e80b6e4aae78}</Project>
       <Name>Spartacus.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Spartacus.Helpers\Spartacus.Helpers.csproj">
+      <Project>{DAB76ADF-54AE-4C45-8574-22DF0EA986B1}</Project>
+      <Name>Spartacus.Helpers</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

@@ -1,6 +1,6 @@
 ﻿using Spartacus.BusinessLogic.Core;
 using Spartacus.BusinessLogic.Interfaces;
-using Spartacus.Domain.Entities.Membership;
+using Spartacus.Domain.Entities.Tokens;
 using Spartacus.Domain.Entities.Trainer;
 using Spartacus.Domain.Entities.User;
 using System.Collections.Generic;
@@ -12,9 +12,9 @@ namespace Spartacus.BusinessLogic.Logics
     {
         public Task SendEmailAsync(string recipientEmail, string body, string subject) => SendEmailAsyncAction(recipientEmail, body, subject);
 
-        public string PopulateBody(string userEmail, string url) => PopulateBodyAction(userEmail, url);
+        public string PopulateBody(string userEmail, string url, string templatePath) => PopulateBodyAction(userEmail, url, templatePath);
 
-        public string CreateToken(string email) => CreateTokenAction(email);
+        public string CreateToken<TEntity>(string email, int minutes) where TEntity : class, IToken, new() => CreateTokenAction<TEntity>(email, minutes);
 
         public bool IsResetTokenValid(string value) => IsResetTokenValidAction(value);
 
@@ -23,5 +23,7 @@ namespace Spartacus.BusinessLogic.Logics
         public void SendFeedback(FeedData data) => SendFeedbackAction(data);
 
         public List<TrainerData> GetTrainers() => GetTrainersAction();
+
+        public bool ConfirmRegisterToken(string token) => ConfirmRegisterTokenAction(token);
     }
 }

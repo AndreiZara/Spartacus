@@ -9,7 +9,7 @@ namespace Spartacus.BusinessLogic.Core
     {
         internal bool AddCatAction(CatTable data)
         {
-            using (var debil = new CategoryContext())
+            using (var debil = new GymContext())
             {
                 var cat = debil.Categories.FirstOrDefault(c => c.Title == data.Title);
                 if (cat != null) return false;
@@ -22,33 +22,33 @@ namespace Spartacus.BusinessLogic.Core
 
         internal List<CatTable> GetCatsAction()
         {
-            List<CatTable> cats;
-            using (var debil = new CategoryContext())
-            {
-                cats = debil.Categories.ToList();
-            }
+            using var debil = new GymContext();
+            var cats = debil.Categories.ToList();
             return cats;
         }
 
         internal CatTable GetCatByIdAction(int id)
         {
-            CatTable cat;
-            using (var debil = new CategoryContext())
-            {
-                cat = debil.Categories.FirstOrDefault(c => c.Id == id);
-            }
+            using var debil = new GymContext();
+            var cat = debil.Categories.FirstOrDefault(c => c.Id == id);
             return cat;
         }
-        
+
         internal bool UpdateCatAction(CatTable data)
         {
-            using (var debil = new CategoryContext())
+            using (var debil = new GymContext())
             {
                 var cat = debil.Categories.FirstOrDefault(x => x.Id == data.Id);
 
                 if (cat == null) return false;
 
-                cat.Title = data.Title;
+                if (data.Title != cat.Title)
+                {
+                    var exists = debil.Categories.FirstOrDefault(l => l.Title == data.Title) != null;
+                    if (exists) return false;
+
+                    cat.Title = data.Title;
+                }
                 cat.Description = data.Description;
                 cat.PriceOneYear = data.PriceOneYear;
                 cat.PriceSixMonths = data.PriceSixMonths;
@@ -59,10 +59,10 @@ namespace Spartacus.BusinessLogic.Core
             }
             return true;
         }
-        
+
         internal bool DeleteCatByIdAction(int id)
         {
-            using (var debil = new CategoryContext())
+            using (var debil = new GymContext())
             {
                 var cat = debil.Categories.Find(id);
                 if (cat == null) return false;

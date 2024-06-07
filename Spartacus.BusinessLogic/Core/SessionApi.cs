@@ -1,13 +1,14 @@
 ﻿using AutoMapper;
 using Spartacus.BusinessLogic.DBModel;
+using Spartacus.Domain.Entities.Membership;
 using Spartacus.Domain.Entities.User;
 using Spartacus.Domain.Enums;
 using Spartacus.Helpers;
 using System;
 using System.Data.Entity;
-using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Threading;
 using System.Web;
 using System.Web.Configuration;
 
@@ -26,14 +27,13 @@ namespace Spartacus.BusinessLogic.Core
                 debil.SaveChanges();
             }
             return user != null;
-
         }
 
         internal bool UserRegAction(URegData data)
         {
             using var debil = new UserContext();
-            // check if current username is not already taken
-            var user = debil.Users.FirstOrDefault(u => u.Username == data.Username);
+            // check if current username or email is not already taken
+            var user = debil.Users.FirstOrDefault(u => u.Username == data.Username || u.Email == data.Email);
             if (user != null) return false;
 
             debil.Users.Add(new UTable
@@ -129,11 +129,9 @@ namespace Spartacus.BusinessLogic.Core
                 var config = new MapperConfiguration(cfg => cfg.CreateMap<UTable, UProfData>().ForMember(up => up.Password, opt => opt.Ignore()));
                 userProf = config.CreateMapper().Map<UProfData>(user);
 
-                if (user.Membership != null)
-                {
-                    userProf.StartTime = user.Membership.StartTime;
-                    userProf.EndTime = user.Membership.EndTime;
-                }
+                userProf.StartTime = user.Membership?.StartTime;
+                userProf.EndTime = user.Membership?.EndTime;
+                userProf.CatId = user.Membership?.CatId;
 
                 userProf.Activity = user.Trainer?.Activity;
                 userProf.Bio = user.Trainer?.Bio;
@@ -156,8 +154,8 @@ namespace Spartacus.BusinessLogic.Core
 
             if (data.Username != user.Username)
             {
-                var userExists = debil1.Users.FirstOrDefault(u => u.Username == data.Username) != null;
-                if (!userExists && (user.LastUsernameChange == null || user.LastUsernameChange.Value.AddDays(30) < DateTime.Now))
+                var exists = debil1.Users.FirstOrDefault(u => u.Username == data.Username) != null;
+                if (!exists && (user.LastUsernameChange == null || user.LastUsernameChange.Value.AddDays(30) < DateTime.Now))
                 {
                     user.LastUsernameChange = DateTime.Now;
                     user.Username = data.Username;
@@ -196,57 +194,95 @@ namespace Spartacus.BusinessLogic.Core
             }
 
             // ignore FileName as it can be null if no new photo is specified
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<UProfData, UTable>().ForMember(u => u.FileName, opt => opt.Ignore()));
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<UProfData, UTable>()
+                .ForMember(u => u.FileName, opt => opt.Ignore())
+                .ForMember(u => u.Email, opt => opt.Ignore()));
             config.CreateMapper().Map(data, user);
             debil1.SaveChanges();
 
             return SaveProfResp.Success;
         }
 
-        internal bool SetMsDurationForAction(string userCookie, MsDuration duration)
+        internal AddMemResp AddMembershipForAction(string username, MsData data)
         {
-            using var debil = new SessionContext();
-            var session = debil.Sessions.FirstOrDefault(s => s.CookieString == userCookie && s.ExpireTime > DateTime.Now);
-            if (session == null) return false;
-
-            session.Duration = duration;
-            debil.SaveChanges();
-            return true;
-        }
-
-        internal MsDuration? GetMsDurationForAction(string userCookie)
-        {
-            using var debil = new SessionContext();
-            var session = debil.Sessions.FirstOrDefault(s => s.CookieString == userCookie && s.ExpireTime > DateTime.Now);
-            if (session == null) return null;
-            return session.Duration;
-        }
-
-        internal bool AddMembershipForAction(string username, int? catId, MsDuration? duration)
-        {
-            if (duration == null || catId == null) return false;
+            if (data.Period == null || data.CatId == null) return AddMemResp.Failed;
 
             using var debil = new UserContext();
             var user = debil.Users.FirstOrDefault(u => u.Username == username);
-            if (user == null) return false;
+            if (user == null) return AddMemResp.Failed;
+
+            using (var debil1 = new GymContext())
+            {
+                var loc = debil1.Locations.FirstOrDefault(l => l.Id == data.LocId);
+                if (loc == null || loc.CurrentNoOfVisitors + 1 > loc.Capacity) return AddMemResp.FullCapacity;
+            }
 
             if (user.Membership == null)
             {
-                user.Membership = new Domain.Entities.Membership.MsTable
+                user.Membership = new MsTable
                 {
                     StartTime = DateTime.Now,
-                    EndTime = DateTime.Now.AddMonths((int)duration),
+                    EndTime = DateTime.Now.AddMonths((int)data.Period),
+                    CatId = data.CatId.Value,
+                    Period = data.Period.Value,
+                    LocId = data.LocId.Value
                 };
+                if(!RecordPurchase(data, true, user.Membership.LocId)) return AddMemResp.Failed;
             }
             else if (user.Membership.EndTime < DateTime.Now)
             {
                 user.Membership.StartTime = DateTime.Now;
-                user.Membership.EndTime = DateTime.Now.AddMonths((int)duration);
+                user.Membership.EndTime = DateTime.Now.AddMonths((int)data.Period);
+                user.Membership.CatId = data.CatId.Value;
+                user.Membership.Period = data.Period.Value;
+                
+                if(!RecordPurchase(data, false, user.Membership.LocId)) return AddMemResp.Failed;
+                user.Membership.LocId = data.LocId.Value;
             }
-            else return false;
+            else return AddMemResp.Failed;
 
-            user.CatId = catId;
-            user.Period = duration;
+            debil.SaveChanges();
+            return AddMemResp.Success;
+        }
+
+        private bool RecordPurchase(MsData data, bool firstTime, int curLocId)
+        {
+            using var debil = new GymContext();
+            var cat = debil.Categories.FirstOrDefault(c => c.Id == data.CatId);
+            if (cat == null) return false;
+
+            var price = data.Period switch
+            {
+                MsDuration.OneMonth => cat.PriceOneMonth,
+                MsDuration.ThreeMonths => cat.PriceThreeMonths,
+                MsDuration.SixMonths => cat.PriceSixMonths,
+                MsDuration.OneYear => cat.PriceOneYear,
+                _ => throw new InvalidOperationException()
+            };
+
+            var loc = debil.Locations.FirstOrDefault(l => l.Id == data.LocId);
+            if (loc == null) return false;
+
+            if (loc.LastUpdate.AddMonths(1).Month == DateTime.Now.Month)
+                loc.MonthlySales = 0;
+
+            loc.MonthlySales += price;
+            loc.AvgMonthlySales += (float)price / 12;
+            loc.LastUpdate = DateTime.Now;
+
+            if (firstTime)
+            {
+                loc.CurrentNoOfVisitors++;
+            }
+            else if (data.LocId != curLocId)
+            {
+                // user has changed location
+                var cur = debil.Locations.FirstOrDefault(l => l.Id == curLocId);
+                cur.CurrentNoOfVisitors--;
+                loc.CurrentNoOfVisitors++;
+                cur.LastUpdate = DateTime.Now;
+            }
+
             debil.SaveChanges();
             return true;
         }

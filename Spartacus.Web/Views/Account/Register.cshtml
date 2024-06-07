@@ -8,6 +8,7 @@
 <p class="text-center lead">Sign Up to open the door to new experiences</p>
 @using (Html.BeginForm("Register", "Account", FormMethod.Post))
 {
+    @Html.AntiForgeryToken()
     <div class="form-floating mt-3">
         @Html.TextBoxFor(m => m.Username, new
         {

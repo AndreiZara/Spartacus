@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Update";
-    Layout = "~/Views/Shared/_LayoutEmpty.cshtml";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
     var filename = (Model.FileName != null) ? @Model.FileName : "no_image.svg";
 }
 
@@ -50,7 +50,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
                     @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -105,6 +105,14 @@
                 <div class="col-md-10">
                     @Html.CheckBoxFor(model => model.SetMembership)
                     @Html.ValidationMessageFor(model => model.SetMembership, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.LocId, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.LocId, Model.Locations, "", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.LocId, "", new { @class = "text-danger" })
                 </div>
             </div>
 

@@ -35,13 +35,13 @@
                 @TempData["SuccessMessage"]
             </div>
         }
-        @if (Model.StartTime != DateTime.MinValue)
+        @if (Model.EndTime != null || Model.EndTime < DateTime.Now)
             {
 
         <div class="row bg-white rounded shadow-sm my-3">
             <div class="col-lg-4 my-3">
                 <h2>Your membership</h2>
-                <div>@Model.Title</div>
+                <h3>@Model.Title</h3>
                 <div>@Model.Description</div>
             </div>
             <div class="col-lg-4 text-center my-auto">
@@ -108,6 +108,7 @@
                    {
                        @class = "form-control",
                        placeholder = "",
+                       @readonly = true,
                        type = "email"
                    })
                         @Html.LabelFor(m => m.Email)

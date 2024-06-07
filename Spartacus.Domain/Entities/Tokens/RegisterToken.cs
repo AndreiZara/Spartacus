@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Spartacus.Domain.Entities.Tokens
 {
-    public class ResetToken : IToken
+    public class RegisterToken : IToken
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

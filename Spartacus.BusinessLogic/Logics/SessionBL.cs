@@ -1,5 +1,6 @@
 ﻿using Spartacus.BusinessLogic.Core;
 using Spartacus.BusinessLogic.Interfaces;
+using Spartacus.Domain.Entities.Membership;
 using Spartacus.Domain.Entities.User;
 using Spartacus.Domain.Enums;
 using System.Web;
@@ -20,7 +21,7 @@ namespace Spartacus.BusinessLogic
 
         public SaveProfResp SaveProfileByCookie(string cookie, UProfData data) => SaveProfileByCookieAction(cookie, data);
 
-        public bool AddMembershipFor(string username, int? catId, MsDuration? duration) => AddMembershipForAction(username, catId, duration);
+        public AddMemResp AddMembershipFor(string username, MsData data) => AddMembershipForAction(username, data);
 
         public string GetQrById(int id) => GetQrByIdAction(id);
     }

@@ -51,9 +51,9 @@ namespace Spartacus.Web.Models
         // read only
         public string FileName { get; set; }
         [DataType(DataType.Date)]
-        public DateTime StartTime { get; set; }
+        public DateTime? StartTime { get; set; }
         [DataType(DataType.Date)]
-        public DateTime EndTime { get; set; }
+        public DateTime? EndTime { get; set; }
         public int RemainingDays { get; set; }
         public URole Role { get; set; }
         // and something related to category

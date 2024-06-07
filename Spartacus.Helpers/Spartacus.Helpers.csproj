@@ -52,7 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Spartacus.Domain\Spartacus.Domain.csproj">
-      <Project>{bbe0f79f-cdc6-4a3f-84a3-e80b6e4aae78}</Project>
+      <Project>{BBE0F79F-CDC6-4A3F-84A3-E80B6E4AAE78}</Project>
       <Name>Spartacus.Domain</Name>
     </ProjectReference>
   </ItemGroup>

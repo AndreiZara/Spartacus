@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace Spartacus.Web.Controllers
 {
-    [Allow(URole.Admin,  URole.Manager)]
+    [Allow(URole.Admin, URole.Manager)]
     public class FeedController : BaseController
     {
         private readonly IFeedMgmt _mgmt = BussinesLogic.GetFeedMgmtBL();

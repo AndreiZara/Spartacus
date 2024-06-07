@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Spartacus.Domain.Entities.User;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Spartacus.Domain.Entities.User;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Spartacus.Domain.Entities.Trainer
 {
@@ -25,7 +20,7 @@ namespace Spartacus.Domain.Entities.Trainer
 
         [StringLength(64)]
         public string InstagramUrl { get; set; }
-        
+
         [StringLength(64)]
         public string FacebookUrl { get; set; }
 

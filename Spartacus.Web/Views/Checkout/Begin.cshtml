@@ -1,7 +1,7 @@
 ﻿@model Spartacus.Web.Models.Checkout
 
 @{
-    Layout = "~/Views/Shared/_LayoutEmpty.cshtml";
+    Layout = "~/Views/Shared/_EmptyLayout.cshtml";
 }
 
 @section Styles {
@@ -13,14 +13,14 @@
         <h2>Confirm order and pay</h2>
         <span>please make the payment, after that you can enjoy all the features and benefits.</span>
     </div>
+        @using (Html.BeginForm("Begin", "Checkout", FormMethod.Post))
+        {
     <div class="row">
         <div class="col-md-8">
-            @using (Html.BeginForm("Begin", "Checkout", FormMethod.Post))
-            {
-                @Html.AntiForgeryToken();
+                @Html.AntiForgeryToken()
                 @Html.HiddenFor(m => m.Price, Model.Price)
                 @Html.HiddenFor(m => m.EndTime, Model.EndTime)
-                @Html.HiddenFor(m => m.CatId, Model.CatId)
+                @*@Html.HiddenFor(m => m.CatId, Model.CatId)*@  
             <div class="card p-3">
                 <h5 class="text-uppercase">Payment details</h5>
                 <div class="form-floating mt-3">
@@ -135,7 +135,6 @@
                     <a href=@Url.Action("Index", "Home")>Back to home</a>
                     <button type="submit" class="btn btn-main px-3">Pay @Model.Price lei</button>
                 </div>
-            }
         </div>
         <div class="col-md-4">
             <div class="card card-bg p-3 text-black">
@@ -146,8 +145,16 @@
                 <span>Your membership will end on @Model.EndTime.ToShortDateString()</span>
                 <span>view more details on profile page</span>
             </div>
+            <div class="card card-bg p-3 mt-4 text-black">
+                <span>Select where you want to go</span>
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.LocId, Model.Locations, "", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.LocId, "", new { @class = "text-danger" })
+                </div>
+            </div>
         </div>
     </div>
+    }
 </div>
 
 @section Scripts {

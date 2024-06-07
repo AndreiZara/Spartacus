@@ -9,5 +9,6 @@ namespace Spartacus.BusinessLogic.DBModel
 
         public virtual DbSet<ResetToken> ResetTokens { get; set; }
         public virtual DbSet<AccessToken> AccessTokens { get; set; }
+        public virtual DbSet<RegisterToken> RegisterTokens { get; set; }
     }
 }

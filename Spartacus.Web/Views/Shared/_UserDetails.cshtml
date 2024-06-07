@@ -87,33 +87,36 @@
             </dd>
         }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Membership.StartTime)
-            /
-            @Html.DisplayNameFor(model => model.Membership.EndTime)
-        </dt>
+        @if (Model.Membership != null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.Membership.StartTime)
+                /
+                @Html.DisplayNameFor(model => model.Membership.EndTime)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Membership.StartTime)
-            -
-            @Html.DisplayFor(model => model.Membership.EndTime)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Membership.StartTime)
+                -
+                @Html.DisplayFor(model => model.Membership.EndTime)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CatId)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Membership.CatId)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.CatId)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Membership.CatId)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Period)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Membership.Period)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Period)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Membership.Period)
+            </dd>
+        }
 
         <dt>
             @Html.DisplayNameFor(model => model.FileName)
