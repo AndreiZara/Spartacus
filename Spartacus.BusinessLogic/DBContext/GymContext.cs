@@ -2,7 +2,7 @@
 using Spartacus.Domain.Entities.Membership;
 using System.Data.Entity;
 
-namespace Spartacus.BusinessLogic.DBModel
+namespace Spartacus.BusinessLogic.DBContext
 {
     public class GymContext : DbContext
     {

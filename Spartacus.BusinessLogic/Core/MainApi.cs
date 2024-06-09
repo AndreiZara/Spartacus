@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
-using Spartacus.BusinessLogic.DBModel;
+using Spartacus.BusinessLogic.DBContext;
 using Spartacus.Domain.Entities.Membership;
 using Spartacus.Domain.Entities.Tokens;
 using Spartacus.Domain.Entities.Trainer;
 using Spartacus.Domain.Entities.User;
+using Spartacus.Domain.Enums;
 using Spartacus.Helpers;
 using System;
 using System.Collections.Generic;
@@ -100,7 +101,8 @@ namespace Spartacus.BusinessLogic.Core
                 });
 
                 debil.SaveChanges();
-                //RemoveExpiredResetTokensAction();
+                
+                // TODO: RemoveExpiredResetTokensAction();
             }
             return value;
         }
@@ -116,18 +118,18 @@ namespace Spartacus.BusinessLogic.Core
             return token.EndDate > DateTime.Now;
         }
 
-        internal bool ConfirmRegisterTokenAction(string value)
+        internal ConTokenResp ConfirmRegisterTokenAction(string value)
         {
             var hashedValue = LoginHelpers.HashGen(value);
             using (var debil = new TokenContext())
             {
                 var token = debil.RegisterTokens.FirstOrDefault(t => t.Value == hashedValue);
-                if (token == null) return false;
+                if (token == null) return ConTokenResp.Expired;
 
                 using (var debil1 = new UserContext())
                 {
                     var user = debil1.Users.FirstOrDefault(u => u.Email == token.Email);
-                    if (user == null) return false;
+                    if (user == null) return ConTokenResp.Failed;
 
                     if (token.EndDate < DateTime.Now)
                     {
@@ -144,17 +146,16 @@ namespace Spartacus.BusinessLogic.Core
                 }
             }
 
-            //RemoveExpiredResetTokensAction();
-            return true;
+            RemoveExpiredTokensAction<RegisterToken>();
+            return ConTokenResp.Success;
         }
 
         internal bool ResetPasswordByTokenAction(string value, string newPassword)
         {
-            var hashedValue = LoginHelpers.HashGen(value);
             string userEmail;
             using (var debil = new TokenContext())
             {
-                var token = debil.ResetTokens.FirstOrDefault(t => t.Value == hashedValue);
+                var token = debil.ResetTokens.FirstOrDefault(t => t.Value == value);
                 if (token == null) return false;
                 userEmail = token.Email;
 

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Spartacus.BusinessLogic.DBModel;
+using Spartacus.BusinessLogic.DBContext;
 using Spartacus.Domain.Entities.Membership;
 using Spartacus.Domain.Entities.User;
 using Spartacus.Domain.Enums;
@@ -219,6 +219,8 @@ namespace Spartacus.BusinessLogic.Core
 
             if (user.Membership == null)
             {
+                if(!RecordPurchase(data, true, user.Membership.LocId)) return AddMemResp.Failed;
+                
                 user.Membership = new MsTable
                 {
                     StartTime = DateTime.Now,
@@ -227,16 +229,15 @@ namespace Spartacus.BusinessLogic.Core
                     Period = data.Period.Value,
                     LocId = data.LocId.Value
                 };
-                if(!RecordPurchase(data, true, user.Membership.LocId)) return AddMemResp.Failed;
             }
             else if (user.Membership.EndTime < DateTime.Now)
             {
+                if(!RecordPurchase(data, false, user.Membership.LocId)) return AddMemResp.Failed;
+                
                 user.Membership.StartTime = DateTime.Now;
                 user.Membership.EndTime = DateTime.Now.AddMonths((int)data.Period);
                 user.Membership.CatId = data.CatId.Value;
                 user.Membership.Period = data.Period.Value;
-                
-                if(!RecordPurchase(data, false, user.Membership.LocId)) return AddMemResp.Failed;
                 user.Membership.LocId = data.LocId.Value;
             }
             else return AddMemResp.Failed;
@@ -264,10 +265,12 @@ namespace Spartacus.BusinessLogic.Core
             if (loc == null) return false;
 
             if (loc.LastUpdate.AddMonths(1).Month == DateTime.Now.Month)
+            {
+                loc.AvgMonthlySales += loc.MonthlySales / 12;
                 loc.MonthlySales = 0;
+            }
 
             loc.MonthlySales += price;
-            loc.AvgMonthlySales += (float)price / 12;
             loc.LastUpdate = DateTime.Now;
 
             if (firstTime)

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Spartacus.BusinessLogic.DBModel;
+using Spartacus.BusinessLogic.DBContext;
 using Spartacus.Domain.Entities.Tokens;
 using Spartacus.Domain.Entities.Trainer;
 using Spartacus.Domain.Entities.User;
@@ -67,7 +67,6 @@ namespace Spartacus.BusinessLogic.Core
                     }
                     user.Username = data.Username;
                 }
-
 
                 if (image != null)
                 {

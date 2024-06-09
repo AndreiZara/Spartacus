@@ -3,11 +3,24 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 <!-- Section Slider Start -->
 <!-- Slider Start -->
 <section class="slider">
     <div class="container">
         <div class="row">
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger" role="alert">
+                    @TempData["ErrorMessage"]
+                </div>
+            }
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success" role="alert">
+                    @TempData["SuccessMessage"]
+                </div>
+            }
             <div class="col-md-8">
                 <span class="h6 d-inline-block mb-4 subhead text-uppercase">Gym fitness club</span>
                 <h1 class="text-uppercase text-white mb-5">Step up your <span class="text-color">fitness Challenge</span><br>with us</h1>

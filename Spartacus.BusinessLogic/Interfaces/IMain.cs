@@ -1,6 +1,7 @@
 ﻿using Spartacus.Domain.Entities.Tokens;
 using Spartacus.Domain.Entities.Trainer;
 using Spartacus.Domain.Entities.User;
+using Spartacus.Domain.Enums;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -15,6 +16,6 @@ namespace Spartacus.BusinessLogic.Interfaces
         bool ResetPasswordByToken(string value, string newPassword);
         void SendFeedback(FeedData data);
         List<TrainerData> GetTrainers();
-        bool ConfirmRegisterToken(string token);
+        ConTokenResp ConfirmRegisterToken(string token);
     }
 }

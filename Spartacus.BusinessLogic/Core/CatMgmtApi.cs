@@ -1,4 +1,4 @@
-﻿using Spartacus.BusinessLogic.DBModel;
+﻿using Spartacus.BusinessLogic.DBContext;
 using Spartacus.Domain.Entities.Membership;
 using System.Collections.Generic;
 using System.Linq;

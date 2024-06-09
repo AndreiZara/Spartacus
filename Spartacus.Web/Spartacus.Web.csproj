@@ -199,8 +199,6 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
-    <Content Include="Content\Users\2024\0607182219-1016-aaron-brogden-9y4matz2js0.jpg" />
-    <Content Include="Content\Users\2024\0607184149-1019-anastase-maragos-7kepupb8.jpg" />
     <Content Include="Content\Users\no_image.svg" />
     <Content Include="External\icofont\fonts\icofont.svg" />
     <Content Include="External\icofont\icofont.css" />
