@@ -139,7 +139,7 @@ namespace Spartacus.Web.Controllers
                     Email = register.Email,
                     Password = LoginHelpers.HashGen(register.Password),
                     Ip = Request.UserHostAddress,
-                    LoginDateTime = DateTime.Now
+                    RegTime = DateTime.Now
                 };
 
                 var userReg = _session.UserReg(data);
@@ -176,11 +176,19 @@ namespace Spartacus.Web.Controllers
 
         public ActionResult ConfirmRegister(string token)
         {
-            if (!_main.ConfirmRegisterToken(token))
-            {
-                TempData["ErrorMessage"] = "Link expired! Your account has been deleted.";
-            }
+            var resp = _main.ConfirmRegisterToken(token);
 
+            TempData["ErrorMessage"] = resp switch
+            {
+                ConTokenResp.Failed => "Your account has been deleted.",
+                ConTokenResp.Expired => "Link has expired.",
+                ConTokenResp.Success => null,
+                _ => throw new InvalidOperationException()
+            };
+
+            if (resp == ConTokenResp.Success)
+                TempData["SuccessMessage"] = "You have confirmed your account successfully.";
+            
             return RedirectToAction("Index", "Home");
         }
 
@@ -232,7 +240,7 @@ namespace Spartacus.Web.Controllers
             var token = TempData["ResetToken"] as string;
             if (ModelState.IsValid)
             {
-                var passReseted = _main.ResetPasswordByToken(token, reset.NewPassword);
+                var passReseted = _main.ResetPasswordByToken(LoginHelpers.HashGen(token), LoginHelpers.HashGen(reset.NewPassword));
                 if (passReseted)
                 {
                     TempData["SuccessMessage"] = "Password has been reset.";

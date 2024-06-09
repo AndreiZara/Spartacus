@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.Win32;
 using Spartacus.BusinessLogic;
 using Spartacus.BusinessLogic.Interfaces;
 using Spartacus.Domain.Entities.Membership;
@@ -13,7 +12,6 @@ using System;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using static QRCoder.PayloadGenerator;
 
 namespace Spartacus.Web.Controllers
 {

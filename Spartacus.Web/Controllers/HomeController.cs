@@ -31,7 +31,7 @@ namespace Spartacus.Web.Controllers
             {
                 data.DateSent = DateTime.Now;
                 _main.SendFeedback(data);
-                TempData["SuccessMessage"] = "Your feedback has been sent.";
+                TempData["SuccessMessage"] = "Thanks for your feedback.";
             }
             return RedirectToAction("Contact");
         }

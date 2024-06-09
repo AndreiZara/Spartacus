@@ -10,6 +10,6 @@ namespace Spartacus.Domain.Entities.User
         public string Email { get; set; }
         public string Password { get; set; }
         public string Ip { get; set; }
-        public DateTime LoginDateTime { get; set; }
+        public DateTime RegTime { get; set; }
     }
 }

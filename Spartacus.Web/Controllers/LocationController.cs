@@ -11,6 +11,7 @@ namespace Spartacus.Web.Controllers
     public class LocationController : BaseController
     {
         private readonly ILocMgmt _mgmt = BussinesLogic.GetLocMgmtBL();
+        
         public ActionResult Read()
         {
             SessionStatus();
@@ -41,7 +42,6 @@ namespace Spartacus.Web.Controllers
             return View();
         }
 
-
         public ActionResult Update(int id)
         {
             SessionStatus();
@@ -65,6 +65,7 @@ namespace Spartacus.Web.Controllers
             }
             return View(data);
         }
+        
         public ActionResult Delete(int id)
         {
             SessionStatus();

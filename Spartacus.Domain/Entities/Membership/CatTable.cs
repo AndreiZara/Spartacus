@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Spartacus.Domain.Entities.Membership
@@ -28,7 +29,5 @@ namespace Spartacus.Domain.Entities.Membership
 
         [Required]
         public int PriceOneYear { get; set; }
-
-        // TODO: add last sale, and number of sales
     }
 }

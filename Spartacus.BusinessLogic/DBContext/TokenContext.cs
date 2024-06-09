@@ -1,7 +1,7 @@
 ﻿using Spartacus.Domain.Entities.Tokens;
 using System.Data.Entity;
 
-namespace Spartacus.BusinessLogic.DBModel
+namespace Spartacus.BusinessLogic.DBContext
 {
     public class TokenContext : DbContext
     {

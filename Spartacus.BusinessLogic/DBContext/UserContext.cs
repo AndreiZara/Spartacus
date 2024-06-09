@@ -3,7 +3,7 @@ using Spartacus.Domain.Entities.Trainer;
 using Spartacus.Domain.Entities.User;
 using System.Data.Entity;
 
-namespace Spartacus.BusinessLogic.DBModel
+namespace Spartacus.BusinessLogic.DBContext
 {
     public class UserContext : DbContext
     {

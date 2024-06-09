@@ -70,10 +70,10 @@
     <Compile Include="Core\UserMgmtApi.cs" />
     <Compile Include="Core\MainApi.cs" />
     <Compile Include="Core\SessionApi.cs" />
-    <Compile Include="DBModel\GymContext.cs" />
-    <Compile Include="DBModel\SessionContext.cs" />
-    <Compile Include="DBModel\TokenContext.cs" />
-    <Compile Include="DBModel\UserContext.cs" />
+    <Compile Include="DBContext\GymContext.cs" />
+    <Compile Include="DBContext\SessionContext.cs" />
+    <Compile Include="DBContext\TokenContext.cs" />
+    <Compile Include="DBContext\UserContext.cs" />
     <Compile Include="Interfaces\ICatMgmt.cs" />
     <Compile Include="Interfaces\IFeedMgmt.cs" />
     <Compile Include="Interfaces\ILocMgmt.cs" />
@@ -151,7 +151,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DBModel\Seed\" />
+    <Folder Include="DBContext\Seed\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

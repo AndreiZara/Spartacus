@@ -63,6 +63,7 @@
     <Compile Include="Entities\User\URegData.cs" />
     <Compile Include="Entities\Tokens\ResetToken.cs" />
     <Compile Include="Enums\AddMemResp.cs" />
+    <Compile Include="Enums\ConTokenResp.cs" />
     <Compile Include="Enums\MsDuration.cs" />
     <Compile Include="Enums\SaveProfResp.cs" />
     <Compile Include="Enums\URole.cs" />

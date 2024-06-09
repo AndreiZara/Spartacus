@@ -3,6 +3,7 @@ using Spartacus.BusinessLogic.Interfaces;
 using Spartacus.Domain.Entities.Tokens;
 using Spartacus.Domain.Entities.Trainer;
 using Spartacus.Domain.Entities.User;
+using Spartacus.Domain.Enums;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -24,6 +25,6 @@ namespace Spartacus.BusinessLogic.Logics
 
         public List<TrainerData> GetTrainers() => GetTrainersAction();
 
-        public bool ConfirmRegisterToken(string token) => ConfirmRegisterTokenAction(token);
+        public ConTokenResp ConfirmRegisterToken(string token) => ConfirmRegisterTokenAction(token);
     }
 }

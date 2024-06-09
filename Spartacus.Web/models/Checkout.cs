@@ -45,6 +45,5 @@ namespace Spartacus.Web.Models
         public DateTime EndTime { get; set; }
         //public int CatId { get; set; }
         public SelectList Locations { get; set; }
-
     }
 }
